@@ -16,7 +16,8 @@ class Game {
     app.renderer.roundPixels = true;
 
     const graphics = new PIXI.Graphics();
-    graphics.beginFill(0xFF700B, 1);
+
+    graphics.beginFill(0xf8f839, 1);
     graphics.drawRect(50, 250, 120, 120);
     app.stage.addChild(graphics);
 
