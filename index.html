@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>I was gonna put the game name here but I ran out of s</title>
+
+    <style>
+      body {
+        margin: 20px;
+        background-color: #333366;
+      }
+      @font-face {
+        font-family: FreePixel;
+        src: url('./assets/FreePixel.ttf');
+      }
+    </style>
+     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.3/howler.min.js"></script>
+    <script>
+      WebFont.load({
+        custom: {
+          families: ['FreePixel']
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <canvas id="main-canvas"></canvas>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    </script>
+    <script lang="javascript">
+      // Math.seedrandom('hello!');
+    </script>
+
+    <script src="./node_modules/pixi.js/dist/pixi.js"></script>
+    <script src="./src/constants.js"></script>
+    <script src="./src/rect.js"></script>
+    <script src="./src/point.js"></script>
+    <script src="./src/texturecache.js"></script>
+    <script src="./src/tiledtilemap.js"></script>
+    <script src="./src/main.js"></script>
+  </body>
+</html>
