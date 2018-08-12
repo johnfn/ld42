@@ -3,7 +3,7 @@ interface IEntity {
 }
 
 type GameSelection = 
-  | { type: "cat", info: CatInfo, state: CatGoal }
+  | { type: "cat", cat: Cat }
   | { type: "room", room: Room }
   | { type: "none" }
 

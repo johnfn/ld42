@@ -26,14 +26,35 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
     if (this.state.selection.type === "cat") {
       let description = "";
 
+      const cat = this.state.selection.cat;
+      const activity = cat.state.activity;
+
+      if (activity === "waiting") {
+        description = "Doing nothing in particular";
+      } else if (activity === "falling") {
+        description = "Ahhhh!!!";
+      } else if (activity === "living") {
+        description = "Hanging out in its cat room";
+      } else if (activity === "finding-room") {
+        description = "Going to find a place to live."
+      }
+
       return (
         <div>
           <h2>Cat Informyation</h2>
-          <div>Name: { this.state.selection.info.name } </div>
-          <div>Favorite activity: { this.state.selection.info.favoriteActivity } </div>
-          <div>Housing Status: { this.state.selection.info.room ? "Housed!" : "Homeless" } </div>
 
-          { JSON.stringify(this.state.selection.state) }
+          <div>Name: { cat.name } </div>
+          <div>Favorite activity: { cat.info.favoriteActivity } </div>
+          <div>Housing Status: { cat.info.room ? "Housed!" : "Homeless" } </div>
+
+          <div
+            style={{
+              paddingTop: "20px"
+            } } />
+
+          <div>
+            { description }
+          </div>
         </div>
       );
     }

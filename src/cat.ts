@@ -109,8 +109,6 @@ class Cat extends PIXI.Container implements IEntity {
 
           return { activity: 'waiting' };
         } else {
-          debugger;
-
           return {
             activity: 'finding-room',
             destination: {
@@ -160,8 +158,7 @@ class Cat extends PIXI.Container implements IEntity {
 
       gameState.selection = {
         type: "cat",
-        info: this.info,
-        state: this.state,
+        cat: this,
       }
     }
   }
