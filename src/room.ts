@@ -19,8 +19,9 @@ class Room extends PIXI.Container {
     // move myself to my center
     //roomSprite.x = Constants.MAP_TILE_SIZE * 0.5;
     //roomSprite.y = Constants.MAP_TILE_SIZE * 0.5 * 2;
-    //this.x = my_center.x - this.width;
-    //this.y = my_center.y - this.height;
+    console.log('room width is ', this.width);
+    this.x = my_center.x - this.width;
+    this.y = my_center.y - this.height;
 
     //this.beginFill(0x8B572A, 1);
     //this.drawRect(50, 250, 120, 120);
