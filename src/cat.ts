@@ -95,17 +95,12 @@ class Cat extends PIXI.Container implements IEntity {
 
     if (tileBelow.terrain === 'sky') {
       return { activity: 'falling' };
-    }
-
     // we update our state based on our current state.
-
-    if (this.state.activity === 'falling') {
+    } else if (this.state.activity === 'falling') {
       // we already checked that we're not in the sky, so we're definitely on land.
 
       return { activity: 'waiting' };
-    }
-
-    if (this.state.activity === 'finding-room') {
+    } else if (this.state.activity === 'finding-room') {
       // TODO - see if we've reached our destination.
 
       const destRoom = this.state.destination.room;
@@ -121,19 +116,25 @@ class Cat extends PIXI.Container implements IEntity {
 
           return { activity: 'waiting' };
         } else {
-          return this.findRoom(gameState);
+          return { activity: 'living' };
         }
       } else {
         return this.state;
       }
-    }
-
-    if (this.state.activity === 'waiting') {
+    } else if (this.state.activity === 'waiting') {
       if (this.info.room) {
         return { activity: 'waiting' };
       } else {
         return this.findRoom(gameState);
       }
+    } else if (this.state.activity === 'living') {
+      if (this.info.room) {
+        return { activity: 'living' };
+      } else {
+        return this.findRoom(gameState);
+      }
+    } else {
+      const _state: never = this.state;
     }
 
     return { activity: 'waiting' };
@@ -148,9 +149,7 @@ class Cat extends PIXI.Container implements IEntity {
 
     if (this.state.activity === 'falling') {
       this.y += 1;
-    }
-
-    if (this.state.activity === 'finding-room') {
+    } else if (this.state.activity === 'finding-room') {
       const dest = this.state.destination;
 
       if (dest.worldRect.x > this.x) {
@@ -165,12 +164,14 @@ class Cat extends PIXI.Container implements IEntity {
         this.info.room = dest.room; 
         dest.room.occupants++;
       }
-    }
-
-    if (this.state.activity === 'waiting'){
+    } else if (this.state.activity === 'waiting'){
       if (this.info.room) {
         this.say(gameState, "purr");
       }
+    } else if (this.state.activity === 'living'){
+      this.say(gameState, "purr");
+    } else {
+      const _state: never = this.state;
     }
 
     if (this.wasClicked) {

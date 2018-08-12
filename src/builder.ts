@@ -8,6 +8,7 @@ class Builder extends PIXI.Graphics implements IEntity {
 
   //absolute coordinates, units in pix
   location: Rect;
+  floorLevel: number;
   pendingInteraction: 'mouseover' | 'mouseout' | 'click' | null;
 
   // so we can find it in the list of entiteis
@@ -18,9 +19,11 @@ class Builder extends PIXI.Graphics implements IEntity {
   /**
    * Construction
    */
-  constructor(stage: PIXI.Container, topLeftX: number, topLeftY: number) {
+  constructor(stage: PIXI.Container, topLeftX: number, topLeftY: number, floorLevel?: number) {
 
     super();
+
+    this.floorLevel = floorLevel || 1;
 
     stage.addChild(this);
     const { width, height } = PIXI.loader.resources['room-1'].texture;
@@ -33,9 +36,9 @@ class Builder extends PIXI.Graphics implements IEntity {
     })
     this.pendingInteraction = null;
 
-    Builder.renderBuilderRoomSilhouette(this, this.location);
+    Builder.renderBuilderRoomSilhouette(this, this.worldRect());
     this.interactive = true;
-    this.hitArea = new PIXI.Rectangle(this.location.x, this.location.y, this.location.w, this.location.h);
+    this.hitArea = new PIXI.Rectangle(this.worldRect().x, this.worldRect().y, this.worldRect().w, this.worldRect().h);
 
     this.on('mouseover', (event: PIXI.interaction.InteractionEvent) => {
       this.pendingInteraction = 'mouseover';
@@ -47,6 +50,10 @@ class Builder extends PIXI.Graphics implements IEntity {
       this.pendingInteraction = 'click';
     });
 
+  }
+
+  worldRect(): Rect {
+    return this.location;
   }
   
   // check every tick whether we are in the box and whether we have just entered/exited
@@ -72,39 +79,46 @@ class Builder extends PIXI.Graphics implements IEntity {
   say(gameState: State, text: string) {
     const t = new FloatUpText(gameState, text);
     // why doesnt float up text handle its position properly 
-    t.x = this.location.x;
-    t.y = this.location.y;
+    t.x = this.worldRect().x;
+    t.y = this.worldRect().y;
     this.addChild(t);
   }
 
   _successfullyBuildRoom(gameState: State): void {
-      gameState.world.addRoom(this.location.x / Constants.MAP_TILE_SIZE, this.location.y / Constants.MAP_TILE_SIZE, gameState);
+      gameState.world.addRoom(this.worldRect().x / Constants.MAP_TILE_SIZE, this.worldRect().y / Constants.MAP_TILE_SIZE, gameState);
       // remove ourselves from updateables list and derender
       gameState.removeEntity(this);
       gameState.stage.removeChild(this);
       // create the next. constructor adds itself to stage for rendering
-      if (this.location.x + this.location.w * 2 < Constants.WORLD_WIDTH) {
+      if (this.worldRect().x + this.worldRect().w * 2 < Constants.WORLD_WIDTH) {
         let nextLocation: [number, number];
-        nextLocation = [this.location.x + this.location.w, this.location.y];
+        nextLocation = [this.worldRect().x + this.worldRect().w, this.worldRect().y];
 
-        let alreadyCreatedBuilder: boolean = gameState.getBuilders().map(anotherBuilder => ( 
-          anotherBuilder.location.x === nextLocation[0] && anotherBuilder.location.y === nextLocation[1]
-        )).reduce((pv, cv) => pv || cv, false);
-        if (!alreadyCreatedBuilder) {
+        let alreadyCreatedBuilder: boolean = (gameState.getBuilders().map(anotherBuilder => ( 
+          anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
+        )).reduce((pv, cv) => pv || cv, false) || gameState.getRooms().map(anotherBuilder => ( 
+          anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
+        )).reduce((pv, cv) => pv || cv, false) );
+        let existRoomUnderneath = gameState.getRooms().map(anotherBuilder => ( 
+          anotherBuilder.worldRect().x === nextLocation[0] && (anotherBuilder.worldRect().y - anotherBuilder.worldRect().h) === nextLocation[1]
+        )).reduce((pv, cv) => pv || cv, false)
+        if (!alreadyCreatedBuilder && (existRoomUnderneath || this.floorLevel === 1)) {
           console.log('new builder at ', nextLocation);
-          gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1]));
+          gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1], this.floorLevel));
         }
       }
-      if (this.location.y + this.location.h * 2 > 0) {
+      if (this.worldRect().y + this.worldRect().h * 2 > 0) {
         let nextLocation: [number, number];
-        nextLocation = [this.location.x, this.location.y - this.location.h];
+        nextLocation = [this.worldRect().x, this.worldRect().y - this.worldRect().h];
  // wip refactor
-        let alreadyCreatedBuilder: boolean = gameState.getBuilders().map(anotherBuilder => ( 
-          anotherBuilder.location.x === nextLocation[0] && anotherBuilder.location.y === nextLocation[1]
-        )).reduce((pv, cv) => pv || cv, false);
+        let alreadyCreatedBuilder: boolean = (gameState.getBuilders().map(anotherBuilder => ( 
+          anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
+        )).reduce((pv, cv) => pv || cv, false) || gameState.getRooms().map(anotherBuilder => ( 
+          anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
+        )).reduce((pv, cv) => pv || cv, false) );
         if (!alreadyCreatedBuilder) {
           console.log('new builder at ', nextLocation);
-          gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1]));
+          gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1], this.floorLevel + 1));
         }
       }
   }
