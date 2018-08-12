@@ -1,13 +1,13 @@
 class Constants {
   // all dims measured in pix
-  public static SCREEN_WIDTH = 600;
-  public static SCREEN_HEIGHT = 600;
+  public static SCREEN_WIDTH = 800;
+  public static SCREEN_HEIGHT = 800;
 
   public static WORLD_WIDTH = 5000;
   public static WORLD_HEIGHT = 5000;
 
-  public static MAP_WIDTH_IN_TILES = 50;
-  public static MAP_HEIGHT_IN_TILES = 50;
+  public static MAP_WIDTH_IN_TILES = 100;
+  public static MAP_HEIGHT_IN_TILES = 100;
 
   public static TOOLBAR_HEIGHT = 16;
   public static MAP_TILE_SIZE = 16;

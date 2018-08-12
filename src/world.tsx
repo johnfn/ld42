@@ -12,10 +12,13 @@ type MapBuilding =
   | { type: "room" }
 
 type MapCell = {
-  terrain       : MapTerrain;
-  building     ?: MapBuilding;
-  terrainSprite?: PIXI.Container;
+  terrain        : MapTerrain;
+  building      ?: MapBuilding;
+  terrainSprite ?: PIXI.Container;
+  buildingSprite?: PIXI.Container;
 }
+
+// TODO: Maybe separate into layers?
 
 class World extends PIXI.Graphics implements IEntity {
   /**
@@ -30,11 +33,17 @@ class World extends PIXI.Graphics implements IEntity {
     this.grid = this.buildMap();
 
     this.renderMap();
+
+    if (Constants.DEBUG_FLAGS.DEBUG_ADD_BUILDING) {
+      this.addRoom(20, 10);
+    }
   }
 
   buildMap(): MapCell[][] {
     const grid: MapCell[][] = [];
-    const numSkyTiles = 20; // TODO: unhardcode this
+    const numSkyTiles = 30; // TODO: unhardcode this
+    //const numSkyTiles = 20; // TODO: unhardcode this
+    const leftWaterTiles = 10;
 
     for (let x = 0; x < Constants.MAP_WIDTH_IN_TILES; x++) {
       grid[x] = [];
@@ -44,18 +53,14 @@ class World extends PIXI.Graphics implements IEntity {
 
         if (y < numSkyTiles) {
           terrain = { type: 'sky' };
-        } else if (y === numSkyTiles) {
-          if (x < 10) {
+        } else if (y >= numSkyTiles && y < numSkyTiles + 3) {
+          if (x < leftWaterTiles) {
             terrain = { type: 'water' };
           } else {
             terrain = { type: 'grass' };
           }
         } else {
-          if (x < 10) {
-            terrain = { type: 'water' };
-          } else {
-            terrain = { type: 'dirt' };
-          }
+          terrain = { type: 'water' };
         }
 
         grid[x][y] = {
@@ -64,11 +69,20 @@ class World extends PIXI.Graphics implements IEntity {
       }
     }
 
-    if (Constants.DEBUG_FLAGS.DEBUG_ADD_BUILDING) {
-      grid[20][10].building
-    }
-
     return grid;
+  }
+
+  public addRoom(x: number, y: number): void {
+    this.grid[x][y].building = { type: "room" };
+
+    const buildingSprite = new PIXI.Graphics();
+
+    buildingSprite.beginFill(0xff00ff);
+    buildingSprite.drawRect(x, y, 32, 32);
+
+    this.addChild(buildingSprite);
+
+    this.grid[x][y].buildingSprite = buildingSprite;
   }
 
   renderMap(): void {
@@ -91,7 +105,7 @@ class World extends PIXI.Graphics implements IEntity {
             //const graphic = new PIXI.Sprite(PIXI.loader.resources['ground-1'].texture);
             //graphic.scale = new PIXI.Point(3,4);
             graphic.beginFill(0x00ff00);
-        graphic.drawRect(0, 0, Constants.MAP_TILE_SIZE, Constants.MAP_TILE_SIZE);
+            graphic.drawRect(0, 0, Constants.MAP_TILE_SIZE, Constants.MAP_TILE_SIZE);
             return graphic;
           })()
         } else if (terrainType === "dirt") {

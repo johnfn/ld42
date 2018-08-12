@@ -16,7 +16,7 @@ class Builder extends PIXI.Graphics implements IEntity {
   }
   
   update(state: State): void {
-
+    console.log(state.mousePosition);
   }
 
   renderBuilderRoomSilhouette(): void {
@@ -29,30 +29,38 @@ class Builder extends PIXI.Graphics implements IEntity {
 
     const startX = 50;  // Arbitrary
     const startY = 100; // Arbitrary
+    const lineThickness = 6.5;
 
     graphic
-      // .beginFill(color)
-      .lineStyle(10, this.hexColor, 1, 0) // alignment 0 = inner
+      .lineStyle(lineThickness, this.hexColor, 1, 0) // alignment 0 = inner
       .moveTo(startX, startY)
-      .lineTo(width, 0)
-      .lineTo(0, height)
-      .lineTo(-1 * width, 0)
-      .lineTo(0, -1 * height)
-      .closePath()
-    // graphic.drawRect(50, 100, width, height);
+      .lineTo(width + startX, startY)
+      .lineTo(width + startX, startY + height)
+      .lineTo(        startX, startY + height)
+      .lineTo(        startX, startY)
+      .closePath();
     
     // TODO: Opacity handling
     graphic.interactive = true;
 
     graphic.alpha = 0.3;
-    console.log(Constants.EVENTS)
-    graphic.on(Constants.EVENTS.mouseover, e => graphic.alpha = 1.0);
-    graphic.on(Constants.EVENTS.mouseout, e => graphic.alpha =  0.3);
+    // console.log(Constants.EVENTS)
+    // graphic.on(Constants.EVENTS.mouseover, e => graphic.alpha = 1.0);
+    // graphic.on(Constants.EVENTS.mouseout, e => graphic.alpha =  0.3);
+    graphic.on('mouseover', (event) => console.log('mo', event));
 
-    //silhouette = graphic;
+    graphic.on('mouseover', (event) => {
+      console.log(event);
+    })
+    graphic.on('mouseout', (event) => {
+      console.log(event);
+    })
+
+    this.silhouette = graphic;
 
     // silhouette = null;
     this.addChild(graphic);
+    console.log(this.children);
   }
 
 
