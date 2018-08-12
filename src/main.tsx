@@ -57,6 +57,8 @@ class Game {
       <Toolbar state={ this.state } />,
       document.getElementById("toolbar")! as HTMLElement,
     );
+
+    this.state.entities.push(Toolbar.Instance);
   }
 
   gameLoop(): void {
