@@ -75,5 +75,11 @@ class Room extends PIXI.Container {
         room: this,
       };
     }
+
+    if (state.selection.type === "room" && state.selection.room === this) {
+      this.alpha = 0.8;
+    } else {
+      this.alpha = 1.0;
+    }
   }
 }

@@ -168,6 +168,14 @@ class Cat extends PIXI.Container implements IEntity {
         cat: this,
       }
     }
+
+    // update graphics
+
+    if (gameState.selection.type === "cat" && gameState.selection.cat === this) {
+      this.alpha = 0.8;
+    } else {
+      this.alpha = 1.0;
+    }
   }
 
   say(gameState: State, text: string) {
