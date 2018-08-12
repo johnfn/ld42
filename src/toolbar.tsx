@@ -1,4 +1,6 @@
-type ToolbarProps = { };
+type ToolbarProps = { 
+  state: State;
+};
 type ToolbarState = { };
 
 class Toolbar extends React.Component<ToolbarProps, State> {
@@ -8,6 +10,12 @@ class Toolbar extends React.Component<ToolbarProps, State> {
     super(props);
 
     Toolbar.Toolbar = this;
+
+    console.log(props.state);
+
+    this.setState({ 
+      ...props.state,
+    });
   }
 
   render() {
