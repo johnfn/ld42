@@ -86,7 +86,7 @@ class Builder extends PIXI.Graphics implements IEntity {
     // Add inner plus symbol
     const plusGfx = new PIXI.Graphics();
     const middleX = (this.topLeftX + this.bottomRightX) / 2;
-    const middleY = (this.topLeftY + this.bottomRIghtY) / 2;
+    const middleY = (this.topLeftY + this.bottomRightY) / 2;
     
     plusGfx
       .lineStyle(lineThickness, this.hexColor, 1, 0.5)

@@ -46,11 +46,13 @@ class Cat extends PIXI.Container implements IEntity {
   }
 
   updateCatState(gameState: State): CatGoal {
-    const tileBelow = gameState.world.getCellAt(this.x, this.y + Constants.MAP_TILE_SIZE);
+    const tileBelow = gameState.world.getCellAt(this.x, this.y + 32);
 
     if (tileBelow.terrain === 'sky') {
       return { activity: 'falling' };
     }
+
+    // we update our state based on our current state.
 
     if (this.state.activity === 'falling') {
       // we already checked that we're not in the sky, so we're definitely on land.
@@ -59,7 +61,14 @@ class Cat extends PIXI.Container implements IEntity {
     }
 
     if (this.state.activity === 'waiting') {
+      const buildings = gameState.world.getBuildings();
+      const bestBuilding = Util.SortByKey(buildings, b => {
+        if (b.occupants >= b.capacity) {
+          return Number.POSITIVE_INFINITY;
+        }
 
+        return Util.ManhattanDistance(b, this);
+      })[0];
     }
 
     return { activity: 'waiting' };

@@ -12,10 +12,10 @@ class Util {
     });
   }
 
-  public static ManhattanDistance(c1: { xIndex: number, yIndex: number }, c2: { xIndex: number, yIndex: number }): number {
+  public static ManhattanDistance(c1: { x: number, y: number }, c2: { x: number, y: number }): number {
     return (
-      Math.abs(c1.xIndex - c2.xIndex) + 
-      Math.abs(c1.yIndex - c2.yIndex)
+      Math.abs(c1.x - c2.x) + 
+      Math.abs(c1.y - c2.y)
     );
   }
 
