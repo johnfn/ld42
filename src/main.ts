@@ -1,5 +1,16 @@
-class Condo {
+class Room extends PIXI.Graphics {
   constructor(state: State) {
+    super();
+
+    const graphics = new PIXI.Graphics();
+
+    graphics.beginFill(0x8B572A, 1);
+    graphics.drawRect(50, 250, 120, 120);
+
+    state.stage.addChild(graphics);
+  }
+
+  update(state: State): void {
 
   }
 }
@@ -39,8 +50,13 @@ class Game {
       stage: app.stage,
     };
 
-    this.state.entities.push();
+
+
+    this.state.entities.push(new Room(this.state));
+
+
     
+    /*
     const graphics = new PIXI.Graphics();
 
     graphics.beginFill(0xf8f839, 1);
@@ -50,7 +66,7 @@ class Game {
 
     const tiled = new TiledTilemap(PIXI.loader.resources["testmap"].data, app.renderer);
     app.stage.addChild(tiled.loadRegion(new Rect({ x: 0, y: 0, w: 16 * 32, h: 16 * 32 })));
-    
+    */
   }
 
   gameLoop(): void {
