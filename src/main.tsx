@@ -48,7 +48,6 @@ class Game {
       buttons: 10,
     };
 
-
     this.state.entities.push(new Room(this.state));
 
     this.gameLoop();
