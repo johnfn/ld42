@@ -3,17 +3,10 @@
 class Builder extends PIXI.Graphics implements IEntity {
 
   location: Rect;
-  
-  // wip - i'm removing these fields
-  topLeftX: number;
-  topLeftY: number;
-  bottomRightX: number;
-  bottomRightY: number;
-  isHovering: boolean;
 
-  silhouette!: PIXI.Graphics;
+  silhouette: PIXI.Graphics;
 
-  readonly hexColor = 0xffe7d7;
+  static readonly hexColor = 0xffe7d7;
 
   /**
    * Construction
@@ -31,18 +24,7 @@ class Builder extends PIXI.Graphics implements IEntity {
       h: height
     })
 
-    this.topLeftX = topLeftX;
-    this.topLeftY = topLeftY;
-    
-    this.bottomRightX = this.topLeftX + width;
-    this.bottomRightY = this.topLeftY + height;
-
-    this.isHovering = false;
-    // Debug
-    // let { topLeftX, topLeftY, width, height } = this;
-    // console.log({ topLeftX, topLeftY, width, height })
-
-    this.silhouette = this.renderBuilderRoomSilhouette();
+    this.silhouette = Builder.renderBuilderRoomSilhouette(this, this.location);
     this.interactive = true;
     this.hitArea = new PIXI.Rectangle(this.location.x, this.location.y, this.location.w, this.location.h);
 
@@ -61,18 +43,6 @@ class Builder extends PIXI.Graphics implements IEntity {
   
   // check every tick whether we are in the box and whether we have just entered/exited
   update(state: State): void {
-    const mousePos = state.mousePosition;
-    if (this.location.contains(mousePos)) {
-      if (!this.isHovering) {
-        this.isHovering = true;
-        this.onMouseover(state);
-      }
-    } else {
-      if (this.isHovering) {
-        this.isHovering = false;
-        this.onMouseoff(state);
-      }
-    }
   }
 
   onMouseover(state: State): void {
@@ -85,10 +55,11 @@ class Builder extends PIXI.Graphics implements IEntity {
     graphic.alpha = 0.3;
   }
 
-  renderBuilderRoomSilhouette(): PIXI.Graphics {
+  // TODO(bowei): make this its own private class
+  public static renderBuilderRoomSilhouette(context: PIXI.Container, location: Rect): PIXI.Graphics {
     const graphic = new PIXI.Graphics();
-    const { x: topLeftX, y: topLeftY } = this.location.topLeft;
-    const { x: bottomRightX, y: bottomRightY } = this.location.bottomRight;
+    const { x: topLeftX, y: topLeftY } = location.topLeft;
+    const { x: bottomRightX, y: bottomRightY } = location.bottomRight;
 
     const lineThickness = 6.5;
     graphic
@@ -115,24 +86,8 @@ class Builder extends PIXI.Graphics implements IEntity {
       .closePath();
     graphic.addChild(plusGfx);
     graphic.alpha = 0.3;
-    
-     /*
-    graphic.interactive = true;
-    graphic.hitArea = new PIXI.Rectangle(this.location.x, this.location.y, this.location.w, this.location.h);
 
-    graphic.on('mouseover', (event: PIXI.interaction.InteractionEvent) => {
-      console.log(event);
-    })
-    graph: PIXI.interaction.InteractionEventraction.InteractionEvent) => {
-      console.log(event);
-    }): PIXI.interaction.InteractionEvent
-      event; *
-    graphic.on('click', (event/
-      console.log('rec click')
-    }); */
-
-    this.addChild(graphic);
+    context.addChild(graphic);
     return graphic;
   }
-
 }

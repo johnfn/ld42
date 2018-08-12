@@ -28,26 +28,22 @@ class Room extends PIXI.Container {
     // ie 9 * 16 x 6 * 16
     //Assert(roomSprite.width == 144 && roomSprite.height == 96);
 
-    // move myself to my center
-    //roomSprite.x = Constants.MAP_TILE_SIZE * 0.5;
-    //roomSprite.y = Constants.MAP_TILE_SIZE * 0.5 * 2;
-    //console.log('room width is ', this.width);
-    //this.x = my_center.x - this.width / 2.0;
-    //this.y = my_center.y - this.height / 2.0;
-
-    //this.beginFill(0x8B572A, 1);
-    //this.drawRect(50, 250, 120, 120);
-
     context.addChild(this);
 
     this.wasClicked = false;
+
     this.on("click", (e: PIXI.interaction.InteractionEvent) => {
       this.wasClicked = true;
     });
   }
 
   update(state: State): void {
-    
-    // state.buttons += 1;
+    if (this.wasClicked) {
+      this.wasClicked = false;
+      state.selection = {
+        type: "room",
+        info: this.info,
+      }
+    }
   }
 }
