@@ -51,6 +51,8 @@ class Game {
 
     this.state.entities.push(new Room(this.app.stage, new Point({ x: 80, y: 80 })));
 
+    this.state.entities.push(new Builder(this.app.stage));
+
     this.state.entities.push(new GrantsDebug(this.app.stage));
 
     this.gameLoop();
