@@ -66,6 +66,30 @@ class Cat extends PIXI.Container implements IEntity {
     });
   }
 
+  findRoom(gameState: State): CatGoal {
+    // find a room
+
+    const rooms = gameState.getRooms().filter(r => r.occupants < r.capacity);
+
+    const bestRoom = Util.SortByKey(rooms, b => {
+      return Util.ManhattanDistance({ x: b.worldRect().x, y: b.worldRect().y }, this);
+    })[0];
+
+    if (!bestRoom) {
+      this.say(gameState, "I can't find any rooms right meow :(");
+
+      return { activity: 'waiting' };
+    } else {
+      return {
+        activity: 'finding-room',
+        destination: {
+          worldRect: bestRoom.worldRect(),
+          room: bestRoom,
+        },
+      };
+    }
+  }
+
   updateCatState(gameState: State): CatGoal {
     const tileBelow = gameState.world.getCellAt(this.x, this.y + 32);
 
@@ -84,12 +108,21 @@ class Cat extends PIXI.Container implements IEntity {
     if (this.state.activity === 'finding-room') {
       // TODO - see if we've reached our destination.
 
-      const destRect = this.state.destination.room.worldRect();
+      const destRoom = this.state.destination.room;
+      const destRect = destRoom.worldRect();
 
       if (destRect.contains(this.getRect())) {
-        this.x = Util.RandRange(destRect.x, destRect.x + destRect.w);
+        // make sure that this hasn't been filled since we last checked
 
-        return { activity: 'waiting' };
+        if (destRoom.hasCapacity()) {
+          this.x = Util.RandRange(destRect.x, destRect.x + destRect.w - 32);
+
+          this.say(gameState, "My catroom got taken meow :(");
+
+          return { activity: 'waiting' };
+        } else {
+          return this.findRoom(gameState);
+        }
       } else {
         return this.state;
       }
@@ -99,27 +132,7 @@ class Cat extends PIXI.Container implements IEntity {
       if (this.info.room) {
         return { activity: 'waiting' };
       } else {
-        // find a room
-
-        const rooms = gameState.getRooms().filter(r => r.occupants < r.capacity);
-
-        const bestRoom = Util.SortByKey(rooms, b => {
-          return Util.ManhattanDistance({ x: b.worldRect().x, y: b.worldRect().y }, this);
-        })[0];
-
-        if (!bestRoom) {
-          this.say(gameState, "I can't find any rooms right meow :(");
-
-          return { activity: 'waiting' };
-        } else {
-          return {
-            activity: 'finding-room',
-            destination: {
-              worldRect: bestRoom.worldRect(),
-              room: bestRoom,
-            },
-          };
-        }
+        return this.findRoom(gameState);
       }
     }
 
@@ -178,8 +191,8 @@ class Cat extends PIXI.Container implements IEntity {
     }
   }
 
-  say(gameState: State, text: string) {
-    if (Math.random() > .99) {
+  say(gameState: State, text: string, alwaysSay = false) {
+    if (Math.random() > .99 || alwaysSay) {
       const t = new FloatUpText(gameState, text);
 
       this.addChild(t);

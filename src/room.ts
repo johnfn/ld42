@@ -67,6 +67,10 @@ class Room extends PIXI.Container {
     return this.y / Constants.MAP_TILE_SIZE;
   }
 
+  hasCapacity(): boolean {
+    return this.capacity > this.occupants;
+  }
+
   update(state: State): void {
     if (this.wasClicked) {
       this.wasClicked = false;
