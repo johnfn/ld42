@@ -27,10 +27,5 @@ class MapScrollListener extends PIXI.Container {
 
     state.camera.setX(state.camera.x + dx);
     state.camera.setY(state.camera.y + dy);
-
-
-    //console.log(mouse);
-
-    // state.camera.setX(state.camera.x + 1);
   }
 }

@@ -28,8 +28,9 @@ class Builder extends PIXI.Graphics implements IEntity {
     graphic.beginFill(0x888888); // grey
     graphic.drawRect(50, 100, width, height);
     
-
     // TODO: Opacity handling
+    graphic.interactive = true;
+
     graphic.alpha = 0.3;
     console.log(Constants.EVENTS)
     graphic.on(Constants.EVENTS.mouseover, e => graphic.alpha = 1.0);

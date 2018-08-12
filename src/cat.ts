@@ -1,7 +1,3 @@
-/**
- * a single floor of the hotel. as usual needs paddding
- * make sure to give us some padding - like tile_width / 2
- */
 class HotelFloor extends PIXI.Container {
   constructor(stage: PIXI.Container, myCenter: Point) {
     super();
