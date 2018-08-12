@@ -45,9 +45,17 @@ class World extends PIXI.Graphics implements IEntity {
         if (y < numSkyTiles) {
           terrain = { type: 'sky' };
         } else if (y === numSkyTiles) {
-          terrain = { type: 'grass' };
+          if (x < 10) {
+            terrain = { type: 'water' };
+          } else {
+            terrain = { type: 'grass' };
+          }
         } else {
-          terrain = { type: 'dirt' }
+          if (x < 10) {
+            terrain = { type: 'water' };
+          } else {
+            terrain = { type: 'dirt' };
+          }
         }
 
         grid[x][y] = {
@@ -67,7 +75,7 @@ class World extends PIXI.Graphics implements IEntity {
 
         // TODO(johnfn): unhardcode colors
         if (terrainType === "sky") {
-          graphic.beginFill(0x0000ff);
+          graphic.beginFill(0x8888ff);
         } else if (terrainType === "grass") {
           graphic.beginFill(0x00ff00);
         } else if (terrainType === "dirt") {

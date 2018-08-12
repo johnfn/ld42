@@ -13,6 +13,17 @@ class Constants {
   public static MAP_TILE_SIZE = 16;
 
   public static MOUSE_SCROLL_DEADZONE = 40;
+  public static MOUSE_SCROLL_SPEED = 3;
+
+  public static EVENTS = {
+    mouseover: 'mouseover',
+    mouseout: 'mouseout'
+  };
+
+  public static COLORS = {
+    SKY: '7ED2E4',
+    WATER: '85B7E3'
+  }
 
   public static Strings = {
     "CAT_NAMES": [

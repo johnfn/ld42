@@ -11,9 +11,15 @@ class Room extends PIXI.Container {
     // why are we wrapping roomSprite? idk but thats how it is
     const spriteTexture: PIXI.Texture = PIXI.loader.resources.room.texture;
     const roomSprite: PIXI.Sprite = new PIXI.Sprite(spriteTexture);
+    roomSprite;
+    const debugSprite: PIXI.Graphics = new PIXI.Graphics();
+    debugSprite.beginFill(0x8B572A, 1);
+    debugSprite.drawRect(0, 0, 144, 96);
+
     //roomSprite.x  -= this.width / 2.0;
     //roomSprite.y  -= this.height / 2.0;
-    this.addChild(roomSprite); // at relative x, y = 0
+    //this.addChild(roomSprite); // at relative x, y = 0
+    this.addChild(debugSprite); // at relative x, y = 0
     // need roomSprite.width and roomSprite.height to be both divisible by tile_width
     // my size is 144 x 96, floor needs to handle
     // ie 9 * 16 x 6 * 16
