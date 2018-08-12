@@ -95,7 +95,7 @@ class Cat extends PIXI.Container implements IEntity {
       } else {
         // find a room
 
-        const rooms = gameState.getRooms();
+        const rooms = gameState.getRooms().filter(r => r.occupants < r.capacity);
         const bestRoom = Util.SortByKey(rooms, b => {
           if (b.occupants >= b.capacity) {
             return Number.POSITIVE_INFINITY;
@@ -148,7 +148,11 @@ class Cat extends PIXI.Container implements IEntity {
       if (this.state.destination.worldRect.contains(this.getRect())) {
         this.info.room = dest.room; 
         dest.room.occupants++;
+      }
+    }
 
+    if (this.state.activity === 'waiting'){
+      if (this.info.room) {
         this.say(gameState, "purr");
       }
     }

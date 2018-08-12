@@ -43,7 +43,7 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
         <div>
           <h2>Cat Informyation</h2>
 
-          <div>Name: { cat.name } </div>
+          <div>Name: { cat.info.name } </div>
           <div>Favorite activity: { cat.info.favoriteActivity } </div>
           <div>Housing Status: { cat.info.room ? "Housed!" : "Homeless" } </div>
 

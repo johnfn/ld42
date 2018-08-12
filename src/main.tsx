@@ -98,13 +98,14 @@ class Game {
 
     this.state.entities.push(this.state.camera);
     this.state.entities.push(new MapScrollListener(this.app.stage));
+    this.state.entities.push(new CatSpawner(this.app.stage));
+    this.state.entities.push(new Mountain(this.app.stage));
 
     //this.state.entities.push(new HotelFloor(this.app.stage, new Point({ x: Constants.SCREEN_WIDTH / 2.0, y: 80 })));
 
     this.state.entities.push(new Builder(this.app.stage, 320, 384));
 
     this.state.entities.push(new GrantsDebug(this.app.stage));
-    this.state.entities.push(new Cat(this.app.stage));
 
     this.gameLoop();
 
