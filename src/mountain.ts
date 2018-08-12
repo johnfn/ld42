@@ -7,8 +7,8 @@ class Mountain extends PIXI.Container implements IEntity {
     stage.addChild(this);
 
     // this is the starting position. TODO stop hardcoding this
-    this.x = 16 * 15;
-    this.y = 16 * 25;
+    this.x = 16 * 30;
+    this.y = 16 * 8;
   }
 
   update(gameState: State): void {

@@ -22,6 +22,8 @@ class Constants {
 
   public static MAP_TILE_SIZE = 16;
 
+  public static MAX_HOMELESS_CATS = 5;
+
   public static WORLD_WIDTH = Constants.MAP_WIDTH_IN_TILES * Constants.MAP_TILE_SIZE;
   public static WORLD_HEIGHT = Constants.MAP_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE;
 

@@ -1,3 +1,7 @@
+function isCat(x: any): x is Cat {
+  return x.type === "CAT_TAG";
+}
+
 type CatGoal = 
   | { activity: 'waiting' }
   | { activity: 'falling' }
@@ -21,6 +25,8 @@ type CatInfo = {
 class Cat extends PIXI.Container implements IEntity {
   state: CatGoal;
   info : CatInfo;
+
+  type = "CAT_TAG";
 
   // we do this so that we only update during the tick
   wasClicked: boolean;
@@ -96,11 +102,8 @@ class Cat extends PIXI.Container implements IEntity {
         // find a room
 
         const rooms = gameState.getRooms().filter(r => r.occupants < r.capacity);
-        const bestRoom = Util.SortByKey(rooms, b => {
-          if (b.occupants >= b.capacity) {
-            return Number.POSITIVE_INFINITY;
-          }
 
+        const bestRoom = Util.SortByKey(rooms, b => {
           return Util.ManhattanDistance({ x: b.worldRect().x, y: b.worldRect().y }, this);
         })[0];
 
