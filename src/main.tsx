@@ -7,7 +7,7 @@ class State {
 
   // like canvas
   stage         !: PIXI.Container;
-  world           !: World;
+  world         !: World;
   camera        !: Camera;
   mousePosition !: Point;
 
@@ -15,6 +15,25 @@ class State {
    * This is the resource count of the number of buttons we have. You use these to build rooms, etc.
    */
   buttons       !: number;
+
+  removeList     : IEntity[] = [];
+
+  constructor(props: {
+    entities      : IEntity[],
+    stage         : PIXI.Container,
+    world         : World,
+    camera        : Camera,
+    mousePosition : Point,
+    buttons       : number,
+  }) {
+    for (const k in props) {
+      (this as any)[k] = (props as any)[k];
+    }
+  }
+
+  removeEntity(entity: IEntity) {
+    this.removeList.push(entity);
+  }
 }
 
 class Game {
@@ -46,21 +65,21 @@ class Game {
   start() {
     this.stupidPixiSetupSetuff();
 
-    this.state = {
+    this.state = new State({
       entities     : [],
       stage        : this.app.stage,
       buttons      : 2,
       world        : new World(this.app.stage),
       camera       : new Camera(),
       mousePosition: new Point({ x: 0, y: 0 }),
-    };
+    });
 
     this.app.stage.interactive = true;
 
     this.state.entities.push(this.state.camera);
     this.state.entities.push(new MapScrollListener(this.app.stage));
 
-    this.state.entities.push(new HotelFloor(this.app.stage, new Point({ x: Constants.SCREEN_WIDTH / 2.0, y: 80 })));
+    //this.state.entities.push(new HotelFloor(this.app.stage, new Point({ x: Constants.SCREEN_WIDTH / 2.0, y: 80 })));
 
     this.state.entities.push(new Builder(this.app.stage, 50, 100));
 
@@ -77,27 +96,25 @@ class Game {
     this.state.entities.push(Toolbar.Instance);
   }
 
-  removeEntity(x: IEntity) {
-
-  }
-
   gameLoop(): void {
     requestAnimationFrame(() => this.gameLoop());
 
     for (const entity of this.state.entities) {
       entity.update(this.state);
     }
+
+    for (const e of this.state.removeList) {
+      this.state.entities.splice(this.state.entities.indexOf(e), 1);
+    }
+
+    this.state.removeList = [];
   }
 }
   
 
-// TODO(someone): Move all assets into constants and load via loop
+// TODO(someone): Move all assets into constants
 
 PIXI.loader.add("testmap", `./assets/testmap.json`);
-//PIXI.loader.add("test"   , `./assets/test.png`);
-//PIXI.loader.add("room"   , `./assets/room-1.png`); // 144 x 96
-//PIXI.loader.add("room"   , `./assets/umbrella-1.png`); // 144 x 96
-//PIXI.loader.add("room"   , `./assets/water-1.png`); // 144 x 96
 
 const ASSET_LIST: string = `
 birds-1.png

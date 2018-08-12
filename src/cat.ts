@@ -26,12 +26,8 @@ class Cat extends PIXI.Container implements IEntity {
   constructor(stage: PIXI.Container) {
     super();
 
-    const graphic = new PIXI.Graphics();
+    this.addChild(new PIXI.Sprite(PIXI.loader.resources['pink-cat-1'].texture));
 
-    graphic.beginFill(0xffffff);
-    graphic.drawRect(0, 0, 16, 16);
-
-    this.addChild(graphic);
     stage.addChild(this);
 
     this.state = { activity: 'waiting' };
@@ -78,6 +74,12 @@ class Cat extends PIXI.Container implements IEntity {
 
     if (this.state.activity === 'falling') {
       this.y += 1;
+    }
+
+    if (Math.random() > .99) {
+      const t = new FloatUpText(gameState, "meow!");
+
+      this.addChild(t);
     }
   }
 }

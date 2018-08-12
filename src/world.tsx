@@ -128,11 +128,9 @@ class World extends PIXI.Graphics implements IEntity {
           })()
         } else {
           // ensure we didnt miss a case
-
           const x: never = terrainType;
           throw new Error(`unexpected terrain type ${ x }`);
         }
-
 
         graphic.x = x * Constants.MAP_TILE_SIZE;
         graphic.y = y * Constants.MAP_TILE_SIZE;
@@ -146,52 +144,59 @@ class World extends PIXI.Graphics implements IEntity {
     const numSkyTiles = Constants.SKY_HEIGHT_IN_TILES; 
     const leftWaterTiles = 10;
 
-    const renderBlockyThing = (terrainType: string, renderfn: (() => PIXI.Container)) => {
-      const toBeFilled: boolean[][] = new Array(Constants.MAP_WIDTH_IN_TILES);
 
-      for (let x = 0; x < Constants.MAP_WIDTH_IN_TILES; x++) {
-        toBeFilled[x] = new Array(Constants.MAP_HEIGHT_IN_TILES);
-        for (let y = 0; y < Constants.MAP_HEIGHT_IN_TILES; y++) {
-          if (this.grid[x][y].terrain === terrainType) {
-            toBeFilled[x][y] = true;
-          } else {
-            toBeFilled[x][y] = false;
-          }
+    this.renderBlockyThing('grass', (): { graphic: PIXI.Container, widthTiles: number, heightTiles: number } => {
+      return {  
+        // 324 x 48
+        graphic : new PIXI.Sprite(PIXI.loader.resources['ground-1'].texture),
+        widthTiles: 19,
+        heightTiles: 3
+      };
+    });
+  }
+
+  renderBlockyThing(
+    terrainType: string, 
+    renderfn: (() => { graphic: PIXI.Container, widthTiles: number, heightTiles: number } 
+  )): void {
+    const toBeFilled: boolean[][] = new Array(Constants.MAP_WIDTH_IN_TILES);
+
+    for (let x = 0; x < Constants.MAP_WIDTH_IN_TILES; x++) {
+      toBeFilled[x] = new Array(Constants.MAP_HEIGHT_IN_TILES);
+      for (let y = 0; y < Constants.MAP_HEIGHT_IN_TILES; y++) {
+        if (this.grid[x][y].terrain === terrainType) {
+          toBeFilled[x][y] = true;
+        } else {
+          toBeFilled[x][y] = false;
         }
       }
+    }
 
-      for (let x = 0; x < Constants.MAP_WIDTH_IN_TILES; x++) {
-        for (let y = 0; y < Constants.MAP_HEIGHT_IN_TILES; y++) {
-          if (toBeFilled[x][y]) {
-            // test if all the next stuff is relevant
-            // just assume it is for now
+    for (let x = 0; x < Constants.MAP_WIDTH_IN_TILES; x++) {
+      for (let y = 0; y < Constants.MAP_HEIGHT_IN_TILES; y++) {
+        if (toBeFilled[x][y]) {
+          // test if all the next stuff is relevant
+          // just assume it is for now
 
-            const graphic = renderfn(); // needs to be a new one each time
-            graphic.x = x * Constants.MAP_TILE_SIZE;
-            graphic.y = y * Constants.MAP_TILE_SIZE;
-            this.addChild(graphic);
+          const { graphic, widthTiles, heightTiles } = renderfn(); // needs to be a new one each time
+          graphic.x = x * Constants.MAP_TILE_SIZE;
+          graphic.y = y * Constants.MAP_TILE_SIZE;
+          this.addChild(graphic);
 
-            // iterate 
-            for (let xi = 0; xi < 19; xi++ ) {
-              for (let yi = 0; yi < 3; yi++) {
-                if (x + xi >= Constants.MAP_WIDTH_IN_TILES) { continue; }
-                if (y + yi >= Constants.MAP_HEIGHT_IN_TILES) { continue; }
+          // iterate 
+          for (let xi = 0; xi < widthTiles; xi++ ) {
+            for (let yi = 0 ; yi < heightTiles; yi++) {
+              if (x + xi >= Constants.MAP_WIDTH_IN_TILES) { continue; }
+              if (y + yi >= Constants.MAP_HEIGHT_IN_TILES) { continue; }
 
-                toBeFilled[x + xi][y + yi] = false;
-              }
+              toBeFilled[x + xi][y + yi] = false; 
+              // attach back each cell to its containing sprite
+              this.grid[x + xi][y + yi].terrainSprite = graphic;
             }
           }
         }
       }
     }
-
-    renderBlockyThing('grass', (): PIXI.Container => {
-      return new PIXI.Sprite(PIXI.loader.resources['ground-1'].texture); // 324 x 48
-      /*
-      const graphic = new PIXI.Sprite(PIXI.loader.resources['ground-1'].texture); // 324 x 48
-      graphic.x = x * Constants.MAP_TILE_SIZE;
-      graphic.y = y * Constants.MAP_TILE_SIZE;
-      return graphic; */
-    });
   }
+
 }

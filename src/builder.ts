@@ -46,20 +46,29 @@ class Builder extends PIXI.Graphics implements IEntity {
       // console.log('hi')
       if (!this.isHovering) {
         this.isHovering = true;
-        this.children[0].alpha = 1.0;
+        this.onMouseover(state);
       }
     } else {
       if (this.isHovering) {
         this.isHovering = false;
-        this.children[0].alpha = 0.3;
+        this.onMouseoff(state);
+
       }
     }
   }
 
-  renderBuilderRoomSilhouette(): void {
-    const graphic = new PIXI.Graphics();
+  onMouseover(state: State): void {
+    const [graphic] = this.children;
+    graphic.alpha = 1.0;
+  }
 
-    
+  onMouseoff(state: State): void {
+    const [graphic] = this.children;
+    graphic.alpha = 0.3;
+  }
+
+  renderBuilderRoomSilhouette(): void {
+    const graphic = new PIXI.Graphics();    
 
     // const startX = this.topLeftX;  // Arbitrary
     // const startY = this.topLeftY; // Arbitrary
@@ -73,24 +82,26 @@ class Builder extends PIXI.Graphics implements IEntity {
       .lineTo(    this.topLeftX, this.bottomRightY)
       .lineTo(    this.topLeftX, this.topLeftY)
       .closePath();
+
+    // Add inner plus symbol
+    const plusGfx = new PIXI.Graphics();
+    
     
     // TODO: Opacity handling
     graphic.interactive = true;
 
     graphic.alpha = 0.3;
-    // console.log(Constants.EVENTS)
-    // graphic.on(Constants.EVENTS.mouseover, e => graphic.alpha = 1.0);
-    // graphic.on(Constants.EVENTS.mouseout, e => graphic.alpha =  0.3);
 
-    graphic.on('mouseover', (event) => {
-      console.log(event);
-    })
-    graphic.on('mouseout', (event) => {
-      console.log(event);
-    })
-    graphic.on('click', (event) => {
-      console.log('rec click')
-    });
+    // Don't work
+    // graphic.on('mouseover', (event) => {
+    //   console.log(event);
+    // })
+    // graphic.on('mouseout', (event) => {
+    //   console.log(event);
+    // })
+    // graphic.on('click', (event) => {
+    //   console.log('rec click')
+    // });
 
     this.silhouette = graphic;
 

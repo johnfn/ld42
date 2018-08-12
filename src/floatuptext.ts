@@ -21,7 +21,7 @@ class FloatUpText extends PIXI.Graphics implements IEntity {
 
     if (this.lifespan < 0) {
       this.parent.removeChild(this);
-      state.remove(this);
+      state.removeEntity(this);
     }
 
     this.y--;
