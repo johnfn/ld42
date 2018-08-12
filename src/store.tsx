@@ -10,7 +10,7 @@ const BuildingTypes = {
   },
 
   catLabratory: {
-    name: "Cat Labratory",
+    name: "Cat Laboratailory",
 
     cost: {
       buttons: 200,
@@ -18,7 +18,7 @@ const BuildingTypes = {
   },
 
   yarnEmporium: {
-    name: "Yarn Emporium",
+    name: "Yarn Empurrrrrrium",
 
     cost: {
       buttons: 20,
@@ -102,10 +102,6 @@ class StoreItem extends React.Component<StoreItemProps, StoreItemState> {
 
 type StoreProps = { 
   state: State;
-
-  price: {
-    buttons: number;
-  };
 };
 
 type StoreState = { };
@@ -132,6 +128,7 @@ class Store extends React.Component<StoreProps, State> implements IEntity {
     for (const key of buildingNames) {
       results.push(
         <StoreItem
+          key={ key }
           buildingName={ key }
           selected={ this.state.selectedBuilding === key }
         />

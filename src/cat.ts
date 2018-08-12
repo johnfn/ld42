@@ -113,6 +113,7 @@ class Cat extends PIXI.Container implements IEntity {
           this.x = Util.RandRange(destRect.x, destRect.x + destRect.w - 32);
 
           this.say(gameState, "My catroom got taken meow :(");
+          this.info.room = undefined;
 
           return { activity: 'waiting' };
         } else {
@@ -126,7 +127,7 @@ class Cat extends PIXI.Container implements IEntity {
       }
     } else if (this.state.activity === 'waiting') {
       if (this.info.room) {
-        return { activity: 'waiting' };
+        return { activity: 'living' };
       } else {
         return this.findRoom(gameState);
       }
@@ -169,11 +170,8 @@ class Cat extends PIXI.Container implements IEntity {
         dest.room.occupants++;
       } */
     } else if (this.state.activity === 'waiting'){
-      if (this.info.room) {
-        this.say(gameState, "purr");
-      }
     } else if (this.state.activity === 'living'){
-      this.say(gameState, "purr");
+      //this.say(gameState, "purr");
     } else {
       const _state: never = this.state;
     }

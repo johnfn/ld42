@@ -165,6 +165,13 @@ class Game {
     );
 
     this.state.entities.push(Store.Instance);
+
+    ReactDOM.render(
+      <IslandStatus state={ this.state } />,
+      document.getElementById("island-status")! as HTMLElement,
+    );
+
+    this.state.entities.push(IslandStatus.Instance);
   }
 
   tick = 0;
