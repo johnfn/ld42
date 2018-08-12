@@ -1,3 +1,5 @@
+type CatDesire = "buy-room"
+
 type CatGoal = 
   | { activity: 'waiting' }
   | { activity: 'falling' }
@@ -9,7 +11,7 @@ type CatGoal =
         worldY: number;
       };
 
-      path: Point[];
+      desire: CatDesire;
     }
   ;
 
@@ -60,6 +62,12 @@ class Cat extends PIXI.Container implements IEntity {
       return { activity: 'waiting' };
     }
 
+    if (this.state.activity === 'walking') {
+      // TODO - see if we've reached our destination.
+
+      return this.state;
+    }
+
     if (this.state.activity === 'waiting') {
       const buildings = gameState.world.getBuildings();
       const bestBuilding = Util.SortByKey(buildings, b => {
@@ -67,11 +75,22 @@ class Cat extends PIXI.Container implements IEntity {
           return Number.POSITIVE_INFINITY;
         }
 
-        return Util.ManhattanDistance(b, this);
+        return Util.ManhattanDistance({ x: b.worldX, y: b.worldY }, this);
       })[0];
 
       if (!bestBuilding) {
+        this.say(gameState, "I can't find any rooms meow :(");
+
         return { activity: 'waiting' };
+      } else {
+        return {
+          activity: 'walking',
+          destination: {
+            worldX: bestBuilding.worldX,
+            worldY: bestBuilding.worldY,
+          },
+          desire: "buy-room",
+        };
       }
     }
 
@@ -89,6 +108,17 @@ class Cat extends PIXI.Container implements IEntity {
       this.y += 1;
     }
 
+    if (this.state.activity === 'walking') {
+      const dest = this.state.destination;
+
+      if (dest.worldX > this.x) {
+        this.x++;
+      }
+
+      if (dest.worldX < this.x) {
+        this.x--;
+      }
+    }
   }
 
   say(gameState: State, text: string) {

@@ -15,8 +15,11 @@ type MapCell = {
 type Building = {
   type     : "room" | "laboratory";
 
-  x        : number;
-  y        : number;
+  tileX    : number;
+  tileY    : number;
+
+  worldX   : number;
+  worldY   : number;
 
   occupants: number;
   capacity : number;
@@ -83,21 +86,41 @@ class World extends PIXI.Graphics implements IEntity {
   }
 
   public addRoom(x: number, y: number): void {
+    const roomSpriteCreator = (): { graphic: PIXI.Container, widthTiles: number, heightTiles: number } => {
+      const graphic: PIXI.Container = new Room(this);
+      graphic;
+      return {  
+        // 144 x 96
+        graphic,
+        widthTiles: 9,
+        heightTiles: 6
+      };
+    }
+    const { graphic: buildingSprite, widthTiles, heightTiles } = roomSpriteCreator();
+    // TODO(grant): dont forget all the x + xi , y + yi tiles need to be tagged here
     this.grid[x][y].building = { type: "room" };
 
-    const buildingSprite = new PIXI.Graphics();
+    //const buildingSprite = new PIXI.Graphics();
 
-    buildingSprite.beginFill(0x00ffff);
-    buildingSprite.drawRect(x * 16, y * 16, 32, 32);
+    //buildingSprite.beginFill(0x00ffff);
+    //buildingSprite.drawRect(x * 16, y * 16, 32, 32);
+    buildingSprite.x = x * Constants.MAP_TILE_SIZE;
+    buildingSprite.y = y * Constants.MAP_TILE_SIZE;
 
     this.addChild(buildingSprite);
 
+    // TODO(grant): dont forget all the x + xi , y + yi tiles need to be tagged here too
     this.grid[x][y].buildingSprite = buildingSprite;
 
     this.buildings.push({
       type: "room",
-      x,
-      y,
+
+      tileX: x,
+      tileY: y,
+
+      worldX: x * Constants.MAP_TILE_SIZE,
+      worldY: y * Constants.MAP_TILE_SIZE,
+
       occupants: 0,
       capacity : 5,
     });
@@ -170,7 +193,7 @@ class World extends PIXI.Graphics implements IEntity {
 
     // render grass
     this.renderBlockyThing({
-      type: 'terrainSprite',
+      thingType: 'terrainSprite',
       whenToRender: (mapCell: MapCell): boolean => ((mapCell.terrain) === 'grass'),
       spriteCreator: (): { graphic: PIXI.Container, widthTiles: number, heightTiles: number } => {
         return {  
@@ -182,8 +205,9 @@ class World extends PIXI.Graphics implements IEntity {
       }
     })
     // render rooms
+    /*
     this.renderBlockyThing({
-      type: 'buildingSprite',
+      thingType: 'buildingSprite',
       whenToRender: (mapCell: MapCell): boolean => ((mapCell.building && mapCell.building.type) === 'room'),
       spriteCreator: (): { graphic: PIXI.Container, widthTiles: number, heightTiles: number } => {
         return {  
@@ -193,11 +217,11 @@ class World extends PIXI.Graphics implements IEntity {
           heightTiles: 3
         };
       }
-    })
+    }) */
   }
 
   renderBlockyThing(args: {
-    type: string,
+    thingType: 'terrainSprite' | 'buildingSprite',
     whenToRender: ((m: MapCell) => boolean),
     spriteCreator: (() => { graphic: PIXI.Container, widthTiles: number, heightTiles: number } )
   }): void {
@@ -233,7 +257,7 @@ class World extends PIXI.Graphics implements IEntity {
 
               toBeFilled[x + xi][y + yi] = false; 
               // attach back each cell to its containing sprite
-              this.grid[x + xi][y + yi].terrainSprite = graphic;
+              this.grid[x + xi][y + yi][args.thingType] = graphic;
             }
           }
         }

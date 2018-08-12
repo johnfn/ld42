@@ -5,7 +5,7 @@
 class Room extends PIXI.Container {
   
   // adds myself to context centered at my_center relative to context
-  constructor(context: PIXI.Container, my_center: Point) {
+  constructor(context: PIXI.Container, my_center?: Point) {
     super();
     
     // why are we wrapping roomSprite? idk but thats how it is

@@ -71,6 +71,8 @@ class Constants {
       "Shadow",
       "Sunny",
       "Sushi",
+      "Garligan",
+      "Bluregard",
       "Noodle",
       "Patchwork",
       "Furrball",
@@ -78,6 +80,7 @@ class Constants {
       "Andrea",
       "Luna",
       "Mr. Snuggles",
+      "Sir Donnigan",
       "Archbishop Mannykins III",
       "Professor Fluffles"
     ],
