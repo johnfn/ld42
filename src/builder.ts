@@ -1,10 +1,17 @@
 // This is the object for building new structures, like floors and rooms.
 
+function isBuilder(x: any): x is Builder {
+  return x.type === "BUILDER_TAG";
+}
+
 class Builder extends PIXI.Graphics implements IEntity {
 
   //absolute coordinates, units in pix
   location: Rect;
   pendingInteraction: 'mouseover' | 'mouseout' | 'click' | null;
+
+  // so we can find it in the list of entiteis
+  type = "BUILDER_TAG";
 
   static readonly hexColor = 0xffe7d7;
 
@@ -12,6 +19,7 @@ class Builder extends PIXI.Graphics implements IEntity {
    * Construction
    */
   constructor(stage: PIXI.Container, topLeftX: number, topLeftY: number) {
+
     super();
 
     stage.addChild(this);
@@ -75,13 +83,20 @@ class Builder extends PIXI.Graphics implements IEntity {
       gameState.removeEntity(this);
       gameState.stage.removeChild(this);
       // create the next. constructor adds itself to stage for rendering
-      let nextLocation: [number, number];
-      if (this.location.x + this.location.w * 2 >= Constants.WORLD_WIDTH) {
-        nextLocation =[this.location.x - 2 * this.location.w, this.location.y - this.location.h];
-      } else {
-        nextLocation = [this.location.x + this.location.w, this.location.y];
+      let nextLocationRight: [number, number] | undefined;
+      if (this.location.x + this.location.w * 2 < Constants.WORLD_WIDTH) {
+        nextLocationRight = [this.location.x + this.location.w, this.location.y];
+        if (true) {
+          gameState.entities.push(new Builder(gameState.stage, nextLocationRight[0], nextLocationRight[1]));
+        }
       }
-      gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1]));
+      let nextLocationUp: [number, number] | undefined;
+      if (this.location.y + this.location.h * 2 > 0) {
+        nextLocationUp = [this.location.x, this.location.y - this.location.h];
+        if (true) {
+          gameState.entities.push(new Builder(gameState.stage, nextLocationUp[0], nextLocationUp[1]));
+        }
+      }
   }
 
   // TODO(bowei): make this its own private class

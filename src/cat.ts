@@ -189,6 +189,18 @@ class Cat extends PIXI.Container implements IEntity {
     } else {
       this.alpha = 1.0;
     }
+
+    // give buttons
+
+    this.payRent(gameState);
+  }
+
+  payRent(gameState: State): void {
+    if (gameState.time.hour === 12 && gameState.time.minute === 0) {
+      gameState.buttons += 5;
+
+      this.say(gameState, "+5 buttons", true);
+    }
   }
 
   say(gameState: State, text: string, alwaysSay = false) {

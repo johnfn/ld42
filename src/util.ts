@@ -42,4 +42,8 @@ class Util {
 
     return 0;
   }
+
+  public static Pad(num: string, size: number){ 
+    return ('000000000' + num).substr(-size); 
+  }
 }

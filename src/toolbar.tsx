@@ -20,6 +20,10 @@ class Toolbar extends React.Component<ToolbarProps, State> implements IEntity {
     this.setState(state);
   }
 
+  getTime(): string {
+    return `${ this.state.time.hour }:${ Util.Pad(String(this.state.time.minute), 2) }`;
+  }
+
   render() {
     return (
       <div
@@ -28,7 +32,21 @@ class Toolbar extends React.Component<ToolbarProps, State> implements IEntity {
           font: 'Arial',
         }}
       >
-        buttons: { this.state.buttons }
+        <span
+          style={{
+            paddingLeft: "10px",
+          }}
+        >
+          Buttons: { this.state.buttons }
+        </span>
+
+        <span
+          style={{
+            paddingLeft: "10px",
+          }}
+        >
+          Time: { this.getTime() }
+        </span>
       </div>
     );
   }

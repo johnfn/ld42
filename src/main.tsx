@@ -7,6 +7,11 @@ type GameSelection =
   | { type: "room", room: Room }
   | { type: "none" }
 
+type Time = {
+  hour  : number;
+  minute: number;
+}
+
 class State {
   selection     !: GameSelection;
   entities      !: IEntity[];
@@ -16,6 +21,8 @@ class State {
   world         !: World;
   camera        !: Camera;
   mousePosition !: Point;
+
+  time          !: Time;
 
   /**
    * This is the resource count of the number of buttons we have. You use these to build rooms, etc.
@@ -32,13 +39,13 @@ class State {
     mousePosition : Point,
     buttons       : number,
     selection     : GameSelection,
+    time          : Time,
   }) {
     for (const k in props) {
       (this as any)[k] = (props as any)[k];
     }
   }
 
-  // Hey grant do we actually want to use this ?  - bowei
   removeEntity(entity: IEntity) {
     this.removeList.push(entity);
   }
@@ -104,6 +111,7 @@ class Game {
       camera       : new Camera(),
       mousePosition: new Point({ x: 0, y: 0 }),
       selection    : { type: "none" },
+      time         : { hour: 6, minute: 0 },
     });
 
     this.app.stage.interactive = true;
@@ -134,8 +142,30 @@ class Game {
     this.state.entities.push(Inspector.Instance);
   }
 
+  tick = 0;
+  updateGame(): void {
+    if (++this.tick >= 10) {
+      // update game clock
+
+      this.tick = 0;
+      this.state.time.minute += 15;
+
+      if (this.state.time.minute >= 60) {
+        this.state.time.minute = 0;
+        this.state.time.hour += 1;
+      }
+
+      if (this.state.time.hour >= 24) {
+        this.state.time.hour = 0;
+      }
+    }
+  }
+
   gameLoop(): void {
     requestAnimationFrame(() => this.gameLoop());
+
+    this.updateGame();
+
 
     for (const entity of this.state.entities) {
       entity.update(this.state);
