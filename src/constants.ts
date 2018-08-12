@@ -31,10 +31,11 @@ class Constants {
   public static MOUSE_SCROLL_SPEED = 3;
 
   public static DEBUG_FLAGS = {
-    DEBUG_ADD_BUILDING: true
+    DEBUG_ADD_BUILDING: true,
+    DEBUG_INITIAL_BUTTONS_COUNT: 100
   };
 
-  public static INITIAL_BUTTONS_COUNT = 100;
+  public static INITIAL_BUTTONS_COUNT = 12;
 
   public static CAT_ACTIVITIES = catActivities;
 
@@ -81,7 +82,13 @@ class Constants {
       "Snowball",
       "Andrea",
       "Luna",
-      "Nyanyanyanna",
+      "Nyanyanyanners",
+      "Miya",
+      "Tama",
+      "Nitama",
+      "Yontama",
+      "Lardyclaws",
+      "Baconator",
       "Mimi",
       "Inspector Whiskers",
       "Mr. Snuggles",

@@ -87,7 +87,7 @@ class Game {
     this.state = new State({
       entities     : [],
       stage        : this.app.stage,
-      buttons      : Constants.INITIAL_BUTTONS_COUNT,
+      buttons      : Constants.DEBUG_FLAGS.DEBUG_INITIAL_BUTTONS_COUNT || Constants.INITIAL_BUTTONS_COUNT,
       world        : new World(this.app.stage),
       camera       : new Camera(),
       mousePosition: new Point({ x: 0, y: 0 }),
