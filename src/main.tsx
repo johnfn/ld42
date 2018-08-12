@@ -62,6 +62,16 @@ class State {
     return rooms;
   }
 
+  getBuilders(): Builder[] {
+    const builders: Builder[] = [];
+    for (const ent of this.entities) {
+      if (isBuilder(ent)) {
+        builders.push(ent);
+      }
+    }
+    return builders;
+  }
+
   getCats(): Cat[] {
     const cats: Cat[] = [];
 

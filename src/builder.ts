@@ -83,18 +83,26 @@ class Builder extends PIXI.Graphics implements IEntity {
       gameState.removeEntity(this);
       gameState.stage.removeChild(this);
       // create the next. constructor adds itself to stage for rendering
-      let nextLocationRight: [number, number] | undefined;
       if (this.location.x + this.location.w * 2 < Constants.WORLD_WIDTH) {
-        nextLocationRight = [this.location.x + this.location.w, this.location.y];
-        if (true) {
-          gameState.entities.push(new Builder(gameState.stage, nextLocationRight[0], nextLocationRight[1]));
+        let nextLocation: [number, number];
+        nextLocation = [this.location.x + this.location.w, this.location.y];
+
+        let alreadyCreatedBuilder: boolean = gameState.getBuilders().map(anotherBuilder => ( 
+          anotherBuilder.location.x === nextLocation[0] && anotherBuilder.location.y === nextLocation[1]
+        )).reduce((pv, cv) => pv || cv, false);
+        if (!alreadyCreatedBuilder) {
+          gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1]));
         }
       }
-      let nextLocationUp: [number, number] | undefined;
       if (this.location.y + this.location.h * 2 > 0) {
-        nextLocationUp = [this.location.x, this.location.y - this.location.h];
-        if (true) {
-          gameState.entities.push(new Builder(gameState.stage, nextLocationUp[0], nextLocationUp[1]));
+        let nextLocation: [number, number];
+        nextLocation = [this.location.x, this.location.y - this.location.h];
+ // wip refactor
+        let alreadyCreatedBuilder: boolean = gameState.getBuilders().map(anotherBuilder => ( 
+          anotherBuilder.location.x === nextLocation[0] && anotherBuilder.location.y === nextLocation[1]
+        )).reduce((pv, cv) => pv || cv, false);
+        if (!alreadyCreatedBuilder) {
+          gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1]));
         }
       }
   }
