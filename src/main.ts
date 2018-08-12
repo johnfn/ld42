@@ -41,7 +41,7 @@ class Game {
 
     this.state.entities.push();
 
-    /*
+    
     const graphics = new PIXI.Graphics();
 
     graphics.beginFill(0xf8f839, 1);
@@ -51,7 +51,7 @@ class Game {
 
     const tiled = new TiledTilemap(PIXI.loader.resources["testmap"].data, app.renderer);
     app.stage.addChild(tiled.loadRegion(new Rect({ x: 0, y: 0, w: 16 * 32, h: 16 * 32 })));
-    */
+    
   }
 
   gameLoop(): void {
