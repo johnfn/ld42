@@ -1,7 +1,7 @@
 class Constants {
   // all dims measured in pix
-  public static SCREEN_WIDTH = 1000;
-  public static SCREEN_HEIGHT = 1000;
+  public static SCREEN_WIDTH = 600;
+  public static SCREEN_HEIGHT = 600;
 
   public static WORLD_WIDTH = 5000;
   public static WORLD_HEIGHT = 5000;

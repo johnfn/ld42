@@ -7,9 +7,13 @@ class State {
 
   // like canvas
   stage   !: PIXI.Container;
-  buttons !: number;
   map     !: World;
   camera  !: Camera
+
+  /**
+   * This is the resource count of the number of buttons we have. You use these to build rooms, etc.
+   */
+  buttons !: number;
 }
 
 class Game {
@@ -42,7 +46,9 @@ class Game {
       camera   : new Camera(),
     };
 
-    this.state.entities.push(new Room(this.app.stage, new Point({x: 0,y: 0}));
+    this.state.entities.push(this.state.camera);
+
+    this.state.entities.push(new Room(this.app.stage, new Point({ x: 0, y: 0 })));
 
     this.state.entities.push(new GrantsDebug(this.app.stage));
 

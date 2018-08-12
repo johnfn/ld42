@@ -9,11 +9,13 @@ class GrantsDebug extends PIXI.Container {
     const gfx = new PIXI.Graphics();
 
     gfx.beginFill(0xff0000);
-    gfx.drawRect(0, 0, 50, 50);
+    gfx.drawRect(200, 200, 50, 50);
+    this.addChild(gfx);
+
     stage.addChild(this);
   }
 
   update(state: State): void {
-    state.camera.setX(state.camera.x + 1);
+    // state.camera.setX(state.camera.x + 1);
   }
 }

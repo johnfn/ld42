@@ -17,8 +17,6 @@ class Toolbar extends React.Component<ToolbarProps, State> implements IEntity {
   tick = 0;
 
   update(state: State) {
-    console.log(this.tick);
-
     this.setState(state);
   }
 

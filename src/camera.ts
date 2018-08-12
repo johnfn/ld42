@@ -24,6 +24,8 @@ class Camera {
   }
 
   setX(value: number) {
+    debugger;
+
     if (value < this.bounds.x) { value = this.bounds.x; }
     if (value >= this.bounds.right - this.width) { value = this.bounds.right - this.width; }
 
@@ -54,18 +56,20 @@ class Camera {
   }
 
   constructor() {
-    this.width  = Constants.WORLD_WIDTH;
-    this.height = Constants.WORLD_HEIGHT;
+    this.width  = Constants.SCREEN_WIDTH;
+    this.height = Constants.SCREEN_HEIGHT;
 
     this.bounds = new Rect({ 
       x: 0, 
       y: 0, 
-      w: Constants.SCREEN_WIDTH,
-      h: Constants.SCREEN_HEIGHT,
+      w: Constants.WORLD_WIDTH,
+      h: Constants.WORLD_HEIGHT,
     });
   }
 
   update(state: State) {
+    console.log(state.stage.x, state.stage.y);
+
     state.stage.x = this.desiredStageX;
     state.stage.y = this.desiredStageY;
   }
