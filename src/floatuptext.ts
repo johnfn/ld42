@@ -1,5 +1,6 @@
 class FloatUpText extends PIXI.Graphics implements IEntity {
   lifespan   = 100;
+  // wtf does this do
   z          = 100;
 
   constructor(state: State, text: string) {

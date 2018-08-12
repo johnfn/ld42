@@ -38,6 +38,7 @@ class State {
     }
   }
 
+  // Hey grant do we actually want to use this ?  - bowei
   removeEntity(entity: IEntity) {
     this.removeList.push(entity);
   }
@@ -86,7 +87,7 @@ class Game {
     this.state = new State({
       entities     : [],
       stage        : this.app.stage,
-      buttons      : 2,
+      buttons      : Constants.DEBUG_FLAGS.DEBUG_INITIAL_BUTTONS_COUNT || Constants.INITIAL_BUTTONS_COUNT,
       world        : new World(this.app.stage),
       camera       : new Camera(),
       mousePosition: new Point({ x: 0, y: 0 }),
@@ -129,6 +130,7 @@ class Game {
       entity.update(this.state);
     }
 
+    // hi im bowei and i rely on removeList being handled after update
     for (const e of this.state.removeList) {
       this.state.entities.splice(this.state.entities.indexOf(e), 1);
     }

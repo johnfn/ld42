@@ -2,6 +2,7 @@
 
 class Builder extends PIXI.Graphics implements IEntity {
 
+  //absolute coordinates, units in pix
   location: Rect;
   pendingInteraction: 'mouseover' | 'mouseout' | 'click' | null;
 
@@ -47,13 +48,40 @@ class Builder extends PIXI.Graphics implements IEntity {
     } else if (this.pendingInteraction === 'mouseout') {
       this.alpha = 0.3;
     } else if (this.pendingInteraction === 'click') {
-      gameState.world.addRoom(this.location.x / Constants.MAP_TILE_SIZE, this.location.y / Constants.MAP_TILE_SIZE, gameState);
-      gameState.stage.removeChild(this);
-      gameState.entities.push(new Builder(gameState.stage, this.location.x + this.location.w, this.location.y));
-      gameState.buttons -= 10;
+      if (gameState.buttons >= 10) {
+        this._successfullyBuildRoom(gameState);
+        gameState.buttons -= 10;
+      } else {
+        //this.say(gameState, "I furrr-ailed to complete that action!");
+        //this.say(gameState, "You have insuffurrrr-icient buttons, meow!");
+        this.say(gameState, "Nya-ot enough buttons!");
+      }
     }
 
     this.pendingInteraction = null;
+  }
+
+  say(gameState: State, text: string) {
+    const t = new FloatUpText(gameState, text);
+    // why doesnt float up text handle its position properly 
+    t.x = this.location.x;
+    t.y = this.location.y;
+    this.addChild(t);
+  }
+
+  _successfullyBuildRoom(gameState: State): void {
+      gameState.world.addRoom(this.location.x / Constants.MAP_TILE_SIZE, this.location.y / Constants.MAP_TILE_SIZE, gameState);
+      // remove ourselves from updateables list and derender
+      gameState.removeEntity(this);
+      gameState.stage.removeChild(this);
+      // create the next. constructor adds itself to stage for rendering
+      let nextLocation: [number, number];
+      if (this.location.x + this.location.w * 2 >= Constants.WORLD_WIDTH) {
+        nextLocation =[this.location.x - 2 * this.location.w, this.location.y - this.location.h];
+      } else {
+        nextLocation = [this.location.x + this.location.w, this.location.y];
+      }
+      gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1]));
   }
 
   // TODO(bowei): make this its own private class
