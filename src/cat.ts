@@ -141,6 +141,7 @@ class Cat extends PIXI.Container implements IEntity {
 
       if (this.state.destination.worldRect.intersects(this.getRect())) {
         this.info.room = dest.building; 
+        dest.building.occupants++;
 
         this.say(gameState, "purr");
       }
