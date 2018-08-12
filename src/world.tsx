@@ -34,6 +34,7 @@ class World extends PIXI.Graphics implements IEntity {
 
   buildMap(): MapCell[][] {
     const grid: MapCell[][] = [];
+    const numSkyTiles = 20; // TODO: unhardcode this
 
     for (let x = 0; x < Constants.MAP_WIDTH_IN_TILES; x++) {
       grid[x] = [];
@@ -41,9 +42,9 @@ class World extends PIXI.Graphics implements IEntity {
       for (let y = 0; y < Constants.MAP_WIDTH_IN_TILES; y++) {
         let terrain: MapTerrain;
 
-        if (y < 10) {
+        if (y < numSkyTiles) {
           terrain = { type: 'sky' };
-        } else if (y === 10) {
+        } else if (y === numSkyTiles) {
           terrain = { type: 'grass' };
         } else {
           terrain = { type: 'dirt' }
@@ -80,11 +81,10 @@ class World extends PIXI.Graphics implements IEntity {
           throw new Error(`unexpected terrain type ${ x }`);
         }
 
-        // TODO(johnfn): unhardcode 32
-        graphic.drawRect(0, 0, 32, 32);
+        graphic.drawRect(0, 0, Constants.MAP_TILE_SIZE, Constants.MAP_TILE_SIZE);
 
-        graphic.x = x * 32;
-        graphic.y = y * 32;
+        graphic.x = x * Constants.MAP_TILE_SIZE;
+        graphic.y = y * Constants.MAP_TILE_SIZE;
 
         this.grid[x][y].terrainSprite = graphic;
 

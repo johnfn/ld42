@@ -24,8 +24,6 @@ class Camera {
   }
 
   setX(value: number) {
-    debugger;
-
     if (value < this.bounds.x) { value = this.bounds.x; }
     if (value >= this.bounds.right - this.width) { value = this.bounds.right - this.width; }
 
@@ -68,8 +66,6 @@ class Camera {
   }
 
   update(state: State) {
-    console.log(state.stage.x, state.stage.y);
-
     state.stage.x = this.desiredStageX;
     state.stage.y = this.desiredStageY;
   }

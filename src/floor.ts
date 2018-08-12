@@ -14,9 +14,9 @@ class HotelFloor extends PIXI.Container {
     this.addChild(roomContainers[0]);
 
 
-    roomSprite.x = Constants.MAP_TILE_SIZE * 0.5;
-    roomSprite.y = Constants.MAP_TILE_SIZE * 0.5 * 2;
-    this.addChild(roomSprite);
+    //j//jroomSprite.x = Constants.MAP_TILE_SIZE * 0.5;
+    //jroomSprite.y = Constants.MAP_TILE_SIZE * 0.5 * 2;
+    //jthis.addChild(roomSprite);
 
     //this.beginFill(0x8B572A, 1);
     //this.drawRect(50, 250, 120, 120);
