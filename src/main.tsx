@@ -2,6 +2,7 @@ interface IEntity {
   update: (state: State) => void;
 }
 
+// Provides data about the current selected game object
 type GameSelection = 
   | { type: "cat", cat: Cat }
   | { type: "room", room: Room }
