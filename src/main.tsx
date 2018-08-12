@@ -61,6 +61,6 @@ class Game {
 
 PIXI.loader.add("testmap", `./assets/testmap.json`);
 PIXI.loader.add("test", `./assets/test.png`);
-PIXI.loader.add("room", `./assets/room-1.png`);
+PIXI.loader.add("room", `./assets/room-1.png`); // 144 x 96
 
 new Game();

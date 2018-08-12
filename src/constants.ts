@@ -1,6 +1,6 @@
 class Constants {
-  public static WIDTH = 600;
-  public static HEIGHT = 600;
+  public static WIDTH = 1000;
+  public static HEIGHT = 1000;
 
   public static MAP_WIDTH_IN_TILES = 50;
   public static MAP_HEIGHT_IN_TILES = 50;
