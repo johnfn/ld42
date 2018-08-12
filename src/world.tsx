@@ -8,7 +8,6 @@ type MapBuilding =
 type MapCell = {
   terrain        : TerrainTypes;
   terrainSprite ?: PIXI.Container;
-  buildingSprite?: PIXI.Container;
 }
 
 // TODO: Maybe separate into layers?
@@ -178,7 +177,7 @@ class World extends PIXI.Graphics implements IEntity {
   }
 
   renderBlockyThing(args: {
-    thingType: 'terrainSprite' | 'buildingSprite',
+    thingType: 'terrainSprite',
     whenToRender: ((m: MapCell) => boolean),
     spriteCreator: (() => { graphic: PIXI.Container, widthTiles: number, heightTiles: number } )
   }): void {
