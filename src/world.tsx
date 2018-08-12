@@ -26,6 +26,7 @@ class World extends PIXI.Graphics implements IEntity {
     this.renderMap();
 
     new Mountain(this);
+    new Sun(this);
 
   }
 
