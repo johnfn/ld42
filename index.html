@@ -25,17 +25,25 @@
       }
 
       /* ------------------------------------- */
-      #game-window-frame {
-        /* border: 15px white solid; */
-        /* margin: 15px; */
-        padding: 15px;
-        background: #ceebfb;
-        /* border-top: none; */
+      /* Cursor styles */
+
+      #toolbar {
+        cursor: help;
       }
 
-      #main-canvas {
-        /* border: 1px solid red; */
-        /* border-bottom: 2px solid green; */
+      #reports {
+        cursor: help;
+      }
+
+      /* #main-canvas-wrapper {
+        cursor: pointer;
+      } */
+
+      /* ------------------------------------- */
+
+      #game-window-frame {
+        padding: 15px;
+        background: #ceebfb;
       }
 
       #toolbar {
@@ -45,21 +53,39 @@
         padding-bottom: 7px;
       }
 
-      #inspector {
-        background: #1395b5;
-        /* Without !important, color keeps getting overridden by element.style */
-        color: white !important;
+      /* ------------------------------------- */
+
+      #reports {
+        float: left; 
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 15px;
+        background: #9a00ff;
+        min-width: 300px;
+        color: white;
       }
 
-      #inspector div[color^="white"] {
-        color: #white;
+      /* Selects #inspector, #store, etc */
+      #reports > div {
+        display: flex;
+        border: 1px solid rgba(0, 0, 0, 0.15);
       }
+
+      /* #inspector {
+        background: #1395b5; */
+        /* Without !important, color keeps getting overridden by element.style */
+        /* color: white !important;
+      } */
+
+      /* #inspector div[color^="white"] {
+        color: white;
+      } */
 
       /* Padding styling for the inspector's text is in .inspector-desc. */
-      .inspector-desc {
+      /* .inspector-desc {
         padding-bottom: 15px;
         padding-right: 15px;
-      }
+      } */
 
       
 
@@ -89,9 +115,11 @@
     <div id="app">
       <div style="float: left" id="game-window-frame">
         <div id="toolbar"></div>
-        <canvas id="main-canvas"></canvas>
+        <div class="main-canvas-wrapper">
+          <canvas id="main-canvas"></canvas>
+        </div>
       </div>
-      <div style="float: left; color: white; padding-left: 10px">
+      <div id="reports">
         <div id="island-status">
         </div>
 
