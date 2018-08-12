@@ -91,6 +91,7 @@ class RoomBuilder extends PIXI.Graphics implements IEntity {
     const { x: bottomRightX, y: bottomRightY } = location.bottomRight;
 
     const lineThickness = 6.5;
+    // TODO(bowei): fix how some lines are thicker than others
     graphic
       .lineStyle(lineThickness , this.hexColor, 1, 0) // alignment 0 = inner
       .moveTo(topLeftX    , topLeftY)

@@ -32,7 +32,7 @@ class Constants {
 
   public static DEBUG_FLAGS = {
     DEBUG_ADD_BUILDING: true,
-    DEBUG_INITIAL_BUTTONS_COUNT: 12
+    DEBUG_INITIAL_BUTTONS_COUNT: 22
   };
 
   public static INITIAL_BUTTONS_COUNT = 12;
