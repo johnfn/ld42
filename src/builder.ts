@@ -1,6 +1,6 @@
 // This is the object for building new structures, like floors and rooms.
 
-class Builder extends PIXI.Graphics implements IEntity {
+class RoomBuilder extends PIXI.Graphics implements IEntity {
 
   //absolute coordinates, units in pix
   location: Rect;
@@ -25,7 +25,7 @@ class Builder extends PIXI.Graphics implements IEntity {
     })
     this.pendingInteraction = null;
 
-    Builder.renderBuilderRoomSilhouette(this, this.location);
+    RoomBuilder.renderRoomBuilderRoomSilhouette(this, this.location);
     this.interactive = true;
     this.hitArea = new PIXI.Rectangle(this.location.x, this.location.y, this.location.w, this.location.h);
 
@@ -81,11 +81,11 @@ class Builder extends PIXI.Graphics implements IEntity {
       } else {
         nextLocation = [this.location.x + this.location.w, this.location.y];
       }
-      gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1]));
+      gameState.entities.push(new RoomBuilder(gameState.stage, nextLocation[0], nextLocation[1]));
   }
 
   // TODO(bowei): make this its own private class
-  public static renderBuilderRoomSilhouette(context: PIXI.Container, location: Rect): PIXI.Graphics {
+  public static renderRoomBuilderRoomSilhouette(context: PIXI.Container, location: Rect): PIXI.Graphics {
     const graphic = new PIXI.Graphics();
     const { x: topLeftX, y: topLeftY } = location.topLeft;
     const { x: bottomRightX, y: bottomRightY } = location.bottomRight;
