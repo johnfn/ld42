@@ -51,7 +51,8 @@ class Builder extends PIXI.Graphics implements IEntity {
       console.log("BUILDER CLICK")
       gameState.world.addRoom(this.location.x / Constants.MAP_TILE_SIZE, this.location.y / Constants.MAP_TILE_SIZE, gameState);
       gameState.stage.removeChild(this);
-      new Builder(gameState.stage, this.location.x + this.location.w, this.location.y);
+      gameState.entities.push(new Builder(gameState.stage, this.location.x + this.location.w, this.location.y));
+      gameState.buttons -= 10;
     }
     this.pendingInteraction = null;
   }
