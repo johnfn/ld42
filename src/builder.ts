@@ -2,7 +2,7 @@
 
 class Builder extends PIXI.Graphics implements IEntity {
   
-
+  silhouette!: PIXI.Graphics; 
 
   constructor(stage: PIXI.Container) {
     super();
@@ -27,7 +27,9 @@ class Builder extends PIXI.Graphics implements IEntity {
 
     graphic.beginFill(0x888888); // grey
     graphic.drawRect(50, 100, width, height);
-
+    
+    silhouette = graphic;
+    // silhouette = null;
     this.addChild(graphic);
     
   }

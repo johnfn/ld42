@@ -1,3 +1,5 @@
+import { CONST } from "pixi.js";
+
 interface IEntity {
   update: (state: State) => void;
 }
@@ -35,10 +37,6 @@ class Game {
     this.app.renderer.roundPixels = true;
   }
 
-  stageMouseMove() {
-
-  }
-
   start() {
     this.stupidPixiSetupSetuff();
 
@@ -53,7 +51,7 @@ class Game {
     this.state.entities.push(this.state.camera);
     this.state.entities.push(new MapScrollListener(this.app.stage));
 
-    this.state.entities.push(new Room(this.app.stage, new Point({ x: 80, y: 80 })));
+    this.state.entities.push(new Room(this.app.stage, new Point({ x: Constants.SCREEN_WIDTH / 2.0, y: 80 })));
 
     this.state.entities.push(new GrantsDebug(this.app.stage));
 
@@ -71,13 +69,11 @@ class Game {
     requestAnimationFrame(() => this.gameLoop());
 
     //state.mousePosition = 
-    var mousePosition = this.app.renderer.interaction.mouse.global;
-
-
-    for (const entity of this.state.entities) {
+     for (const entity of this.state.entities) {
       entity.update(this.state);
+     }
     }
-  }
+    
 }
 
 // TODO(someone): Move all assets into constants and load via loop

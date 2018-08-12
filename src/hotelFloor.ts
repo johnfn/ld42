@@ -9,10 +9,12 @@ class HotelFloor extends PIXI.Container {
 
     const roomContainers: Room[] = [];
 
-    roomContainers.push(new Room(stage, my_center));
+    roomContainers.push(new Room(this, my_center));
 
     this.addChild(roomContainers[0]);
 
+    this.x = my_center.x - this.width / 2.0;
+    this.y = my_center.y - this.height / 2.0;
 
     //j//jroomSprite.x = Constants.MAP_TILE_SIZE * 0.5;
     //jroomSprite.y = Constants.MAP_TILE_SIZE * 0.5 * 2;

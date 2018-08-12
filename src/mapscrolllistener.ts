@@ -4,6 +4,7 @@ class MapScrollListener extends PIXI.Container {
   }
 
   update(state: State): void {
+    const mousePosition = state.
     // state.camera.setX(state.camera.x + 1);
   }
 }
