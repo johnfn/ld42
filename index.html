@@ -25,6 +25,21 @@
       }
 
       /* ------------------------------------- */
+      /* Cursor styles */
+
+      #toolbar {
+        cursor: help;
+      }
+
+      #reports {
+        cursor: help;
+      }
+
+      /* #main-canvas-wrapper {
+        cursor: pointer;
+      } */
+
+      /* ------------------------------------- */
 
       #game-window-frame {
         padding: 15px;
@@ -42,6 +57,7 @@
 
       #reports {
         float: left; 
+        padding-left: 15px;
         padding-right: 15px;
         padding-bottom: 15px;
         background: #9a00ff;
@@ -99,7 +115,9 @@
     <div id="app">
       <div style="float: left" id="game-window-frame">
         <div id="toolbar"></div>
-        <canvas id="main-canvas"></canvas>
+        <div class="main-canvas-wrapper">
+          <canvas id="main-canvas"></canvas>
+        </div>
       </div>
       <div id="reports">
         <div id="island-status">
