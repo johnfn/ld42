@@ -79,6 +79,7 @@ class Constants {
       "Snowball",
       "Andrea",
       "Luna",
+      "Inspector Whiskers",
       "Mr. Snuggles",
       "Sir Donnigan",
       "Archbishop Mannykins III",

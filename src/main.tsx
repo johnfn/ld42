@@ -2,7 +2,12 @@ interface IEntity {
   update: (state: State) => void;
 }
 
+type GameSelection = 
+  | { type: "cat", info: CatInfo }
+  | { type: "none" }
+
 class State {
+  selection     !: GameSelection;
   entities      !: IEntity[];
 
   // like canvas
@@ -25,6 +30,7 @@ class State {
     camera        : Camera,
     mousePosition : Point,
     buttons       : number,
+    selection     : GameSelection,
   }) {
     for (const k in props) {
       (this as any)[k] = (props as any)[k];
@@ -49,7 +55,6 @@ class Game {
       antialias: true,
       view: document.getElementById("main-canvas")! as HTMLCanvasElement,
     });
-    document.body.appendChild(this.app.view);
 
     PIXI.settings.PRECISION_FRAGMENT = 'highp'; //this makes text looks better
     this.app.renderer.roundPixels = true;
@@ -72,6 +77,7 @@ class Game {
       world        : new World(this.app.stage),
       camera       : new Camera(),
       mousePosition: new Point({ x: 0, y: 0 }),
+      selection    : { type: "none" },
     });
 
     this.app.stage.interactive = true;
@@ -81,7 +87,7 @@ class Game {
 
     //this.state.entities.push(new HotelFloor(this.app.stage, new Point({ x: Constants.SCREEN_WIDTH / 2.0, y: 80 })));
 
-    this.state.entities.push(new Builder(this.app.stage, 50, 100));
+    this.state.entities.push(new Builder(this.app.stage, 0, 0));
 
     this.state.entities.push(new GrantsDebug(this.app.stage));
     this.state.entities.push(new Cat(this.app.stage));
@@ -94,6 +100,13 @@ class Game {
     );
 
     this.state.entities.push(Toolbar.Instance);
+
+    ReactDOM.render(
+      <Inspector state={ this.state } />,
+      document.getElementById("inspector")! as HTMLElement,
+    );
+
+    this.state.entities.push(Inspector.Instance);
   }
 
   gameLoop(): void {

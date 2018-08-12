@@ -4,6 +4,9 @@
  */
 class Room extends PIXI.Container {
   
+  // we do this so that we only update during the tick
+  wasClicked: boolean;
+
   // adds myself to context centered at my_center relative to context
   constructor(context: PIXI.Container, my_center?: Point) {
     super();
@@ -36,6 +39,11 @@ class Room extends PIXI.Container {
     //this.drawRect(50, 250, 120, 120);
 
     context.addChild(this);
+
+    this.wasClicked = false;
+    this.on("click", (e: PIXI.interaction.InteractionEvent) => {
+      this.wasClicked = true;
+    });
   }
 
   update(state: State): void {

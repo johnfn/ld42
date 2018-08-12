@@ -18,8 +18,7 @@ type Building = {
   tileX    : number;
   tileY    : number;
 
-  worldX   : number;
-  worldY   : number;
+  worldRect: Rect;
 
   occupants: number;
   capacity : number;
@@ -44,7 +43,7 @@ class World extends PIXI.Graphics implements IEntity {
     this.renderMap();
 
     if (Constants.DEBUG_FLAGS.DEBUG_ADD_BUILDING) {
-      this.addRoom(30, Constants.SKY_HEIGHT_IN_TILES - 2);
+      this.addRoom(30, Constants.SKY_HEIGHT_IN_TILES - 6);
     }
   }
 
@@ -86,24 +85,19 @@ class World extends PIXI.Graphics implements IEntity {
   }
 
   public addRoom(x: number, y: number): void {
-    const roomSpriteCreator = (): { graphic: PIXI.Container, widthTiles: number, heightTiles: number } => {
-      const graphic: PIXI.Container = new Room(this);
-      graphic;
-      return {  
-        // 144 x 96
-        graphic,
-        widthTiles: 9,
-        heightTiles: 6
-      };
-    }
-    const { graphic: buildingSprite, widthTiles, heightTiles } = roomSpriteCreator();
+    const buildingSprite = new Room(this);
+    const widthInTiles   = 9;
+    const heightInTiles  = 6;
+
     // TODO(grant): dont forget all the x + xi , y + yi tiles need to be tagged here
     this.grid[x][y].building = { type: "room" };
 
-    //const buildingSprite = new PIXI.Graphics();
+    for (let i = x; i < x + widthInTiles; i++) {
+      for (let j = y; j < y + heightInTiles; j++) {
+        this.grid[i][j].building = { type: "room" };
+      }
+    }
 
-    //buildingSprite.beginFill(0x00ffff);
-    //buildingSprite.drawRect(x * 16, y * 16, 32, 32);
     buildingSprite.x = x * Constants.MAP_TILE_SIZE;
     buildingSprite.y = y * Constants.MAP_TILE_SIZE;
 
@@ -118,8 +112,12 @@ class World extends PIXI.Graphics implements IEntity {
       tileX: x,
       tileY: y,
 
-      worldX: x * Constants.MAP_TILE_SIZE,
-      worldY: y * Constants.MAP_TILE_SIZE,
+      worldRect: new Rect({
+        x: x * Constants.MAP_TILE_SIZE,
+        y: y * Constants.MAP_TILE_SIZE,
+        w: widthInTiles * 16,
+        h: widthInTiles * 16,
+      }),
 
       occupants: 0,
       capacity : 5,
@@ -131,7 +129,7 @@ class World extends PIXI.Graphics implements IEntity {
   }
 
   public getCellAt(x: number, y: number): MapCell {
-    console.log(Math.floor(x / Constants.MAP_TILE_SIZE), Math.floor(y / Constants.MAP_TILE_SIZE));
+    //console.log(Math.floor(x / Constants.MAP_TILE_SIZE), Math.floor(y / Constants.MAP_TILE_SIZE));
 
     return this.grid[Math.floor(x / Constants.MAP_TILE_SIZE)][Math.floor(y / Constants.MAP_TILE_SIZE)];    
   }   

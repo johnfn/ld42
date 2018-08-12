@@ -1,7 +1,10 @@
 // This is the object for building new structures, like floors and rooms.
 
 class Builder extends PIXI.Graphics implements IEntity {
+
+  location: Rect;
   
+  // wip - i'm removing these fields
   topLeftX: number;
   topLeftY: number;
   bottomRightX: number;
@@ -15,17 +18,22 @@ class Builder extends PIXI.Graphics implements IEntity {
   /**
    * Construction
    */
-  constructor(stage: PIXI.Container, topLeftX?: number, topLeftY?: number) {
+  constructor(stage: PIXI.Container, topLeftX: number, topLeftY: number) {
     super();
 
     stage.addChild(this);
-    this.topLeftX = topLeftX ? topLeftX : 0;
-    this.topLeftY = topLeftY ? topLeftY : 0;
+    const { width, height } = PIXI.loader.resources['room-1'].texture;
+
+    this.location = new Rect({
+      x: topLeftX,
+      y: topLeftY,
+      w: width,
+      h: height
+    })
+
+    this.topLeftX = topLeftX;
+    this.topLeftY = topLeftY;
     
-    const roomTexture: PIXI.Texture = PIXI.loader.resources['room-1'].texture;
-    const roomSprite: PIXI.Sprite = new PIXI.Sprite(roomTexture);
-    // this.zoneWidth = 
-    const { width, height } = roomSprite;
     this.bottomRightX = this.topLeftX + width;
     this.bottomRightY = this.topLeftY + height;
 
@@ -34,16 +42,27 @@ class Builder extends PIXI.Graphics implements IEntity {
     // let { topLeftX, topLeftY, width, height } = this;
     // console.log({ topLeftX, topLeftY, width, height })
 
-    this.renderBuilderRoomSilhouette();
+    this.silhouette = this.renderBuilderRoomSilhouette();
+    this.interactive = true;
+    this.hitArea = new PIXI.Rectangle(this.location.x, this.location.y, this.location.w, this.location.h);
+
+    this.on('mouseover', (event: PIXI.interaction.InteractionEvent) => {
+      console.log(event);
+    })
+    this.on('mouseout', (event: PIXI.interaction.InteractionEvent) => {
+      console.log(event);
+    })
+    this.on('click', (event: PIXI.interaction.InteractionEvent) => {
+      event;
+      console.log('rec click')
+    });
+
   }
   
+  // check every tick whether we are in the box and whether we have just entered/exited
   update(state: State): void {
     const mousePos = state.mousePosition;
-    const isInX = mousePos.x >= this.topLeftX && mousePos.x <= this.bottomRightX;
-    const isInY = mousePos.y >= this.topLeftY && mousePos.y <= this.bottomRightY;
-    // console.log(isInX, isInY);
-    if (isInX && isInY) {
-      // console.log('hi')
+    if (this.location.contains(mousePos)) {
       if (!this.isHovering) {
         this.isHovering = true;
         this.onMouseover(state);
@@ -52,7 +71,6 @@ class Builder extends PIXI.Graphics implements IEntity {
       if (this.isHovering) {
         this.isHovering = false;
         this.onMouseoff(state);
-
       }
     }
   }
@@ -67,27 +85,24 @@ class Builder extends PIXI.Graphics implements IEntity {
     graphic.alpha = 0.3;
   }
 
-  renderBuilderRoomSilhouette(): void {
-    const graphic = new PIXI.Graphics();    
+  renderBuilderRoomSilhouette(): PIXI.Graphics {
+    const graphic = new PIXI.Graphics();
+    const { x: topLeftX, y: topLeftY } = this.location.topLeft;
+    const { x: bottomRightX, y: bottomRightY } = this.location.bottomRight;
 
-    // const startX = this.topLeftX;  // Arbitrary
-    // const startY = this.topLeftY; // Arbitrary
     const lineThickness = 6.5;
-
     graphic
-      .lineStyle(lineThickness, this.hexColor, 1, 0) // alignment 0 = inner
-      .moveTo(this.topLeftX, this.topLeftY)
-      .lineTo(this.bottomRightX, this.topLeftY)
-      .lineTo(this.bottomRightX, this.bottomRightY)
-      .lineTo(    this.topLeftX, this.bottomRightY)
-      .lineTo(    this.topLeftX, this.topLeftY)
+      .lineStyle(lineThickness , this.hexColor, 1, 0) // alignment 0 = inner
+      .moveTo(topLeftX    , topLeftY)
+      .lineTo(bottomRightX, topLeftY)
+      .lineTo(bottomRightX, bottomRightY)
+      .lineTo(topLeftX    , bottomRightY)
+      .lineTo(topLeftX    , topLeftY)
       .closePath();
-
     // Add inner plus symbol
     const plusGfx = new PIXI.Graphics();
-    const middleX = (this.topLeftX + this.bottomRightX) / 2;
-    const middleY = (this.topLeftY + this.bottomRightY) / 2;
-    
+    const middleX = (topLeftX + bottomRightX) / 2;
+    const middleY = (topLeftY + bottomRightY) / 2;
     plusGfx
       .lineStyle(lineThickness, this.hexColor, 1, 0.5)
       .moveTo(middleX, middleY)
@@ -98,31 +113,26 @@ class Builder extends PIXI.Graphics implements IEntity {
       .lineTo(middleX, middleY + 10)
       .lineTo(middleX, middleY)
       .closePath();
-
     graphic.addChild(plusGfx);
-    
-    // TODO: Opacity handling
-    graphic.interactive = true;
-
     graphic.alpha = 0.3;
+    
+     /*
+    graphic.interactive = true;
+    graphic.hitArea = new PIXI.Rectangle(this.location.x, this.location.y, this.location.w, this.location.h);
 
-    // Don't work
-    // graphic.on('mouseover', (event) => {
-    //   console.log(event);
-    // })
-    // graphic.on('mouseout', (event) => {
-    //   console.log(event);
-    // })
-    // graphic.on('click', (event) => {
-    //   console.log('rec click')
-    // });
+    graphic.on('mouseover', (event: PIXI.interaction.InteractionEvent) => {
+      console.log(event);
+    })
+    graph: PIXI.interaction.InteractionEventraction.InteractionEvent) => {
+      console.log(event);
+    }): PIXI.interaction.InteractionEvent
+      event; *
+    graphic.on('click', (event/
+      console.log('rec click')
+    }); */
 
-    this.silhouette = graphic;
-
-    // silhouette = null;
     this.addChild(graphic);
-    console.log(this.children);
+    return graphic;
   }
-
 
 }
