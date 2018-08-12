@@ -4,11 +4,10 @@ class Mountain extends PIXI.Container implements IEntity {
 
     this.addChild(new PIXI.Sprite(PIXI.loader.resources['mountains-1'].texture));
 
-    stage.addChild(this);
-
     // this is the starting position.
-    this.x = 16 * 30;
-    this.y = 16 * 8;
+    this.x = 20 * 25;
+    this.y = 16 * 7.5;
+    stage.addChild(this);
   }
 
   update(gameState: State): void {

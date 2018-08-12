@@ -23,9 +23,10 @@ class World extends PIXI.Graphics implements IEntity {
 
     stage.addChild(this);
     this.grid = this.buildMap();
+    this.renderMap();
+
     new Mountain(this);
 
-    this.renderMap();
   }
 
   update(state: State): void {

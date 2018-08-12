@@ -14,8 +14,8 @@ class CatSpawner extends PIXI.Container implements IEntity {
 
         // this is the starting position. TODO stop hardcoding this
 
-        newCat.x = 14 * 15;
-        newCat.y = 16 * 25 + Math.floor(Math.random() * 100);
+        newCat.x = 12 * 15 + Math.floor(Math.random() * 100);
+        newCat.y = 16 * 25;
       }
     }
   }

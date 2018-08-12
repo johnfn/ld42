@@ -3,6 +3,10 @@ class Util {
     return x[Math.floor(Math.random() * x.length)];
   }
 
+  public static RandRange(low: number, high: number): number {
+    return low + Math.random() * (high - low);
+  }
+
   public static SortByKey<T>(array: T[], key: (t: T) => number): T[] {
     return array.sort((a, b) => {
       const x = key(a);
