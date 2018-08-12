@@ -38,6 +38,7 @@ class State {
     }
   }
 
+  // Hey grant do we actually want to use this ?  - bowei
   removeEntity(entity: IEntity) {
     this.removeList.push(entity);
   }
@@ -129,6 +130,7 @@ class Game {
       entity.update(this.state);
     }
 
+    // hi im bowei and i rely on removeList being handled after update
     for (const e of this.state.removeList) {
       this.state.entities.splice(this.state.entities.indexOf(e), 1);
     }

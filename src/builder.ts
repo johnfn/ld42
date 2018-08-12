@@ -47,13 +47,24 @@ class Builder extends PIXI.Graphics implements IEntity {
     } else if (this.pendingInteraction === 'mouseout') {
       this.alpha = 0.3;
     } else if (this.pendingInteraction === 'click') {
-      gameState.world.addRoom(this.location.x / Constants.MAP_TILE_SIZE, this.location.y / Constants.MAP_TILE_SIZE, gameState);
-      gameState.stage.removeChild(this);
-      gameState.entities.push(new Builder(gameState.stage, this.location.x + this.location.w, this.location.y));
-      gameState.buttons -= 10;
+      if (gameState.buttons >= 10) {
+        this._successfullyBuildRoom(gameState);
+        gameState.buttons -= 10;
+      } else {
+        console.log("I furrr-ailed to complete that action!");
+      }
     }
 
     this.pendingInteraction = null;
+  }
+
+  _successfullyBuildRoom(gameState: State): void {
+      gameState.world.addRoom(this.location.x / Constants.MAP_TILE_SIZE, this.location.y / Constants.MAP_TILE_SIZE, gameState);
+      // remove ourselves from updateables list and derender
+      gameState.removeEntity(this);
+      gameState.stage.removeChild(this);
+      // create the next. constructor adds itself to stage for rendering
+      gameState.entities.push(new Builder(gameState.stage, this.location.x + this.location.w, this.location.y));
   }
 
   // TODO(bowei): make this its own private class
