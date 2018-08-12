@@ -14,7 +14,6 @@ type MapBuilding =
 type MapCell = {
   terrain       : MapTerrain;
   building     ?: MapBuilding;
-
   terrainSprite?: PIXI.Graphics;
 }
 
@@ -65,6 +64,7 @@ class World extends PIXI.Graphics implements IEntity {
         const terrainType = this.grid[x][y].terrain.type;
         const graphic = new PIXI.Graphics();
 
+        // TODO(johnfn): unhardcode colors
         if (terrainType === "sky") {
           graphic.beginFill(0x0000ff);
         } else if (terrainType === "grass") {
@@ -80,6 +80,7 @@ class World extends PIXI.Graphics implements IEntity {
           throw new Error(`unexpected terrain type ${ x }`);
         }
 
+        // TODO(johnfn): unhardcode 32
         graphic.drawRect(0, 0, 32, 32);
 
         graphic.x = x * 32;

@@ -6,38 +6,43 @@ class State {
   entities!: IEntity[];
 
   // like canvas
-  stage!: PIXI.Container;
-
-  buttons!: number;
-
-  map!: World;
+  stage   !: PIXI.Container;
+  buttons !: number;
+  map     !: World;
+  camera  !:Camera
 }
 
 class Game {
   state!: State;
+  app!: PIXI.Application;
   
   constructor() {
     PIXI.loader.load(() => this.start());
   }
 
-  start() {
-    const app = new PIXI.Application(Constants.WIDTH, Constants.HEIGHT, { 
+  stupidPixiSetupSetuff() {
+    this.app = new PIXI.Application(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, { 
       antialias: true,
       view: document.getElementById("main-canvas")! as HTMLCanvasElement,
     });
-    document.body.appendChild(app.view);
+    document.body.appendChild(this.app.view);
 
     PIXI.settings.PRECISION_FRAGMENT = 'highp'; //this makes text looks better
-    app.renderer.roundPixels = true;
+    this.app.renderer.roundPixels = true;
+  }
+
+  start() {
+    this.stupidPixiSetupSetuff();
 
     this.state = {
       entities: [],
-      stage: app.stage,
+      stage: this.app.stage,
       buttons: 2,
-      map: new World(app.stage),
+      map: new World(this.app.stage),
+      camera: new Camera(),
     };
 
-    this.state.entities.push(new Room(app.stage));
+    this.state.entities.push(new Room(this.app.stage));
 
     this.gameLoop();
 
@@ -55,7 +60,6 @@ class Game {
     for (const entity of this.state.entities) {
       entity.update(this.state);
     }
-
   }
 }
 
