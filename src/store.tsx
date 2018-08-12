@@ -72,18 +72,29 @@ class StoreItem extends React.Component<StoreItemProps, StoreItemState> {
           color: canAfford ? 'white' : 'gray',
         }}
       >
-      { item }{' '}
-      {
-        this.state.mouseOver &&
-          <span
-            style={{
-              color: 'gray',
-            }}
-          >
-            Cost: { price } buttons
-          </span>
-      }
-      
+        { item }{' '}
+        {
+          this.state.mouseOver &&
+            <>
+              <span
+                style={{
+                  color: 'gray',
+                }}
+              >
+                Cost: { price } buttons
+              </span>{' '}
+              {
+                !canAfford &&
+                  <span
+                    style={{
+                      color: 'red',
+                    }}
+                  >
+                    Can't afford!
+                  </span>
+              }
+            </>
+        }{' '}
       </div>
     );
   }

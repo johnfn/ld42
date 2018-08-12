@@ -15,7 +15,7 @@ class Cloud extends PIXI.Container implements IEntity {
     // if (this.x > Constants.WORLD_WIDTH) {
     //   this.x = 0;
     // }
-    if (this.x > 900) {
+    if (this.x > 1050) {
       this.x = 0;
     } else {
       this.x++;

@@ -116,6 +116,9 @@ class Cat extends PIXI.Container implements IEntity {
 
           return { activity: 'waiting' };
         } else {
+          this.x = Util.RandRange(destRect.x, destRect.x + destRect.w - 32);
+          this.info.room = destRoom;
+          destRoom.occupants++;
           return { activity: 'living' };
         }
       } else {
@@ -160,10 +163,11 @@ class Cat extends PIXI.Container implements IEntity {
         this.x--;
       }
 
+      /*
       if (this.state.destination.worldRect.contains(this.getRect()) && this.state.destination.room.hasCapacity()) {
         this.info.room = dest.room; 
         dest.room.occupants++;
-      }
+      } */
     } else if (this.state.activity === 'waiting'){
       if (this.info.room) {
         this.say(gameState, "purr");
