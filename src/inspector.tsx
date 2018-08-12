@@ -26,7 +26,7 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
     if (this.state.selection.type === "cat") {
       return (
         <div>
-          <h2>Cat Inspecturr</h2>
+          <h2>Cat Informyation</h2>
           <div>Name: { this.state.selection.info.name } </div>
           <div>Favorite activity: { this.state.selection.info.favoriteActivity } </div>
           <div>Housing Status: { this.state.selection.info.room ? "Housed!" : "Homeless" } </div>
