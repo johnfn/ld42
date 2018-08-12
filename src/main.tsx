@@ -9,6 +9,8 @@ class State {
   stage!: PIXI.Container;
 
   buttons!: number;
+
+  map!: Map;
 }
 
 class Game {
@@ -31,10 +33,9 @@ class Game {
     this.state = {
       entities: [],
       stage: app.stage,
-      buttons: 10,
     };
 
-    this.state.entities.push(new Room(this.state));
+    this.state.entities.push(new Room(app.stage));
 
     this.gameLoop();
 
@@ -53,11 +54,6 @@ class Game {
       entity.update(this.state);
     }
 
-    /*
-    stage.children.sort((a, b) => {
-      return ((a as any).z || 0) - ((b as any).z || 0);
-    });
-    */
   }
 }
 

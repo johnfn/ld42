@@ -1,4 +1,4 @@
-# cat game
+# cat hotel game
 
 Steps:
 

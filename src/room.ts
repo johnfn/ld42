@@ -1,11 +1,11 @@
 class Room extends PIXI.Graphics {
-  constructor(state: State) {
+  constructor(stage: PIXI.Container) {
     super();
 
     this.beginFill(0x8B572A, 1);
     this.drawRect(50, 250, 120, 120);
 
-    state.stage.addChild(this);
+    stage.addChild(this);
   }
 
   update(state: State): void {
