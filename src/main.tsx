@@ -53,11 +53,9 @@ class Game {
 
     this.gameLoop();
 
-    debugger;
-
     ReactDOM.render(
-      <Toolbar />
-      , document.getElementById("toolbar")
+      <Toolbar />,
+      document.getElementById("toolbar")! as HTMLElement,
     );
   }
 

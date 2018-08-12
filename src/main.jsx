@@ -50,7 +50,6 @@ var Game = /** @class */ (function () {
         };
         this.state.entities.push(new Room(this.state));
         this.gameLoop();
-        debugger;
         ReactDOM.render(<Toolbar />, document.getElementById("toolbar"));
     };
     Game.prototype.gameLoop = function () {
