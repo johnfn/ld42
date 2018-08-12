@@ -18,7 +18,7 @@ class State {
 
   selection       !: GameSelection;
   entities        !: IEntity[];
-  selectedBuilding!: BuildingName;
+  selectedBuilding!: RoomName;
 
   // like canvas
   stage         !: PIXI.Container;
@@ -44,7 +44,7 @@ class State {
     buttons          : number,
     selection        : GameSelection,
     time             : Time,
-    selectedBuilding : BuildingName,
+    selectedBuilding : RoomName,
   }) {
     for (const k in props) {
       (this as any)[k] = (props as any)[k];
@@ -136,7 +136,8 @@ class Game {
 
     this.state.entities.push(this.state.camera);
     this.state.entities.push(new MapScrollListener(this.app.stage));
-    this.state.entities.push(new Builder(this.app.stage, 256, 384 - 8));
+    this.state.entities.push(new Builder(this.app.stage, 256,
+    this.state.entities.push(new Sun(this.app.stage)); 384 - 8));
     this.state.entities.push(new CatSpawner(this.app.stage));
     this.state.entities.push(new Cloud(this.app.stage));
 

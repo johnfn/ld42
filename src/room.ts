@@ -1,3 +1,37 @@
+const RoomTypes = {
+  condo: {
+    name     : "Condo 1",
+    capacity : 5,
+    occupancy: 0,
+
+    cost: {
+      buttons: 10,
+    },
+  },
+
+  catLabratory: {
+    name: "Cat Laboratailory",
+    capacity : 0,
+    occupancy: 0,
+
+    cost: {
+      buttons: 200,
+    },
+  },
+
+  yarnEmporium: {
+    name: "Yarn Empurrrrrrium",
+    capacity : 0,
+    occupancy: 0,
+
+    cost: {
+      buttons: 20,
+    },
+  },
+};
+
+type RoomName = keyof typeof RoomTypes;
+
 function isRoom(x: any): x is Room {
   return x.type === "ROOM_TAG";
 }
@@ -22,16 +56,17 @@ class Room extends PIXI.Container {
   constructor(props: {
     tileX    : number;
     tileY    : number;
-    occupants: number;
-    capacity : number;
+    roomName : RoomName;
     state    : State;
   }) {
     super();
 
+    const roomStats = RoomTypes[props.roomName];
+
     props.state.entities.push(this);
 
-    this.occupants = props.occupants;
-    this.capacity  = props.capacity;
+    this.occupants = roomStats.occupancy;
+    this.capacity  = roomStats.capacity;
 
     this.x = props.tileX * Constants.MAP_TILE_SIZE;
     this.y = props.tileY * Constants.MAP_TILE_SIZE;

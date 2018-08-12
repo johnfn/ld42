@@ -10,8 +10,8 @@ class HotelFloor extends PIXI.Container {
 
     const testOtherCenter = new Point({ x: myCenter.x + 16, y: myCenter.y});
     testOtherCenter;
-    roomContainers.push(new Room(stage, myCenter));
-    roomContainers.push(new Room(stage, testOtherCenter));
+    // roomContainers.push(new Room(stage, myCenter));
+    // roomContainers.push(new Room(stage, testOtherCenter));
 
     //this.addChild(roomContainers[0]);
     //this.addChild(roomContainers[1]);

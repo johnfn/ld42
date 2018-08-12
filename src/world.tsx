@@ -26,7 +26,6 @@ class World extends PIXI.Graphics implements IEntity {
     this.renderMap();
 
     new Mountain(this);
-    new Sun(this);
 
   }
 
@@ -81,8 +80,7 @@ class World extends PIXI.Graphics implements IEntity {
     const room = new Room({
       tileX: x,
       tileY: y,
-      occupants: 0,
-      capacity: 5,
+      roomName: "condo",
       state,
     });
 

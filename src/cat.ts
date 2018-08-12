@@ -158,9 +158,7 @@ class Cat extends PIXI.Container implements IEntity {
 
       if (dest.worldRect.x > this.x) {
         this.x++;
-      }
-
-      if (dest.worldRect.x < this.x) {
+      } else if (dest.worldRect.x < this.x) {
         this.x--;
       }
 

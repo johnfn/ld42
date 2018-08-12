@@ -33,9 +33,11 @@ class IslandStatus extends React.Component<IslandStatusProps, State> implements 
         <div>
           Population: { catCount }
         </div>
+
         <div>
           Housed: { housedCatCount }
         </div>
+
         <div>
           Total Catpacity: { totalCatpacity }
         </div>
