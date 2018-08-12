@@ -40,10 +40,6 @@ class Cat extends PIXI.Container implements IEntity {
 
     this.state = { activity: 'waiting' };
 
-    // this is the starting position. TODO stop hardcoding this
-    this.x = 16 * 15;
-    this.y = 16 * 25;
-
     this.info = this.generateCatInfo();
 
     this.interactive = true;

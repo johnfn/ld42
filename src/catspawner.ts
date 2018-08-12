@@ -8,7 +8,14 @@ class CatSpawner extends PIXI.Container implements IEntity {
       const numHomelessCats = state.getCats().filter(c => !!c.info.room).length;
 
       if (numHomelessCats < Constants.MAX_HOMELESS_CATS) {
-        state.entities.push(new Cat(state.stage));
+        const newCat = new Cat(state.stage);
+
+        state.entities.push(newCat);
+
+        // this is the starting position. TODO stop hardcoding this
+
+        newCat.x = 14 * 15;
+        newCat.y = 16 * 25 + Math.floor(Math.random() * 100);
       }
     }
   }
