@@ -16,6 +16,7 @@ class Room extends PIXI.Container {
   occupants: number;
   capacity : number;
 
+  // so we can find it in the list of entities
   type = "ROOM_TAG";
 
   constructor(props: {
