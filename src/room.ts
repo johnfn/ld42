@@ -13,6 +13,7 @@ class Room extends PIXI.Container {
     this.addChild(roomSprite); // at relative x, y = 0
     // need roomSprite.width and roomSprite.height to be both divisible by tile_width
     // my size is 144 x 96, floor needs to handle
+    // ie 9 * 16 x 6 * 16
     //Assert(roomSprite.width == 144 && roomSprite.height == 96);
 
     // move myself to my center

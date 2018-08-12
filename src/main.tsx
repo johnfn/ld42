@@ -47,6 +47,7 @@ class Game {
     };
 
     this.state.entities.push(this.state.camera);
+    this.state.entities.push(new MapScrollListener(this.app.stage));
 
     this.state.entities.push(new Room(this.app.stage, new Point({ x: 0, y: 0 })));
 
