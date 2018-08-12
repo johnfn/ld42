@@ -84,7 +84,11 @@ class Cat extends PIXI.Container implements IEntity {
     if (this.state.activity === 'finding-room') {
       // TODO - see if we've reached our destination.
 
-      if (this.state.destination.worldRect.contains(this.getRect())) {
+      const destRect = this.state.destination.room.worldRect();
+
+      if (destRect.contains(this.getRect())) {
+        this.x = Util.RandRange(destRect.x, destRect.x + destRect.w);
+
         return { activity: 'waiting' };
       } else {
         return this.state;
