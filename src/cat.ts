@@ -114,7 +114,7 @@ class Cat extends PIXI.Container implements IEntity {
       if (destRect.contains(this.getRect())) {
         // make sure that this hasn't been filled since we last checked
 
-        if (destRoom.hasCapacity()) {
+        if (!destRoom.hasCapacity()) {
           this.x = Util.RandRange(destRect.x, destRect.x + destRect.w - 32);
 
           this.say(gameState, "My catroom got taken meow :(");
@@ -161,7 +161,7 @@ class Cat extends PIXI.Container implements IEntity {
         this.x--;
       }
 
-      if (this.state.destination.worldRect.contains(this.getRect())) {
+      if (this.state.destination.worldRect.contains(this.getRect()) && this.state.destination.room.hasCapacity()) {
         this.info.room = dest.room; 
         dest.room.occupants++;
       }

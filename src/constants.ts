@@ -17,8 +17,8 @@ class Constants {
 
   public static SKY_HEIGHT_IN_TILES = 30;
 
-  public static MAP_WIDTH_IN_TILES = 50;
-  public static MAP_HEIGHT_IN_TILES = 50;
+  public static MAP_WIDTH_IN_TILES = 70;
+  public static MAP_HEIGHT_IN_TILES = 40;
 
   public static MAP_TILE_SIZE = 16;
 
