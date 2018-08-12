@@ -33,6 +33,8 @@ class Game {
     this.state = {
       entities: [],
       stage: app.stage,
+      buttons: 2,
+      map: new Map(app.stage),
     };
 
     this.state.entities.push(new Room(app.stage));

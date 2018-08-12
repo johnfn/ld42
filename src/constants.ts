@@ -3,7 +3,7 @@ class Constants {
   public static HEIGHT = 600;
 
   public static MAP_WIDTH_IN_TILES = 50;
-  public static MAP_HEIGHT_IN_TILES = 50; // so 12x12 tiles ??
+  public static MAP_HEIGHT_IN_TILES = 50;
 
   public static Strings = {
     "CAT_NAMES": [
