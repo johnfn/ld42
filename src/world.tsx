@@ -44,7 +44,7 @@ class World extends PIXI.Graphics implements IEntity {
     const grid: MapCell[][] = [];
     const numSkyTiles = Constants.SKY_HEIGHT_IN_TILES; 
     //const numSkyTiles = 20; // TODO: unhardcode this
-    const leftWaterTiles = 10;
+    const leftWaterTiles = 4;
 
     for (let x = 0; x < Constants.MAP_WIDTH_IN_TILES; x++) {
       grid[x] = [];
