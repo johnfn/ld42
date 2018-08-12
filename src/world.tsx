@@ -41,13 +41,16 @@ class World extends PIXI.Graphics implements IEntity {
     this.buildings = [];
 
     this.renderMap();
-
-    if (Constants.DEBUG_FLAGS.DEBUG_ADD_BUILDING) {
-      this.addRoom(30, Constants.SKY_HEIGHT_IN_TILES - 6);
-    }
   }
 
   update(state: State): void {
+    if (Constants.DEBUG_FLAGS.DEBUG_ADD_BUILDING) {
+      // only add once (i only put it in here bc we need state)
+      Constants.DEBUG_FLAGS.DEBUG_ADD_BUILDING = false;
+
+      this.addRoom(30, Constants.SKY_HEIGHT_IN_TILES - 6, state);
+    }
+
     // state.buttons += 1;
   }
 
@@ -84,12 +87,16 @@ class World extends PIXI.Graphics implements IEntity {
     return grid;
   }
 
-  public addRoom(x: number, y: number): void {
+  /**
+   * expects x, y coordinates in grid coordinates
+   */
+  public addRoom(x: number, y: number, state: State): void {
     const buildingSprite = new Room(this);
     const widthInTiles   = 9;
     const heightInTiles  = 6;
 
-    // TODO(grant): dont forget all the x + xi , y + yi tiles need to be tagged here
+    state.entities.push(buildingSprite);
+
     this.grid[x][y].building = { type: "room" };
 
     for (let i = x; i < x + widthInTiles; i++) {

@@ -44,7 +44,6 @@ class Cat extends PIXI.Container implements IEntity {
     this.info = this.generateCatInfo();
 
     this.interactive = true;
-
     this.wasClicked = false;
     this.on("click", (e: PIXI.interaction.InteractionEvent) => {
       this.wasClicked = true;

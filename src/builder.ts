@@ -3,8 +3,7 @@
 class Builder extends PIXI.Graphics implements IEntity {
 
   location: Rect;
-
-  silhouette: PIXI.Graphics;
+  pendingInteraction: string | null;
 
   static readonly hexColor = 0xffe7d7;
 
@@ -23,36 +22,38 @@ class Builder extends PIXI.Graphics implements IEntity {
       w: width,
       h: height
     })
+    this.pendingInteraction = null;
 
-    this.silhouette = Builder.renderBuilderRoomSilhouette(this, this.location);
+    Builder.renderBuilderRoomSilhouette(this, this.location);
     this.interactive = true;
     this.hitArea = new PIXI.Rectangle(this.location.x, this.location.y, this.location.w, this.location.h);
 
     this.on('mouseover', (event: PIXI.interaction.InteractionEvent) => {
-      console.log(event);
+      this.pendingInteraction = 'mouseover';
     })
     this.on('mouseout', (event: PIXI.interaction.InteractionEvent) => {
-      console.log(event);
+      this.pendingInteraction = 'mouseout';
     })
     this.on('click', (event: PIXI.interaction.InteractionEvent) => {
-      event;
-      console.log('rec click')
+      this.pendingInteraction = 'click';
     });
 
   }
   
   // check every tick whether we are in the box and whether we have just entered/exited
-  update(state: State): void {
-  }
-
-  onMouseover(state: State): void {
-    const [graphic] = this.children;
-    graphic.alpha = 1.0;
-  }
-
-  onMouseoff(state: State): void {
-    const [graphic] = this.children;
-    graphic.alpha = 0.3;
+  update(gameState: State): void {
+    if (this.pendingInteraction === 'mouseover') {
+      console.log("BUILDER MOUSEOVER")
+      this.alpha = 1.0;
+    } else if (this.pendingInteraction === 'mouseout') {
+      this.alpha = 0.3;
+    } else if (this.pendingInteraction === 'click') {
+      console.log("BUILDER CLICK")
+      gameState.world.addRoom(this.location.x / Constants.MAP_TILE_SIZE, this.location.y / Constants.MAP_TILE_SIZE, gameState);
+      gameState.stage.removeChild(this);
+      new Builder(gameState.stage, this.location.x + this.location.w, this.location.y);
+    }
+    this.pendingInteraction = null;
   }
 
   // TODO(bowei): make this its own private class
@@ -85,7 +86,6 @@ class Builder extends PIXI.Graphics implements IEntity {
       .lineTo(middleX, middleY)
       .closePath();
     graphic.addChild(plusGfx);
-    graphic.alpha = 0.3;
 
     context.addChild(graphic);
     return graphic;

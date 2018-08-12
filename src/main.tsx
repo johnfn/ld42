@@ -4,7 +4,7 @@ interface IEntity {
 
 type GameSelection = 
   | { type: "cat", info: CatInfo }
-  | { type: "room", info: RoomInfo }
+  | { type: "room", info: Building }
   | { type: "none" }
 
 class State {
