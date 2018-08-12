@@ -34,6 +34,8 @@ class Constants {
     DEBUG_ADD_BUILDING: true
   };
 
+  public static INITIAL_BUTTONS_COUNT = 100;
+
   public static CAT_ACTIVITIES = catActivities;
 
   public static TERRAIN_INFO: { 

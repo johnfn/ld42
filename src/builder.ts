@@ -2,6 +2,7 @@
 
 class Builder extends PIXI.Graphics implements IEntity {
 
+  //absolute coordinates, units in pix
   location: Rect;
   pendingInteraction: 'mouseover' | 'mouseout' | 'click' | null;
 
@@ -51,13 +52,18 @@ class Builder extends PIXI.Graphics implements IEntity {
         this._successfullyBuildRoom(gameState);
         gameState.buttons -= 10;
       } else {
-        console.log("I furrr-ailed to complete that action!");
-        console.log("You have insuffurrrr-icient buttons, meow!");
-        console.log("Nya-ot enough buttons!");
+        this.say(gameState, "I furrr-ailed to complete that action!");
+        this.say(gameState, "You have insuffurrrr-icient buttons, meow!");
+        this.say(gameState, "Nya-ot enough buttons!");
       }
     }
 
     this.pendingInteraction = null;
+  }
+
+  say(gameState: State, text: string) {
+    const t = new FloatUpText(gameState, text);
+    this.addChild(t);
   }
 
   _successfullyBuildRoom(gameState: State): void {
@@ -66,8 +72,13 @@ class Builder extends PIXI.Graphics implements IEntity {
       gameState.removeEntity(this);
       gameState.stage.removeChild(this);
       // create the next. constructor adds itself to stage for rendering
-      const nextLocation: [number, number] = [this.location.x + this.location.w, this.location.y];
-      gameState.entities.push(new Builder(gameState.stage, ...nextLocation));
+      let nextLocation: [number, number];
+      if (this.location.x + this.location.w * 2 >= Constants.WORLD_WIDTH) {
+        nextLocation =[this.location.x - 2 * this.location.w, this.location.y - this.location.h];
+      } else {
+        nextLocation = [this.location.x + this.location.w, this.location.y];
+      }
+      gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1]));
   }
 
   // TODO(bowei): make this its own private class
