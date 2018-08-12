@@ -1,23 +1,20 @@
-type CatDesire = "buy-room"
-
 type CatGoal = 
   | { activity: 'waiting' }
   | { activity: 'falling' }
+  | { activity: 'living' }
   | { 
       activity: 'finding-room';
 
       destination: {
         worldRect: Rect;
-        building: Building;
+        room: Room;
       };
-
-      desire: CatDesire;
     }
   ;
 
 type CatInfo = {
   name             : string;
-  room            ?: Building;
+  room            ?: Room;
   favoriteActivity : FavoriteCatActivities;
 }
 
@@ -85,7 +82,7 @@ class Cat extends PIXI.Container implements IEntity {
     if (this.state.activity === 'finding-room') {
       // TODO - see if we've reached our destination.
 
-      if (this.state.destination.worldRect.intersects(this.getRect())) {
+      if (this.state.destination.worldRect.contains(this.getRect())) {
         return { activity: 'waiting' };
       } else {
         return this.state;
@@ -98,27 +95,28 @@ class Cat extends PIXI.Container implements IEntity {
       } else {
         // find a room
 
-        const buildings = gameState.world.getBuildings();
-        const bestBuilding = Util.SortByKey(buildings, b => {
+        const rooms = gameState.getRooms();
+        const bestRoom = Util.SortByKey(rooms, b => {
           if (b.occupants >= b.capacity) {
             return Number.POSITIVE_INFINITY;
           }
 
-          return Util.ManhattanDistance({ x: b.worldRect.x, y: b.worldRect.y }, this);
+          return Util.ManhattanDistance({ x: b.worldRect().x, y: b.worldRect().y }, this);
         })[0];
 
-        if (!bestBuilding) {
+        if (!bestRoom) {
           this.say(gameState, "I can't find any rooms right meow :(");
 
           return { activity: 'waiting' };
         } else {
+          debugger;
+
           return {
             activity: 'finding-room',
             destination: {
-              worldRect: bestBuilding.worldRect,
-              building: bestBuilding,
+              worldRect: bestRoom.worldRect(),
+              room: bestRoom,
             },
-            desire: "buy-room",
           };
         }
       }
@@ -149,9 +147,9 @@ class Cat extends PIXI.Container implements IEntity {
         this.x--;
       }
 
-      if (this.state.destination.worldRect.intersects(this.getRect())) {
-        this.info.room = dest.building; 
-        dest.building.occupants++;
+      if (this.state.destination.worldRect.contains(this.getRect())) {
+        this.info.room = dest.room; 
+        dest.room.occupants++;
 
         this.say(gameState, "purr");
       }
@@ -159,9 +157,11 @@ class Cat extends PIXI.Container implements IEntity {
 
     if (this.wasClicked) {
       this.wasClicked = false;
+
       gameState.selection = {
         type: "cat",
         info: this.info,
+        state: this.state,
       }
     }
   }

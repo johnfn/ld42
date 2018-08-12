@@ -3,7 +3,7 @@
 class Builder extends PIXI.Graphics implements IEntity {
 
   location: Rect;
-  pendingInteraction: string | null;
+  pendingInteraction: 'mouseover' | 'mouseout' | 'click' | null;
 
   static readonly hexColor = 0xffe7d7;
 
@@ -43,17 +43,16 @@ class Builder extends PIXI.Graphics implements IEntity {
   // check every tick whether we are in the box and whether we have just entered/exited
   update(gameState: State): void {
     if (this.pendingInteraction === 'mouseover') {
-      console.log("BUILDER MOUSEOVER")
       this.alpha = 1.0;
     } else if (this.pendingInteraction === 'mouseout') {
       this.alpha = 0.3;
     } else if (this.pendingInteraction === 'click') {
-      console.log("BUILDER CLICK")
       gameState.world.addRoom(this.location.x / Constants.MAP_TILE_SIZE, this.location.y / Constants.MAP_TILE_SIZE, gameState);
       gameState.stage.removeChild(this);
       gameState.entities.push(new Builder(gameState.stage, this.location.x + this.location.w, this.location.y));
       gameState.buttons -= 10;
     }
+
     this.pendingInteraction = null;
   }
 

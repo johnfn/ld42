@@ -3,8 +3,8 @@ interface IEntity {
 }
 
 type GameSelection = 
-  | { type: "cat", info: CatInfo }
-  | { type: "room", info: Building }
+  | { type: "cat", info: CatInfo, state: CatGoal }
+  | { type: "room", room: Room }
   | { type: "none" }
 
 class State {
@@ -40,6 +40,18 @@ class State {
 
   removeEntity(entity: IEntity) {
     this.removeList.push(entity);
+  }
+
+  getRooms(): Room[] {
+    const rooms: Room[] = [];
+
+    for (const ent of this.entities) {
+      if (isRoom(ent)) {
+        rooms.push(ent);
+      }
+    }
+
+    return rooms;
   }
 }
 

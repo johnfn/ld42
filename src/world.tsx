@@ -7,22 +7,9 @@ type MapBuilding =
 
 type MapCell = {
   terrain        : TerrainTypes;
-  building      ?: MapBuilding;
   terrainSprite ?: PIXI.Container;
   buildingSprite?: PIXI.Container;
 }
-
-type Building = {
-  type     : "room" | "laboratory";
-
-  tileX    : number;
-  tileY    : number;
-
-  worldRect: Rect;
-
-  occupants: number;
-  capacity : number;
-};
 
 // TODO: Maybe separate into layers?
 
@@ -31,14 +18,12 @@ class World extends PIXI.Graphics implements IEntity {
    * what is at the (x, y) position of the map? 
    */
   grid: MapCell[][];
-  buildings: Building[];
 
   constructor(stage: PIXI.Container) {
     super();
 
     stage.addChild(this);
     this.grid = this.buildMap();
-    this.buildings = [];
 
     this.renderMap();
   }
@@ -91,48 +76,15 @@ class World extends PIXI.Graphics implements IEntity {
    * expects x, y coordinates in grid coordinates
    */
   public addRoom(x: number, y: number, state: State): void {
-    const buildingSprite = new Room(this);
-    const widthInTiles   = 9;
-    const heightInTiles  = 6;
-
-    state.entities.push(buildingSprite);
-
-    this.grid[x][y].building = { type: "room" };
-
-    for (let i = x; i < x + widthInTiles; i++) {
-      for (let j = y; j < y + heightInTiles; j++) {
-        this.grid[i][j].building = { type: "room" };
-      }
-    }
-
-    buildingSprite.x = x * Constants.MAP_TILE_SIZE;
-    buildingSprite.y = y * Constants.MAP_TILE_SIZE;
-
-    this.addChild(buildingSprite);
-
-    // TODO(grant): dont forget all the x + xi , y + yi tiles need to be tagged here too
-    this.grid[x][y].buildingSprite = buildingSprite;
-
-    this.buildings.push({
-      type: "room",
-
+    const room = new Room({
       tileX: x,
       tileY: y,
-
-      worldRect: new Rect({
-        x: x * Constants.MAP_TILE_SIZE,
-        y: y * Constants.MAP_TILE_SIZE,
-        w: widthInTiles * 16,
-        h: widthInTiles * 16,
-      }),
-
       occupants: 0,
-      capacity : 5,
+      capacity: 5,
+      state,
     });
-  }
 
-  public getBuildings(): Building[] {
-    return this.buildings;
+    this.addChild(room);
   }
 
   public getCellAt(x: number, y: number): MapCell {

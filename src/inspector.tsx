@@ -24,12 +24,16 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
     }
 
     if (this.state.selection.type === "cat") {
+      let description = "";
+
       return (
         <div>
           <h2>Cat Informyation</h2>
           <div>Name: { this.state.selection.info.name } </div>
           <div>Favorite activity: { this.state.selection.info.favoriteActivity } </div>
           <div>Housing Status: { this.state.selection.info.room ? "Housed!" : "Homeless" } </div>
+
+          { JSON.stringify(this.state.selection.state) }
         </div>
       );
     }
@@ -38,7 +42,10 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
       return (
         <div>
           <h2>Room Inspecturr</h2>
-          <div>Catpacity: { this.state.selection.info.occupants } / { this.state.selection.info.capacity } </div>
+          <div>Catpacity: { this.state.selection.room.occupants } / { this.state.selection.room.capacity } </div>
+          <div>
+
+          </div>
         </div>
       );
     }
