@@ -40,7 +40,6 @@ class Game {
     };
 
     this.state.entities.push();
-
     
     const graphics = new PIXI.Graphics();
 
