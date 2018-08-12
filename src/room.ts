@@ -1,7 +1,7 @@
 class Room extends PIXI.Container {
   constructor(stage: PIXI.Container) {
     super();
-    const spriteTexture: PIXI.Texture = PIXI.loader.resources[`./assets/test.png`].texture;
+    const spriteTexture: PIXI.Texture = PIXI.loader.resources.room.texture;
     this.addChild(new PIXI.Sprite(spriteTexture));
 
     //this.beginFill(0x8B572A, 1);
