@@ -1,28 +1,13 @@
-class HotelFloor extends PIXI.Container {
-  constructor(stage: PIXI.Container, myCenter: Point) {
+class Cat extends PIXI.Container {
+  constructor(stage: PIXI.Container) {
     super();
 
-    const roomContainers: Room[] = [];
+    const graphic = new PIXI.Graphics();
 
-    const testOtherCenter = new Point({ x: myCenter.x + 16, y: myCenter.y});
-    testOtherCenter;
-    roomContainers.push(new Room(stage, myCenter));
-    roomContainers.push(new Room(stage, testOtherCenter));
+    graphic.beginFill(0xffffff);
+    graphic.drawRect(0, 0, 16, 16);
 
-    //this.addChild(roomContainers[0]);
-    //this.addChild(roomContainers[1]);
-
-    this.x = myCenter.x - this.width / 2.0;
-    this.y = myCenter.y - this.height / 2.0;
-
-    //j//jroomSprite.x = Constants.MAP_TILE_SIZE * 0.5;
-    //jroomSprite.y = Constants.MAP_TILE_SIZE * 0.5 * 2;
-    //jthis.addChild(roomSprite);
-
-    //this.beginFill(0x8B572A, 1);
-    //this.drawRect(50, 250, 120, 120);
-
-    stage.addChild(this);
+    this.addChild(graphic);
   }
 
   update(state: State): void {

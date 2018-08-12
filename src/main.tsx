@@ -65,6 +65,7 @@ class Game {
     this.state.entities.push(new Builder(this.app.stage));
 
     this.state.entities.push(new GrantsDebug(this.app.stage));
+    this.state.entities.push(new Cat(this.app.stage));
 
     this.gameLoop();
 
@@ -91,9 +92,31 @@ class Game {
 // TODO(someone): Move all assets into constants and load via loop
 
 PIXI.loader.add("testmap", `./assets/testmap.json`);
-PIXI.loader.add("test"   , `./assets/test.png`);
-PIXI.loader.add("room"   , `./assets/room-1.png`); // 144 x 96
-PIXI.loader.add("room"   , `./assets/umbrella-1.png`); // 144 x 96
-PIXI.loader.add("room"   , `./assets/water-1.png`); // 144 x 96
+//PIXI.loader.add("test"   , `./assets/test.png`);
+//PIXI.loader.add("room"   , `./assets/room-1.png`); // 144 x 96
+//PIXI.loader.add("room"   , `./assets/umbrella-1.png`); // 144 x 96
+//PIXI.loader.add("room"   , `./assets/water-1.png`); // 144 x 96
+
+const ASSET_LIST: string = `
+birds-1.png
+boat-1.png
+button-1.png
+clouds-1.png
+dock-1.png
+ground-1.png
+ground-2.png
+mountains-1.png
+pink-cat-1.png
+room-1.png
+sun-1.png
+test.png
+tree-1.png
+umbrella-1.png
+water-1.png
+`;
+ASSET_LIST.split('\n').map(asset_name => {
+  PIXI.loader.add(asset_name.replace(/.png/g, '')   , `./assets/${asset_name}`);
+})
+  
 
 new Game();

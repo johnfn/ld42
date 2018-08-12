@@ -20,7 +20,7 @@ class Builder extends PIXI.Graphics implements IEntity {
   renderBuilderRoomSilhouette(): void {
     const graphic = new PIXI.Graphics();
 
-    const roomTexture: PIXI.Texture = PIXI.loader.resources.room.texture;
+    const roomTexture: PIXI.Texture = PIXI.loader.resources['room-1'].texture;
     const roomSprite: PIXI.Sprite = new PIXI.Sprite(roomTexture);
     const width = roomSprite.width;
     const height = roomSprite.height;

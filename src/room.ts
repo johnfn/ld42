@@ -9,7 +9,7 @@ class Room extends PIXI.Container {
     super();
     
     // why are we wrapping roomSprite? idk but thats how it is
-    const spriteTexture: PIXI.Texture = PIXI.loader.resources.room.texture;
+    const spriteTexture: PIXI.Texture = PIXI.loader.resources['room-1'].texture;
     const roomSprite: PIXI.Sprite = new PIXI.Sprite(spriteTexture);
     roomSprite;
     const debugSprite: PIXI.Graphics = new PIXI.Graphics();
