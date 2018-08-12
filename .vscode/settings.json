@@ -1,6 +1,7 @@
 {
     "files.exclude": {
         "src/**/*.js": true,
+        "src/**/*.jsx": true,
         "src/**/*.js.map": true
     }
 }
