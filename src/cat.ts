@@ -4,7 +4,7 @@ type CatGoal =
   | { activity: 'waiting' }
   | { activity: 'falling' }
   | { 
-      activity: 'walking';
+      activity: 'finding-room';
 
       destination: {
         worldRect: Rect;
@@ -82,35 +82,45 @@ class Cat extends PIXI.Container implements IEntity {
       return { activity: 'waiting' };
     }
 
-    if (this.state.activity === 'walking') {
+    if (this.state.activity === 'finding-room') {
       // TODO - see if we've reached our destination.
 
-      return this.state;
+      if (this.state.destination.worldRect.intersects(this.getRect())) {
+        return { activity: 'waiting' };
+      } else {
+        return this.state;
+      }
     }
 
     if (this.state.activity === 'waiting') {
-      const buildings = gameState.world.getBuildings();
-      const bestBuilding = Util.SortByKey(buildings, b => {
-        if (b.occupants >= b.capacity) {
-          return Number.POSITIVE_INFINITY;
-        }
-
-        return Util.ManhattanDistance({ x: b.worldRect.x, y: b.worldRect.y }, this);
-      })[0];
-
-      if (!bestBuilding) {
-        this.say(gameState, "I can't find any rooms right meow :(");
-
+      if (this.info.room) {
         return { activity: 'waiting' };
       } else {
-        return {
-          activity: 'walking',
-          destination: {
-            worldRect: bestBuilding.worldRect,
-            building: bestBuilding,
-          },
-          desire: "buy-room",
-        };
+        // find a room
+
+        const buildings = gameState.world.getBuildings();
+        const bestBuilding = Util.SortByKey(buildings, b => {
+          if (b.occupants >= b.capacity) {
+            return Number.POSITIVE_INFINITY;
+          }
+
+          return Util.ManhattanDistance({ x: b.worldRect.x, y: b.worldRect.y }, this);
+        })[0];
+
+        if (!bestBuilding) {
+          this.say(gameState, "I can't find any rooms right meow :(");
+
+          return { activity: 'waiting' };
+        } else {
+          return {
+            activity: 'finding-room',
+            destination: {
+              worldRect: bestBuilding.worldRect,
+              building: bestBuilding,
+            },
+            desire: "buy-room",
+          };
+        }
       }
     }
 
@@ -128,7 +138,7 @@ class Cat extends PIXI.Container implements IEntity {
       this.y += 1;
     }
 
-    if (this.state.activity === 'walking') {
+    if (this.state.activity === 'finding-room') {
       const dest = this.state.destination;
 
       if (dest.worldRect.x > this.x) {
@@ -141,7 +151,7 @@ class Cat extends PIXI.Container implements IEntity {
 
       if (this.state.destination.worldRect.intersects(this.getRect())) {
         this.info.room = dest.building; 
-        dest.building.occupants++;
+        // dest.building.occupants++;
 
         this.say(gameState, "purr");
       }
