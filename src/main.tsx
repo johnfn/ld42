@@ -42,7 +42,9 @@ class Game {
       camera   : new Camera(),
     };
 
-    this.state.entities.push(new Room(this.app.stage));
+    this.state.entities.push(new Room(this.app.stage, new Point({x: 0,y: 0}));
+
+    this.state.entities.push(new GrantsDebug(this.app.stage));
 
     this.gameLoop();
 

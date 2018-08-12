@@ -4,20 +4,15 @@
  */
 class HotelFloor extends PIXI.Container {
   
-  constructor(stage: PIXI.Container) {
+  constructor(stage: PIXI.Container, my_center: Point) {
     super();
 
     const roomContainers: Room[] = [];
 
-    roomContainers.push(new Room(stage));
+    roomContainers.push(new Room(stage, my_center));
 
-    this.addChild()
+    this.addChild(roomContainers[0]);
 
-    const spriteTexture: PIXI.Texture = PIXI.loader.resources.room.texture;
-    const roomSprite: PIXI.Sprite = new PIXI.Sprite(spriteTexture);
-    // need roomSprite.width and roomSprite.height to be both divisible by tile_width
-    // my size is 144 x 96, floor needs to handle
-    //Assert(roomSprite.width == 144 && roomSprite.height == 96);
 
     roomSprite.x = Constants.MAP_TILE_SIZE * 0.5;
     roomSprite.y = Constants.MAP_TILE_SIZE * 0.5 * 2;
