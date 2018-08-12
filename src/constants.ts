@@ -12,6 +12,8 @@ class Constants {
   public static TOOLBAR_HEIGHT = 16;
   public static MAP_TILE_SIZE = 16;
 
+  public static MOUSE_SCROLL_DEADZONE = 40;
+
   public static Strings = {
     "CAT_NAMES": [
       "Charlie",

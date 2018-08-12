@@ -6,6 +6,7 @@ class Builder extends PIXI.Graphics implements IEntity {
 
   constructor(stage: PIXI.Container) {
     super();
+    console.log('builder constructor')
 
     stage.addChild(this);
     
@@ -28,10 +29,14 @@ class Builder extends PIXI.Graphics implements IEntity {
     graphic.beginFill(0x888888); // grey
     graphic.drawRect(50, 100, width, height);
     
-    silhouette = graphic;
+
+    // TODO: Opacity handling
+
+
+    //silhouette = graphic;
+
     // silhouette = null;
     this.addChild(graphic);
-    
   }
 
 

@@ -4,17 +4,20 @@
  */
 class HotelFloor extends PIXI.Container {
   
-  constructor(stage: PIXI.Container, my_center: Point) {
+  constructor(stage: PIXI.Container, myCenter: Point) {
     super();
 
     const roomContainers: Room[] = [];
 
-    roomContainers.push(new Room(this, my_center));
+    const testOtherCenter = new Point({ x: myCenter.x + 48, y: myCenter.y});
+    roomContainers.push(new Room(stage, myCenter));
+    roomContainers.push(new Room(stage, testOtherCenter));
 
     this.addChild(roomContainers[0]);
+    this.addChild(roomContainers[1]);
 
-    this.x = my_center.x - this.width / 2.0;
-    this.y = my_center.y - this.height / 2.0;
+    this.x = myCenter.x - this.width / 2.0;
+    this.y = myCenter.y - this.height / 2.0;
 
     //j//jroomSprite.x = Constants.MAP_TILE_SIZE * 0.5;
     //jroomSprite.y = Constants.MAP_TILE_SIZE * 0.5 * 2;
