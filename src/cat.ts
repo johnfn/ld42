@@ -8,9 +8,12 @@ class Cat extends PIXI.Container {
     graphic.drawRect(0, 0, 16, 16);
 
     this.addChild(graphic);
+    stage.addChild(this);
   }
 
   update(state: State): void {
     // state.buttons += 1;
+    this.x = 200;
+    this.y = 200;
   }
 }

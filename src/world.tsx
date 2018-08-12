@@ -14,7 +14,7 @@ type MapBuilding =
 type MapCell = {
   terrain       : MapTerrain;
   building     ?: MapBuilding;
-  terrainSprite?: PIXI.Graphics;
+  terrainSprite?: PIXI.Container;
 }
 
 class World extends PIXI.Graphics implements IEntity {
@@ -64,6 +64,10 @@ class World extends PIXI.Graphics implements IEntity {
       }
     }
 
+    if (Constants.DEBUG_FLAGS.DEBUG_ADD_BUILDING) {
+      grid[20][10].building
+    }
+
     return grid;
   }
 
@@ -71,17 +75,39 @@ class World extends PIXI.Graphics implements IEntity {
     for (let x = 0; x < Constants.MAP_WIDTH_IN_TILES; x++) {
       for (let y = 0; y < Constants.MAP_WIDTH_IN_TILES; y++) {
         const terrainType = this.grid[x][y].terrain.type;
-        const graphic = new PIXI.Graphics();
+        let graphic: PIXI.Container;//  = new PIXI.Graphics();
 
         // TODO(johnfn): unhardcode colors
         if (terrainType === "sky") {
-          graphic.beginFill(0x8888ff);
+          graphic = (() => {
+            const graphic = new PIXI.Graphics();
+            graphic.beginFill(Constants.COLORS.SKY);
+            graphic.drawRect(0, 0, Constants.MAP_TILE_SIZE, Constants.MAP_TILE_SIZE);
+            return graphic;
+          })()
         } else if (terrainType === "grass") {
-          graphic.beginFill(0x00ff00);
+          graphic = (() => {
+            const graphic = new PIXI.Graphics();
+            //const graphic = new PIXI.Sprite(PIXI.loader.resources['ground-1'].texture);
+            //graphic.scale = new PIXI.Point(3,4);
+            graphic.beginFill(0x00ff00);
+        graphic.drawRect(0, 0, Constants.MAP_TILE_SIZE, Constants.MAP_TILE_SIZE);
+            return graphic;
+          })()
         } else if (terrainType === "dirt") {
-          graphic.beginFill(0xc3870f);
+          graphic = (() => {
+            const graphic = new PIXI.Graphics();
+            graphic.beginFill(0xc3870f);
+        graphic.drawRect(0, 0, Constants.MAP_TILE_SIZE, Constants.MAP_TILE_SIZE);
+            return graphic;
+          })()
         } else if (terrainType === "water") {
-          graphic.beginFill(0x0000ff);
+          graphic = (() => {
+            const graphic = new PIXI.Graphics();
+            graphic.beginFill(Constants.COLORS.WATER);
+        graphic.drawRect(0, 0, Constants.MAP_TILE_SIZE, Constants.MAP_TILE_SIZE);
+            return graphic;
+          })()
         } else {
           // ensure we didnt miss a case
 
@@ -89,7 +115,6 @@ class World extends PIXI.Graphics implements IEntity {
           throw new Error(`unexpected terrain type ${ x }`);
         }
 
-        graphic.drawRect(0, 0, Constants.MAP_TILE_SIZE, Constants.MAP_TILE_SIZE);
 
         graphic.x = x * Constants.MAP_TILE_SIZE;
         graphic.y = y * Constants.MAP_TILE_SIZE;

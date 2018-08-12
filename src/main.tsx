@@ -115,6 +115,8 @@ umbrella-1.png
 water-1.png
 `;
 ASSET_LIST.split('\n').map(asset_name => {
+  if (asset_name.trim() === "") { return; }
+
   PIXI.loader.add(asset_name.replace(/.png/g, '')   , `./assets/${asset_name}`);
 })
   

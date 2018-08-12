@@ -15,14 +15,18 @@ class Constants {
   public static MOUSE_SCROLL_DEADZONE = 40;
   public static MOUSE_SCROLL_SPEED = 3;
 
+  public static DEBUG_FLAGS = {
+    DEBUG_ADD_BUILDING: true
+  };
+
   public static EVENTS = {
     mouseover: 'mouseover',
     mouseout: 'mouseout'
   };
 
   public static COLORS = {
-    SKY: '7ED2E4',
-    WATER: '85B7E3'
+    SKY: 0x7ED2E4,
+    WATER: 0x85B7E3
   }
 
   public static Strings = {

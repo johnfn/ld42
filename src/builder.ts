@@ -2,7 +2,9 @@
 
 class Builder extends PIXI.Graphics implements IEntity {
   
-  silhouette!: PIXI.Graphics; 
+  silhouette!: PIXI.Graphics;
+  
+  readonly hexColor = 0xffe7d7;
 
   constructor(stage: PIXI.Container) {
     super();
@@ -25,8 +27,19 @@ class Builder extends PIXI.Graphics implements IEntity {
     const width = roomSprite.width;
     const height = roomSprite.height;
 
-    graphic.beginFill(0x888888); // grey
-    graphic.drawRect(50, 100, width, height);
+    const startX = 50;  // Arbitrary
+    const startY = 100; // Arbitrary
+
+    graphic
+      // .beginFill(color)
+      .lineStyle(10, this.hexColor, 1, 0) // alignment 0 = inner
+      .moveTo(startX, startY)
+      .lineTo(width, 0)
+      .lineTo(0, height)
+      .lineTo(-1 * width, 0)
+      .lineTo(0, -1 * height)
+      .closePath()
+    // graphic.drawRect(50, 100, width, height);
     
     // TODO: Opacity handling
     graphic.interactive = true;
@@ -34,7 +47,7 @@ class Builder extends PIXI.Graphics implements IEntity {
     graphic.alpha = 0.3;
     console.log(Constants.EVENTS)
     graphic.on(Constants.EVENTS.mouseover, e => graphic.alpha = 1.0);
-    graphic.on(Constants.EVENTS.mouseoff, e => graphic.alpha =  0.3);
+    graphic.on(Constants.EVENTS.mouseout, e => graphic.alpha =  0.3);
 
     //silhouette = graphic;
 
