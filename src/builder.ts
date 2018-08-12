@@ -52,6 +52,8 @@ class Builder extends PIXI.Graphics implements IEntity {
         gameState.buttons -= 10;
       } else {
         console.log("I furrr-ailed to complete that action!");
+        console.log("You have insuffurrrr-icient buttons, meow!");
+        console.log("Nya-ot enough buttons!");
       }
     }
 
@@ -64,7 +66,8 @@ class Builder extends PIXI.Graphics implements IEntity {
       gameState.removeEntity(this);
       gameState.stage.removeChild(this);
       // create the next. constructor adds itself to stage for rendering
-      gameState.entities.push(new Builder(gameState.stage, this.location.x + this.location.w, this.location.y));
+      const nextLocation: [number, number] = [this.location.x + this.location.w, this.location.y];
+      gameState.entities.push(new Builder(gameState.stage, ...nextLocation));
   }
 
   // TODO(bowei): make this its own private class
