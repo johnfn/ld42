@@ -18,7 +18,7 @@ type MapCell = {
   terrainSprite?: PIXI.Graphics;
 }
 
-class Map extends PIXI.Graphics implements IEntity {
+class World extends PIXI.Graphics implements IEntity {
   /**
    * what is at the (x, y) position of the map? 
    */
@@ -37,6 +37,8 @@ class Map extends PIXI.Graphics implements IEntity {
     const grid: MapCell[][] = [];
 
     for (let x = 0; x < Constants.MAP_WIDTH_IN_TILES; x++) {
+      grid[x] = [];
+
       for (let y = 0; y < Constants.MAP_WIDTH_IN_TILES; y++) {
         let terrain: MapTerrain;
 
@@ -84,6 +86,8 @@ class Map extends PIXI.Graphics implements IEntity {
         graphic.y = y * 32;
 
         this.grid[x][y].terrainSprite = graphic;
+
+        this.addChild(graphic);
       }
     }
   }

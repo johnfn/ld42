@@ -10,7 +10,7 @@ class State {
 
   buttons!: number;
 
-  map!: Map;
+  map!: World;
 }
 
 class Game {
@@ -34,7 +34,7 @@ class Game {
       entities: [],
       stage: app.stage,
       buttons: 2,
-      map: new Map(app.stage),
+      map: new World(app.stage),
     };
 
     this.state.entities.push(new Room(app.stage));
