@@ -69,6 +69,10 @@ class Cat extends PIXI.Container implements IEntity {
 
         return Util.ManhattanDistance(b, this);
       })[0];
+
+      if (!bestBuilding) {
+        return { activity: 'waiting' };
+      }
     }
 
     return { activity: 'waiting' };
@@ -85,8 +89,11 @@ class Cat extends PIXI.Container implements IEntity {
       this.y += 1;
     }
 
+  }
+
+  say(gameState: State, text: string) {
     if (Math.random() > .99) {
-      const t = new FloatUpText(gameState, "meow!");
+      const t = new FloatUpText(gameState, text);
 
       this.addChild(t);
     }
