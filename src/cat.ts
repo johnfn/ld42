@@ -1,4 +1,28 @@
-class Cat extends PIXI.Container {
+type CatGoal = 
+  | { activity: 'waiting' }
+  | { activity: 'falling' }
+  | { 
+      activity: 'walking';
+
+      destination: {
+        worldX: number;
+        worldY: number;
+      };
+
+      path: Point[];
+    }
+  ;
+
+type CatInfo = {
+  name             : string;
+  room            ?: Point;
+  favoriteActivity : FavoriteCatActivities;
+}
+
+class Cat extends PIXI.Container implements IEntity {
+  state: CatGoal;
+  info : CatInfo;
+
   constructor(stage: PIXI.Container) {
     super();
 
@@ -9,11 +33,51 @@ class Cat extends PIXI.Container {
 
     this.addChild(graphic);
     stage.addChild(this);
+
+    this.state = { activity: 'waiting' };
+
+    this.x = 16 * 15;
+    this.y = 16 * 25;
+
+    this.info = this.generateCatInfo();
   }
 
-  update(state: State): void {
-    // state.buttons += 1;
-    this.x = 200;
-    this.y = 200;
+  generateCatInfo(): CatInfo {
+    return {
+      name            : Util.RandElem(Constants.Strings.CAT_NAMES),
+      favoriteActivity: Util.RandElem(Object.keys(Constants.CAT_ACTIVITIES) as FavoriteCatActivities[]),
+    }
+  }
+
+  updateCatState(gameState: State): CatGoal {
+    const tileBelow = gameState.world.getCellAt(this.x, this.y + Constants.MAP_TILE_SIZE);
+
+    if (tileBelow.terrain === 'sky') {
+      return { activity: 'falling' };
+    }
+
+    if (this.state.activity === 'falling') {
+      // we already checked that we're not in the sky, so we're definitely on land.
+
+      return { activity: 'waiting' };
+    }
+
+    if (this.state.activity === 'waiting') {
+
+    }
+
+    return { activity: 'waiting' };
+  }
+
+  update(gameState: State): void {
+    // update state
+
+    this.state = this.updateCatState(gameState);
+
+    // update cat based on state
+
+    if (this.state.activity === 'falling') {
+      this.y += 1;
+    }
   }
 }

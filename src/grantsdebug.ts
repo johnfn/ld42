@@ -2,7 +2,7 @@
 
 // Feel free to disregard this.
 
-class GrantsDebug extends PIXI.Container {
+class GrantsDebug extends PIXI.Container implements IEntity {
   constructor(stage: PIXI.Container) {
     super();
 

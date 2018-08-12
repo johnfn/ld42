@@ -7,7 +7,7 @@ class State {
 
   // like canvas
   stage         !: PIXI.Container;
-  map           !: World;
+  world           !: World;
   camera        !: Camera;
   mousePosition !: Point;
 
@@ -50,7 +50,7 @@ class Game {
       entities     : [],
       stage        : this.app.stage,
       buttons      : 2,
-      map          : new World(this.app.stage),
+      world        : new World(this.app.stage),
       camera       : new Camera(),
       mousePosition: new Point({ x: 0, y: 0 }),
     };
@@ -62,7 +62,7 @@ class Game {
 
     this.state.entities.push(new HotelFloor(this.app.stage, new Point({ x: Constants.SCREEN_WIDTH / 2.0, y: 80 })));
 
-    this.state.entities.push(new Builder(this.app.stage));
+    this.state.entities.push(new Builder(this.app.stage, 50, 100));
 
     this.state.entities.push(new GrantsDebug(this.app.stage));
     this.state.entities.push(new Cat(this.app.stage));
@@ -77,10 +77,12 @@ class Game {
     this.state.entities.push(Toolbar.Instance);
   }
 
+  removeEntity(x: IEntity) {
+
+  }
+
   gameLoop(): void {
     requestAnimationFrame(() => this.gameLoop());
-
-    //state.mousePosition =  => this.gameLoop());
 
     for (const entity of this.state.entities) {
       entity.update(this.state);
