@@ -65,7 +65,8 @@ class Camera {
     });
   }
 
-  update(_state: State) {
-
+  update(state: State) {
+    state.stage.x = this.desiredStageX;
+    state.stage.y = this.desiredStageY;
   }
 }

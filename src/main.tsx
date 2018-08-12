@@ -9,12 +9,12 @@ class State {
   stage   !: PIXI.Container;
   buttons !: number;
   map     !: World;
-  camera  !:Camera
+  camera  !: Camera
 }
 
 class Game {
-  state!: State;
-  app!: PIXI.Application;
+  state !: State;
+  app   !: PIXI.Application;
   
   constructor() {
     PIXI.loader.load(() => this.start());
@@ -35,11 +35,11 @@ class Game {
     this.stupidPixiSetupSetuff();
 
     this.state = {
-      entities: [],
-      stage: this.app.stage,
-      buttons: 2,
-      map: new World(this.app.stage),
-      camera: new Camera(),
+      entities : [],
+      stage    : this.app.stage,
+      buttons  : 2,
+      map      : new World(this.app.stage),
+      camera   : new Camera(),
     };
 
     this.state.entities.push(new Room(this.app.stage));
@@ -63,8 +63,10 @@ class Game {
   }
 }
 
+// TODO(someone): Move all assets into constants and load via loop
+
 PIXI.loader.add("testmap", `./assets/testmap.json`);
-PIXI.loader.add("test", `./assets/test.png`);
-PIXI.loader.add("room", `./assets/room-1.png`); // 144 x 96
+PIXI.loader.add("test"   , `./assets/test.png`);
+PIXI.loader.add("room"   , `./assets/room-1.png`); // 144 x 96
 
 new Game();
