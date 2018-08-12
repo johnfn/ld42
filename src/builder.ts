@@ -52,8 +52,8 @@ class Builder extends PIXI.Graphics implements IEntity {
         this._successfullyBuildRoom(gameState);
         gameState.buttons -= 10;
       } else {
-        this.say(gameState, "I furrr-ailed to complete that action!");
-        this.say(gameState, "You have insuffurrrr-icient buttons, meow!");
+        //this.say(gameState, "I furrr-ailed to complete that action!");
+        //this.say(gameState, "You have insuffurrrr-icient buttons, meow!");
         this.say(gameState, "Nya-ot enough buttons!");
       }
     }
@@ -63,6 +63,9 @@ class Builder extends PIXI.Graphics implements IEntity {
 
   say(gameState: State, text: string) {
     const t = new FloatUpText(gameState, text);
+    // why doesnt float up text handle its position properly 
+    t.x = this.location.x;
+    t.y = this.location.y;
     this.addChild(t);
   }
 
