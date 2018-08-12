@@ -20,6 +20,7 @@ class IslandStatus extends React.Component<IslandStatusProps, State> implements 
 
   render() {
     const allCats = State.Instance.getCats();
+    const allRooms = State.Instance.getRooms();
     const catCount = allCats.length;
     const housedCatCount = allCats.filter(c => c.info.room).length;
 
