@@ -9,6 +9,7 @@ class Room extends PIXI.Graphics {
   }
 
   update(state: State): void {
+    state.buttons += 1;
   }
 }
 

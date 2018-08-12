@@ -11,16 +11,17 @@ class Toolbar extends React.Component<ToolbarProps, State> {
 
     Toolbar.Toolbar = this;
 
-    console.log(props.state);
-
-    this.setState({ 
-      ...props.state,
-    });
+    this.state = props.state;
   }
 
   render() {
     return (
-      <div>
+      <div
+        style={{
+          color: 'white',
+          font: 'Arial',
+        }}
+      >
         buttons: { this.state.buttons }
       </div>
     );
