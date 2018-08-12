@@ -14,8 +14,11 @@ type Time = {
 }
 
 class State {
-  selection     !: GameSelection;
-  entities      !: IEntity[];
+  public static Instance: State;
+
+  selection       !: GameSelection;
+  entities        !: IEntity[];
+  selectedBuilding!: BuildingName;
 
   // like canvas
   stage         !: PIXI.Container;
@@ -33,18 +36,21 @@ class State {
   removeList     : IEntity[] = [];
 
   constructor(props: {
-    entities      : IEntity[],
-    stage         : PIXI.Container,
-    world         : World,
-    camera        : Camera,
-    mousePosition : Point,
-    buttons       : number,
-    selection     : GameSelection,
-    time          : Time,
+    entities         : IEntity[],
+    stage            : PIXI.Container,
+    world            : World,
+    camera           : Camera,
+    mousePosition    : Point,
+    buttons          : number,
+    selection        : GameSelection,
+    time             : Time,
+    selectedBuilding : BuildingName,
   }) {
     for (const k in props) {
       (this as any)[k] = (props as any)[k];
     }
+
+    State.Instance = this;
   }
 
   removeEntity(entity: IEntity) {
@@ -115,14 +121,15 @@ class Game {
     this.stupidPixiSetupSetuff();
 
     this.state = new State({
-      entities     : [],
-      stage        : this.app.stage,
-      buttons      : Constants.DEBUG_FLAGS.DEBUG_INITIAL_BUTTONS_COUNT || Constants.INITIAL_BUTTONS_COUNT,
-      world        : new World(this.app.stage),
-      camera       : new Camera(),
-      mousePosition: new Point({ x: 0, y: 0 }),
-      selection    : { type: "none" },
-      time         : { hour: 6, minute: 0 },
+      entities        : [],
+      stage           : this.app.stage,
+      buttons         : Constants.DEBUG_FLAGS.DEBUG_INITIAL_BUTTONS_COUNT || Constants.INITIAL_BUTTONS_COUNT,
+      world           : new World(this.app.stage),
+      camera          : new Camera(),
+      mousePosition   : new Point({ x: 0, y: 0 }),
+      selection       : { type: "none" },
+      time            : { hour: 6, minute: 0 },
+      selectedBuilding: "condo",
     });
 
     this.app.stage.interactive = true;
@@ -131,6 +138,7 @@ class Game {
     this.state.entities.push(new MapScrollListener(this.app.stage));
     this.state.entities.push(new Builder(this.app.stage, 256, 384 - 8));
     this.state.entities.push(new CatSpawner(this.app.stage));
+    this.state.entities.push(new Cloud(this.app.stage));
 
     //this.state.entities.push(new HotelFloor(this.app.stage, new Point({ x: Constants.SCREEN_WIDTH / 2.0, y: 80 })));
 
@@ -151,6 +159,20 @@ class Game {
     );
 
     this.state.entities.push(Inspector.Instance);
+
+    ReactDOM.render(
+      <Store state={ this.state } />,
+      document.getElementById("store")! as HTMLElement,
+    );
+
+    this.state.entities.push(Store.Instance);
+
+    ReactDOM.render(
+      <IslandStatus state={ this.state } />,
+      document.getElementById("island-status")! as HTMLElement,
+    );
+
+    this.state.entities.push(IslandStatus.Instance);
   }
 
   tick = 0;
