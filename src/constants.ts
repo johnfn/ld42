@@ -17,6 +17,9 @@ class Constants {
       "Mr. Snuggles",
       "Archbishop Mannykins III",
       "Professor Fluffles"
-    ]
+    ],
+    "ERRORS": {
+      "1": "You don't have enough resources to do that!"
+    }
   };
 }
