@@ -91,6 +91,7 @@ class Builder extends PIXI.Graphics implements IEntity {
           anotherBuilder.location.x === nextLocation[0] && anotherBuilder.location.y === nextLocation[1]
         )).reduce((pv, cv) => pv || cv, false);
         if (!alreadyCreatedBuilder) {
+          console.log('new builder at ', nextLocation);
           gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1]));
         }
       }
@@ -102,6 +103,7 @@ class Builder extends PIXI.Graphics implements IEntity {
           anotherBuilder.location.x === nextLocation[0] && anotherBuilder.location.y === nextLocation[1]
         )).reduce((pv, cv) => pv || cv, false);
         if (!alreadyCreatedBuilder) {
+          console.log('new builder at ', nextLocation);
           gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1]));
         }
       }
