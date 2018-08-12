@@ -35,6 +35,10 @@ class Game {
     this.app.renderer.roundPixels = true;
   }
 
+  stageMouseMove() {
+
+  }
+
   start() {
     this.stupidPixiSetupSetuff();
 
@@ -49,9 +53,7 @@ class Game {
     this.state.entities.push(this.state.camera);
     this.state.entities.push(new MapScrollListener(this.app.stage));
 
-    this.state.entities.push(new Room(this.app.stage, new Point({ x: 0, y: 0 })));
-
-    this.state.entities.push(new Builder(this.app.stage));
+    this.state.entities.push(new Room(this.app.stage, new Point({ x: 80, y: 80 })));
 
     this.state.entities.push(new GrantsDebug(this.app.stage));
 
@@ -67,6 +69,10 @@ class Game {
 
   gameLoop(): void {
     requestAnimationFrame(() => this.gameLoop());
+
+    //state.mousePosition = 
+    var mousePosition = this.app.renderer.interaction.mouse.global;
+
 
     for (const entity of this.state.entities) {
       entity.update(this.state);
