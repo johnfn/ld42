@@ -1,3 +1,4 @@
+import { CANCELLED } from "dns";
 
 // utility functions for cat moving and pathfinding
 class CatFindPath {
@@ -48,14 +49,18 @@ class CatFindPath {
 
   public static isCatFalling(gameState: State, cat: Cat) : boolean {
     const terrainBelow = gameState.world.getCellAt(cat.x, cat.y + Cat.height).terrain;
-    const buildingBelowLeft = null; 
-    const buildingBelowRight = null; 
-    const closestElevator = gameState.getEntitiesBy(isElevator)[0];
+    let walkableBuildings: PIXI.Container[] = gameState.getEntitiesBy(isElevator);
+    walkableBuildings = walkableBuildings.concat(gameState.getEntitiesBy(isRoom));
 
-    if ((terrainBelow !== 'grass' && terrainBelow !== 'dirt') && closestElevator.x !== cat.x) {
-      return true;
-    } else {
+    const catLeftPaw = new Point({x: cat.x, y: cat.y + Cat.height});
+    const catRightPaw = new Point({x: cat.x + Cat.width, y: cat.y + Cat.height});
+    const buildingBelowLeft: boolean = walkableBuildings.map(c => c.worldRect.c)
+    const buildingBelowRight: boolean = false;
+
+    if (terrainBelow === 'grass' || terrainBelow === 'dirt') {
       return false;
+    } else {
+      return true;
     }
   }
 }

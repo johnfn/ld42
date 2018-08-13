@@ -2,6 +2,10 @@ interface IEntity {
   update: (state: State) => void;
 }
 
+interface IHasWorldRect {
+  worldRect: () => Rect;
+}
+
 // Provides data about the current selected game object
 type GameSelection = 
   | { type: "cat", cat: Cat }
