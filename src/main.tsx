@@ -137,7 +137,7 @@ class Game {
 
     this.state.entities.push(this.state.camera);
     this.state.entities.push(new MapScrollListener(this.app.stage));
-    this.state.entities.push(new Builder(this.app.stage, 256, 384 - 8));
+    this.state.entities.push(new Builder(this.app.stage));
     this.state.entities.push(new Sun(this.app.stage));
     this.state.entities.push(new CatSpawner(this.app.stage));
     this.state.entities.push(new Cloud(this.app.stage));

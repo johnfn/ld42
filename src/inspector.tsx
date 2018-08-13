@@ -57,6 +57,30 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
           <div>
             { description }
           </div>
+
+          <div
+            style={{
+              paddingTop: "20px"
+            } } />
+
+          <div
+            style={{
+              paddingBottom: "10px",
+            }}
+          > History </div>
+
+          {
+            cat.info.statuses.map(status => 
+              <div
+                style={{
+                  fontSize: "12px",
+                }}
+              >
+                { status }
+              </div>
+            )
+          }
+
         </div>
       );
     }

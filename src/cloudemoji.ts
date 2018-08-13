@@ -14,6 +14,7 @@ class CloudEmoji extends PIXI.Graphics implements IEntity {
 
     state.stage.addChild(this);
     state.entities.push(this);
+    this.y -= 55;
   }
 
   update(state: State): void {
@@ -23,7 +24,5 @@ class CloudEmoji extends PIXI.Graphics implements IEntity {
       this.parent.removeChild(this);
       state.removeEntity(this);
     }
-
-    this.y--;
   }
 }

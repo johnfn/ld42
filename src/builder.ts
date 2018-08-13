@@ -16,12 +16,20 @@ class Builder extends PIXI.Graphics implements IEntity {
 
   static readonly hexColor = 0xffe7d7;
 
+  public static INITIAL_BUILDER_POSITION = new Point({
+    x: Constants.MAP_TILE_SIZE * 16, 
+    y: Constants.MAP_TILE_SIZE * (Constants.SKY_HEIGHT_IN_TILES - Room.HEIGHT_IN_TILES)
+  });
+
   /**
    * Construction
    */
-  constructor(stage: PIXI.Container, topLeftX: number, topLeftY: number, floorLevel?: number) {
+  constructor(stage: PIXI.Container, _topLeftX?: number, _topLeftY?: number, floorLevel?: number) {
 
     super();
+
+    const topLeftX = _topLeftX || Builder.INITIAL_BUILDER_POSITION.x;
+    const topLeftY = _topLeftY || Builder.INITIAL_BUILDER_POSITION.y;
 
     this.floorLevel = floorLevel || 1;
 

@@ -67,15 +67,15 @@ class Cat extends PIXI.Container implements IEntity {
   }
 
   addStatus(status: string): void {
-    if (this.info.statuses.length === 0 || 
+    if (this.info.statuses.length === 0 &&
         this.info.statuses[this.info.statuses.length - 1] === status) {
       return;
     }
 
-    this.info.statuses.push(status);
+    this.info.statuses.unshift(status);
 
     if (this.info.statuses.length > 3) {
-      this.info.statuses = this.info.statuses.splice(1);
+      this.info.statuses = this.info.statuses.slice(0, 3);
     }
   }
 
@@ -102,7 +102,7 @@ class Cat extends PIXI.Container implements IEntity {
       if (this.tick % 60 === 0) {
         this.info.happiness--;
 
-        this.addStatus("I'm sad because I can't find a home.");
+        this.addStatus(`${ this.info.name } is sad because they can't find a home.`);
       }
 
       // this.say(gameState, "I can't find any rooms right meow :(");
@@ -152,6 +152,8 @@ class Cat extends PIXI.Container implements IEntity {
           this.info.room = destRoom;
           destRoom.occupants++;
 
+          this.addStatus(`${ this.info.name } has found a room to stay!`);
+          this.emote(gameState, 'heart');
           return { activity: 'living' };
         }
 
