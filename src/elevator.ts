@@ -24,6 +24,11 @@ class Elevator extends PIXI.Container implements IEntity {
   update(gameState: State): void {
   }
 
+  // returns pixel value of center of elevator in x coordinates
+  getCenter(): number {
+    return Elevator.ELEVATOR_START_X + 0.5 * this.width;
+  }
+
   // WIP do not use
   _incrementFloors(): void {
     this.numFloors++;

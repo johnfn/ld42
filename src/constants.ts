@@ -34,7 +34,8 @@ class Constants {
 
   public static DEBUG_FLAGS = {
     DEBUG_ALL_CATS_LIKE_YARN: true,
-    DEBUG_INITIAL_BUTTONS_COUNT: 500
+    DEBUG_INITIAL_BUTTONS_COUNT: 500,
+    SHORT_ACTIVITIES: true,
   };
 
   public static ROOM_WIDTH_IN_TILES  = 10;

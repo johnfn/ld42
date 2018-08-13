@@ -57,11 +57,11 @@ class State {
     this.removeList.push(entity);
   }
 
-  getEntityByPredicate<T>(cond: any => is T): T {
+  getEntitiesByPredicate<T>(cond: (x: any) => x is T): T[] {
     const selected: T[] = [];
     for (const ent of this.entities) {
       if (cond(ent)) {
-        selected.push(cond)
+        selected.push(ent)
       }
     }
     return selected;

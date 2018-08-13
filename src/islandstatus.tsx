@@ -26,6 +26,7 @@ class IslandStatus extends React.Component<IslandStatusProps, State> implements 
     const housedCatCount = allCats.filter(c => c.info.livingRoom).length;
     const totalCatpacity = allRooms.map(r => r.capacity).reduce((pv, cv) => pv + cv, 0);
     const yarnDemand = allCats.filter(c => c.info.favoriteActivity === "Yarn").length;
+    const happinessAvg = Math.floor(allCats.reduce((pv, cv) => pv + cv.info.happiness, 0) / allCats.length);
 
     return (
       <div>
@@ -41,6 +42,10 @@ class IslandStatus extends React.Component<IslandStatusProps, State> implements 
 
         <div>
           Yarn Demand: { yarnDemand }
+        </div>
+
+        <div>
+          Happiness: { isNaN(happinessAvg) ? "???" : happinessAvg }
         </div>
       </div>
     );

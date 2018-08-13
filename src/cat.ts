@@ -101,7 +101,7 @@ class Cat extends PIXI.Container implements IEntity {
 
     if (!bestRoom) {
       if (this.tick % 60 === 0) {
-        this.info.happiness--;
+        this.decreaseHappiness();
 
         this.addStatus(`${ this.info.name } is sad because they can't find a home.`);
       }
@@ -122,12 +122,28 @@ class Cat extends PIXI.Container implements IEntity {
     }
   }
 
+  increaseHappiness() {
+    this.info.happiness++;
+
+    if (this.info.happiness > Cat.maxHappiness) {
+      this.info.happiness = Cat.maxHappiness;
+    }
+  }
+
+  decreaseHappiness() {
+    this.info.happiness--;
+
+    if (this.info.happiness < 0) {
+      this.info.happiness = 0;
+    }
+  }
+
   activitySeekTick = 0;
 
   potentiallySeekOutActivity(gameState: State): CatGoal {
     ++this.activitySeekTick;
 
-    if (this.activitySeekTick < 100) {
+    if (this.activitySeekTick < (Constants.DEBUG_FLAGS.SHORT_ACTIVITIES ? 100 : 1000)) {
       return this.state;
     }
 
@@ -158,7 +174,7 @@ class Cat extends PIXI.Container implements IEntity {
             this.addStatus(`${ this.info.name } is sad because there is no yarn.`);
           }
 
-          this.info.happiness--;
+          this.decreaseHappiness();
 
           return { activity: 'doing-activity' };
         } else {
@@ -171,7 +187,7 @@ class Cat extends PIXI.Container implements IEntity {
         }
       }
     } else if (randomActivity === "home" && !isAtHome) {
-      this.info.happiness++;
+      this.increaseHappiness();
 
       return {
         activity: 'going-to-room',
@@ -258,7 +274,7 @@ class Cat extends PIXI.Container implements IEntity {
       this.y += 1;
     } else if (this.state.activity === 'going-to-room') {
       const dest = this.state.destination;
-      CatFindPath.catFindPath(this, dest).step();
+      CatFindPath.catFindPath(gameState, this, dest).step();
 /*
 i
       if (dest.room.worldRect().x > this.x) {
