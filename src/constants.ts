@@ -199,7 +199,6 @@ class Constants {
 
       // Cat-like creatures/ catpeople from media
       "Rengar", // League of Legends
-      "Izutsumi", // Dungeon Meshi
       "Asebi",    // Dungeon Meshi
       "Leo",      // Fairy Tail
       "Shampoo", // Ranma 1/2
