@@ -44,6 +44,7 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
           <h2>Cat Informyation</h2>
 
           <div>Name: { cat.info.name } </div>
+          <div>Happiness: { cat.info.happiness } / { Cat.maxHappiness } </div>
           <div>Favorite activity: { cat.info.favoriteActivity } </div>
           <div>Housing Status: { cat.info.room ? "Housed!" : "Homeless" } </div>
           <div>Destination: { (cat.state.activity === 'finding-room' && cat.state.destination) ? cat.state.destination.worldRect.x : "None" } </div>
