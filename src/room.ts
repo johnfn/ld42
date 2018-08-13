@@ -3,6 +3,7 @@ const RoomTypes = {
     name     : "Condo 1",
     capacity : 5,
     occupancy: 0,
+    rent     : 5,
 
     cost: {
       buttons: 10,
@@ -13,6 +14,7 @@ const RoomTypes = {
     name: "Cat Laboratailory",
     capacity : 0,
     occupancy: 0,
+    rent     : 0,
 
     cost: {
       buttons: 200,
@@ -23,9 +25,21 @@ const RoomTypes = {
     name: "Yarn Empurrrrrrium",
     capacity : 0,
     occupancy: 0,
+    rent     : 0,
 
     cost: {
       buttons: 20,
+    },
+  },
+
+  emptyRoom: {
+    name: "Empty space",
+    capacity : 0,
+    occupancy: 0,
+    rent     : 0,
+
+    cost: {
+      buttons: 1,
     },
   },
 };
@@ -41,15 +55,18 @@ function isRoom(x: any): x is Room {
  * make sure to give us some padding - like tile_width / 2
  */
 class Room extends PIXI.Container {
-  public static WIDTH_IN_TILES  = 9;
-  public static HEIGHT_IN_TILES = 6;
+  public static WIDTH_IN_TILES  = 10;
+  public static HEIGHT_IN_TILES = 7;
 
   // we do this so that we only update during the tick
   wasClicked: boolean;
 
   occupants: number;
   capacity : number;
+  rent     : number;
   roomName : RoomName;
+
+  capacityDisplay: PIXI.Text | undefined;
 
   // so we can find it in the list of entities
   type = "ROOM_TAG";
@@ -69,6 +86,7 @@ class Room extends PIXI.Container {
     this.roomName = props.roomName;
     this.occupants = roomStats.occupancy;
     this.capacity  = roomStats.capacity;
+    this.rent      = roomStats.rent;
 
     this.x = props.tileX * Constants.MAP_TILE_SIZE;
     this.y = props.tileY * Constants.MAP_TILE_SIZE;
@@ -81,6 +99,17 @@ class Room extends PIXI.Container {
     roomSprite.on("click", (e: PIXI.interaction.InteractionEvent) => {
       this.wasClicked = true;
     });
+
+    if (this.capacity > 0) {
+      this.capacityDisplay = new PIXI.Text("", {
+        fontFamily: 'FreePixel', 
+        fontSize  : 24, 
+        fill      : 0x000000, 
+        align     : 'left',
+      });
+
+      this.addChild(this.capacityDisplay);
+    }
   }
 
   renderRoom(): PIXI.Sprite {
@@ -90,6 +119,8 @@ class Room extends PIXI.Container {
       const roomSprite: PIXI.Sprite = new PIXI.Sprite(spriteTexture);
 
       this.addChild(roomSprite); // at relative x, y = 0
+      roomSprite.x += 8;
+      roomSprite.y += 8;
 
       return roomSprite;
     } else if (this.roomName === "yarnEmporium") {
@@ -103,9 +134,33 @@ class Room extends PIXI.Container {
       this.addChild(spri);
 
       return spri;
-    }
+    } else if (this.roomName === "catLabratory") {
+      const spri = new PIXI.Sprite();
+      const gfx = new PIXI.Graphics();
 
-    throw new Error("unimplemented!!!!!!!!!!");
+      gfx.beginFill(0xff0000);
+      gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE);
+
+      spri.addChild(gfx);
+      this.addChild(spri);
+
+      return spri;
+    } else if (this.roomName === "emptyRoom") {
+      const spri = new PIXI.Sprite();
+      const gfx = new PIXI.Graphics();
+
+      gfx.beginFill(0x303030);
+      gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE);
+
+      spri.addChild(gfx);
+      this.addChild(spri);
+
+      return spri;
+    } else {
+      const x: never = this.roomName;
+
+      throw new Error("unimplemented!!!!!!!!!!");
+    }
   }
 
   worldRect(): Rect {
@@ -142,6 +197,10 @@ class Room extends PIXI.Container {
       this.alpha = 0.8;
     } else {
       this.alpha = 1.0;
+    }
+
+    if (this.capacityDisplay) {
+      this.capacityDisplay.text = `${ this.occupants }/${ this.capacity }`;
     }
   }
 }

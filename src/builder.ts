@@ -26,7 +26,8 @@ class Builder extends PIXI.Graphics implements IEntity {
     this.floorLevel = floorLevel || 1;
 
     stage.addChild(this);
-    const { width, height } = PIXI.loader.resources['room-1'].texture;
+    //const { width, height } = PIXI.loader.resources['room-1'].texture;
+    const { width, height } = { width: Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, height: Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE };
 
     this.location = new Rect({
       x: topLeftX,

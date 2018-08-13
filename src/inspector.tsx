@@ -61,13 +61,12 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
     }
 
     if (this.state.selection.type === "room") {
+      const occupants = this.state.selection.room.occupants;
       return (
         <div>
           <h2>Room Inspecturr</h2>
-          <div>Catpacity: { this.state.selection.room.occupants } / { this.state.selection.room.capacity } </div>
-          <div>
-
-          </div>
+          <div>Catpacity: { occupants } / { this.state.selection.room.capacity } </div>
+          <div>Revenue: { this.state.selection.room.rent * occupants } buttons per day </div>
         </div>
       );
     }
