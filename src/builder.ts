@@ -115,7 +115,7 @@ class Builder extends PIXI.Graphics implements IEntity {
           gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1], this.floorLevel));
         }
       }
-      if (this.worldRect().y + this.worldRect().h * 2 > 0) {
+      if (this.worldRect().y + this.worldRect().h * 2 > 0 || true) { // no upward bounds!
         let nextLocation: [number, number];
         nextLocation = [this.worldRect().x, this.worldRect().y - this.worldRect().h];
  // wip refactor

@@ -19,6 +19,7 @@ type CatGoal =
 type CatInfo = {
   name             : string;
   happiness        : number;
+  statuses         : string[];
   room            ?: Room;
   favoriteActivity : FavoriteCatActivities;
 }
@@ -61,6 +62,20 @@ class Cat extends PIXI.Container implements IEntity {
       name            : Util.RandElem(Constants.Strings.CAT_NAMES),
       favoriteActivity: Util.RandElem(Object.keys(Constants.CAT_ACTIVITIES) as FavoriteCatActivities[]),
       happiness       : 50,
+      statuses        : [],
+    };
+  }
+
+  addStatus(status: string): void {
+    if (this.info.statuses.length === 0 || 
+        this.info.statuses[this.info.statuses.length - 1] === status) {
+      return;
+    }
+
+    this.info.statuses.push(status);
+
+    if (this.info.statuses.length > 3) {
+      this.info.statuses = this.info.statuses.splice(1);
     }
   }
 
@@ -86,6 +101,8 @@ class Cat extends PIXI.Container implements IEntity {
     if (!bestRoom) {
       if (this.tick % 60 === 0) {
         this.info.happiness--;
+
+        this.addStatus("I'm sad because I can't find a home.");
       }
 
       // this.say(gameState, "I can't find any rooms right meow :(");
@@ -108,7 +125,8 @@ class Cat extends PIXI.Container implements IEntity {
 
     if (tileBelow.terrain === 'sky') {
       return { activity: 'falling' };
-    // we update our state based on our current state.
+
+      // we update our state based on our current state.
     } else if (this.state.activity === 'falling') {
       // we already checked that we're not in the sky, so we're definitely on land.
 
@@ -228,9 +246,9 @@ class Cat extends PIXI.Container implements IEntity {
     }
   }
 
-  emote(gameState: State, text: string, alwaysSay = false) {
+  emote(gameState: State, type: 'house' | 'love', alwaysSay = false) {
     if (Math.random() > .99 || alwaysSay) {
-      const t = new FloatUpEmoji(gameState, text);
+      const t = new CloudEmoji(gameState, type);
 
       this.addChild(t);
     }

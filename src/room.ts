@@ -117,7 +117,11 @@ class Room extends PIXI.Container {
       // why are we wrapping roomSprite? idk but thats how it is
       const spriteTexture: PIXI.Texture = PIXI.loader.resources['room-1'].texture;
       const roomSprite: PIXI.Sprite = new PIXI.Sprite(spriteTexture);
+      const gfx = new PIXI.Graphics();
+      gfx.beginFill(0xd07fd0);
+      gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE);
 
+      this.addChild(gfx);
       this.addChild(roomSprite); // at relative x, y = 0
       roomSprite.x += 8;
       roomSprite.y += 8;

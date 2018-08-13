@@ -236,6 +236,8 @@ test.png
 tree-1.png
 umbrella-1.png
 water-1.png
+emoji-heart.png
+emoji-house.png
 `;
 ASSET_LIST.split('\n').map(asset_name => {
   if (asset_name.trim() === "") { return; }

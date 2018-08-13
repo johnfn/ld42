@@ -1,4 +1,4 @@
-class FloatUpEmoji extends PIXI.Graphics implements IEntity {
+class CloudEmoji extends PIXI.Graphics implements IEntity {
   lifespan   = 100;
   // wtf does this do
   z          = 100;
@@ -7,9 +7,9 @@ class FloatUpEmoji extends PIXI.Graphics implements IEntity {
     super();
 
     if (type === 'heart') {
-      this.addChild(new PIXI.Sprite(PIXI.loader.resources['emoji-heart-1'].texture));
+      this.addChild(new PIXI.Sprite(PIXI.loader.resources['emoji-heart'].texture));
     } else if (type === 'house') {
-      this.addChild(new PIXI.Sprite(PIXI.loader.resources['emoji-house-1'].texture));
+      this.addChild(new PIXI.Sprite(PIXI.loader.resources['emoji-house'].texture));
     }
 
     state.stage.addChild(this);
