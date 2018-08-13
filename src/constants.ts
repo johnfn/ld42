@@ -72,29 +72,174 @@ class Constants {
 
   public static Strings = {
     CAT_NAMES: [
+      // Fairly common cat names
+      "Bread",
+      "Cookie",
+      "Buffy",
+      "Banjo",
+      "Billie Jean",
+      "Bitsy",
+      "Dot",
+      "Dixie",
+      "Daisy",
+      "Dora",
+      "Emma",
+      "Jinx",
+      "Jojo",
+      "Lulu",
+      "Luna",
+      "Holly",
+      "Mai Tai",
+      "Patches",
+      "Pearl",
+      "Olive",
+      "Mitsy",
+      "Mimi",
+      "Tabitha",
+      "Sadie",
+      "Sadie Mae",
+      "Tiger",
+      "Whiskers",
+      "Fluffles",
+      "Snickers",
+      "Hersheys",
+      "Zuzu",
+      "Mew Mew",
+      "Spencer",
+      "Roosevelt",
+      "Harris",
+      "Snail",
+      "Peter",
+
+      // Japanese names
+      "Miya",
+      "Tama",
+      "Niitama",
+      "Yontama",
+      "Nekomata",
+      "Nabeneko",
+      "Manzoku",
+
+      // Pop culture references
+      "Shinji",
+      "Asuka",
+      "Naruto",
+      "Ichigo",
+      "Carly Rae",
+      "Aang",
+      "Zuko",
+      "Seinfield",
+      "Cloud",
+      "Strife",
+      "Jobs",
+      "Bjork",
+      "Drake",
+      "Chance",
+      "Gordon",
+      "Ramsey",
+      "Sam Smith",
+      "Pocahontas",
+      "Elvis",
+      "Ariana",
+      "Swift",
+      "Zedd",
+      "Sheeran",
+      "Shawn",
+      "Mendes",
+      "Camila",
+      "Gambino",
+      "Weezer",
+
+      // Neko Atsume references
+      "Tubs",
+      "Jeeves",
+      "Pumpkin",
+      "Lexy",
+      "Snowball",
+      "Xerxes",
+      
+      // Real names nyan-ified and puns
+      "Danyiel",
+      "Alexnyander",
+      "Siennya",
+      "Hannyah",
+      "Connyor",
+      "Franyk",
+      "Annya",
+      "Eleanyor",
+      "Abenya",
+      "Adannya",
+      "Anyan",
+      "Electro-cute",
+
+      // Chips
+      "Garligan",
+      "Daisu",
+
+      // Figures
+      "Aivi",
+      
+      // Cats from media
+      "Diana", // Sailor Moon, black
+      "Jiji", // Kiki's Delivery Service, black
+      "Maomolin", // Ranma 1/2
+      "Meowth",
+      "Persian",
+      "Espeon",
+      "Raikou",
+      "Skitty",
+      "Delcatty",
+      "Shinx",
+      "Luxio",
+      "Luxray",
+      "Glameow",
+      "Purrloin",
+      "Litleo",
+      "Espurr",
+
+      // Cat-like creatures/ catpeople from media
+      "Rengar", // League of Legends
+      "Izutsumi", // Dungeon Meshi
+      "Asebi",    // Dungeon Meshi
+      "Leo",      // Fairy Tail
+      "Shampoo", // Ranma 1/2
+      "Azusa", // K-On
+      "Chitori", // Gurren Lagann
+      "Yoruichi", // Bleach
+      "Catseye", // X-Men
+      "Pantha", // Teen Titans
+      "Black", // "Black Cat", Spiderman
+      "Ava Ayala", // Avengers Academy
+      "Selina", // Catwoman/Batman
+      "Kyle",
+      "Ms. Fortune", // Skullgirls
+      "Ghostrick", // "Ghostrick Catgirl", Yugioh
+      "Thunder Nyan Nyan", // Yugioh
+      "Roll", // Megaman (in some depictions)
+      "Gotmott", // Xenoblade Chronicles 2
+      "Stella", // VA-11 HALL-A
+
+      // Other people's cats
+      "Zinc", // Aivi/surasshu's
+      "Hobac", // Hanna Cha's
+
+      // Misc
       "Charlie",
       "Shadow",
       "Sunny",
       "Sushi",
-      "Garligan",
-      "Bluregard",
+      "Sir Donnigan",
+      "Blooregard",
       "Noodle",
       "Patchwork",
       "Furrball",
-      "Snowball",
       "Andrea",
       "Luna",
       "Nyanyanyanners",
-      "Miya",
-      "Tama",
-      "Nitama",
-      "Yontama",
       "Lardyclaws",
       "Baconator",
-      "Mimi",
       "Inspector Whiskers",
       "Mr. Snuggles",
-      "Sir Donnigan",
       "Archbishop Mannykins III",
       "Professor Fluffles"
     ],
