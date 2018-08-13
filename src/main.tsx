@@ -240,7 +240,12 @@ dock-1.png
 ground-1.png
 ground-2.png
 mountains-1.png
-pink-cat-1.png
+cat-1.png
+cat-2.png
+cat-3.png
+cat-4.png
+cat-5.png
+cat-6.png
 room-1.png
 sun-1.png
 test.png

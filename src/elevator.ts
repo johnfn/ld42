@@ -1,3 +1,7 @@
+function isElevator(x: any): x is Elevator {
+    return x.type === 'ELEVATOR_TAG';
+}
+
 class Elevator extends PIXI.Container implements IEntity {
   public static ELEVATOR_WIDTH_IN_TILES = 2;
   public static ELEVATOR_START_X = (
@@ -6,7 +10,7 @@ class Elevator extends PIXI.Container implements IEntity {
   //public static ELEVATOR_START_Y = Constants.GROUND_LOCATION_Y; // assuming 0 floors
   // height in room heights
   numFloors: number;
-
+  type = 'ELEVATOR_TAG';
 
   constructor(stage: PIXI.Container) {
     super();
@@ -14,7 +18,10 @@ class Elevator extends PIXI.Container implements IEntity {
 
     stage.addChild(this);
 
-    this.renderSelf();
+    this.reRenderSelf();
+  }
+
+  update(gameState: State): void {
   }
 
   // WIP do not use
@@ -30,7 +37,8 @@ class Elevator extends PIXI.Container implements IEntity {
     this.addChild(gfx);
   }
 
-  renderSelf(): void {
+  // when adding levels, increment my numFloors and then call my renderSelf()
+  reRenderSelf(): void {
 
     // first remove
     this.removeChild(this.children[0]);
@@ -45,9 +53,5 @@ class Elevator extends PIXI.Container implements IEntity {
 
     this.x = Elevator.ELEVATOR_START_X;
     this.y = Constants.GROUND_LOCATION_Y - this.numFloors * Constants.ROOM_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE;
-  }
-
-  update(gameState: State): void {
-
   }
 }

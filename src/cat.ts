@@ -44,7 +44,7 @@ class Cat extends PIXI.Container implements IEntity {
   constructor(stage: PIXI.Container) {
     super();
 
-    this.addChild(new PIXI.Sprite(PIXI.loader.resources['pink-cat-1'].texture));
+    this.addChild(new PIXI.Sprite(PIXI.loader.resources[`cat-${ Util.RandIntRange(1, 6) }`].texture));
 
     stage.addChild(this);
 
@@ -259,6 +259,7 @@ class Cat extends PIXI.Container implements IEntity {
       this.y += 1;
     } else if (this.state.activity === 'going-to-room') {
       const dest = this.state.destination;
+      // catPathFind.findPath
 
       if (dest.room.worldRect().x > this.x) {
         this.x++;

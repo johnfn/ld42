@@ -7,6 +7,10 @@ class Util {
     return low + Math.random() * (high - low);
   }
 
+  public static RandIntRange(low: number, high: number): number {
+    return low + Math.floor(Math.random() * (high + 1 - low));
+  }
+
   public static SortByKey<T>(array: T[], key: (t: T) => number): T[] {
     return array.sort((a, b) => {
       const x = key(a);
