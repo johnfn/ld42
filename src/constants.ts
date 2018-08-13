@@ -211,6 +211,7 @@ class Constants {
       "Diana", // Sailor Moon, black
       "Jiji", // Kiki's Delivery Service, black
       "Maomolin", // Ranma 1/2
+      "Sakamoto", // nichijou
       "Meowth",
       "Espeon",
       "Raikou",
@@ -223,6 +224,7 @@ class Constants {
       "Purrloin",
       "Litleo",
       "Espurr",
+      "Shamisen", // Haruhi
       "Mr. Mew", // The World Ends With You
 
       // Cat-like creatures/ catpeople from media
@@ -247,6 +249,10 @@ class Constants {
       "Stella", // VA-11 HALL-A
       "Kyuubey", // Madoka
       "Gyuuki", // YuYuYu
+      "Nekobasu", // totoro
+      "Hanekawa", // Monogatari
+      "Puck",
+      "Nyanta",
       "Tigger", // Pooh
       "Hobbes", // Calvin
 
