@@ -134,7 +134,6 @@ class Cat extends PIXI.Container implements IEntity {
     this.activitySeekTick = 0;
 
     // TODO: choose a random thing to do
-    // there should be other options here, like going back home
 
     const randomActivity = Util.RandElem(["favorite", "home"]);
 
@@ -259,13 +258,14 @@ class Cat extends PIXI.Container implements IEntity {
       this.y += 1;
     } else if (this.state.activity === 'going-to-room') {
       const dest = this.state.destination;
-      // catPathFind.findPath
-
+      CatFindPath.catFindPath(this, dest).step();
+/*
+i
       if (dest.room.worldRect().x > this.x) {
         this.x++;
       } else if (dest.room.worldRect().x < this.x) {
         this.x--;
-      }
+      } */
 
       /*
       if (this.state.destination.worldRect.contains(this.getRect()) && this.state.destination.room.hasCapacity()) {

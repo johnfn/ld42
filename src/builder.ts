@@ -119,7 +119,7 @@ class Builder extends PIXI.Graphics implements IEntity {
             anotherBuilder.worldRect().x === nextLocation[0] && (anotherBuilder.worldRect().y - anotherBuilder.worldRect().h) === nextLocation[1]
           )).reduce((pv, cv) => pv || cv, false)
         if (!alreadyCreatedBuilder && (existRoomUnderneath || this.floorLevel === 1)) {
-          console.log('new builder at ', nextLocation);
+          //console.log('new builder at ', nextLocation);
           gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1], this.floorLevel));
         }
       }
@@ -134,7 +134,7 @@ class Builder extends PIXI.Graphics implements IEntity {
           )).reduce((pv, cv) => pv || cv, false) );
 
         if (!alreadyCreatedBuilder) {
-          console.log('new builder at ', nextLocation);
+          //console.log('new builder at ', nextLocation);
           gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1], this.floorLevel + 1));
         }
       }

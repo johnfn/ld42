@@ -23,8 +23,9 @@ class IslandStatus extends React.Component<IslandStatusProps, State> implements 
     const allRooms = State.Instance.getRooms();
 
     const catCount = allCats.length;
-    const housedCatCount = allCats.filter(c => c.info.room).length;
+    const housedCatCount = allCats.filter(c => c.info.livingRoom).length;
     const totalCatpacity = allRooms.map(r => r.capacity).reduce((pv, cv) => pv + cv, 0);
+    const yarnDemand = allCats.filter(c => c.info.favoriteActivity === "Yarn").length;
 
     return (
       <div>
@@ -35,11 +36,11 @@ class IslandStatus extends React.Component<IslandStatusProps, State> implements 
         </div>
 
         <div>
-          Housed: { housedCatCount }
+          Housed: { housedCatCount } (Catpacity: { totalCatpacity })
         </div>
 
         <div>
-          Total Catpacity: { totalCatpacity }
+          Yarn Demand: { yarnDemand }
         </div>
       </div>
     );

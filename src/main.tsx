@@ -244,6 +244,7 @@ cat-1.png
 cat-2.png
 cat-3.png
 cat-4.png
+yarn-emporium-1.png
 cat-5.png
 cat-6.png
 room-1.png

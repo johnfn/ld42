@@ -140,7 +140,7 @@ class World extends PIXI.Graphics implements IEntity {
       //whenToRender: (mapCell: MapCell): boolean => ((console.log('called', mapCell.terrain) || true) && (mapCell.terrain) === 'grass' && (console.log('grass') || true)),
       whenToRender: (mapCell: MapCell): boolean => ((mapCell.terrain) === 'grass'),
       spriteCreator: (): { graphic: PIXI.Container, widthTiles: number, heightTiles: number } => {
-        console.log("MAKE SOME grass")
+        //console.log("MAKE SOME grass")
         return {  
           // 324 x 48
           graphic : new PIXI.Sprite(PIXI.loader.resources['ground-1'].texture),

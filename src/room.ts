@@ -113,28 +113,26 @@ class Room extends PIXI.Container {
   }
 
   renderRoom(): PIXI.Sprite {
+    const gfx = new PIXI.Graphics();
+    gfx.beginFill(Constants.COLORS.CONDO);
+    gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE);
+
+    this.addChild(gfx);
+
     if (this.roomName === "condo") {
       // why are we wrapping roomSprite? idk but thats how it is
       const spriteTexture: PIXI.Texture = PIXI.loader.resources['room-1'].texture;
       const roomSprite: PIXI.Sprite = new PIXI.Sprite(spriteTexture);
-      const gfx = new PIXI.Graphics();
-      gfx.beginFill(Constants.COLORS.CONDO);
-      gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE);
-
-      this.addChild(gfx);
       this.addChild(roomSprite); // at relative x, y = 0
       roomSprite.x += 8;
       roomSprite.y += 8;
 
       return roomSprite;
     } else if (this.roomName === "yarnEmporium") {
-      const spri = new PIXI.Sprite();
-      const gfx = new PIXI.Graphics();
+      const spri = new PIXI.Sprite(PIXI.loader.resources['yarn-emporium-1'].texture);
+      spri.x += 8;
+      spri.y += 8;
 
-      gfx.beginFill(0x0000ff);
-      gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE);
-
-      spri.addChild(gfx);
       this.addChild(spri);
 
       return spri;
