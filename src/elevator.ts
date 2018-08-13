@@ -36,7 +36,7 @@ class Elevator extends PIXI.Container implements IEntity {
     gfx.beginFill(Constants.COLORS.ELEVATOR);
     gfx.drawRect(0, 0, 
       Elevator.ELEVATOR_WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, 
-      Constants.ROOM_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE * this.numFloors;
+      Constants.ROOM_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE * this.numFloors
     );
     gfx.y = Constants.GROUND_LOCATION_Y - this.numFloors * Constants.ROOM_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE;
     this.addChild(gfx);
@@ -52,7 +52,7 @@ class Elevator extends PIXI.Container implements IEntity {
     gfx.beginFill(Constants.COLORS.ELEVATOR);
     gfx.drawRect(0, 0, 
         Elevator.ELEVATOR_WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, 
-        Constants.ROOM_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE * this.numFloors;
+        Constants.ROOM_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE * this.numFloors
     );
     this.addChild(gfx);
 
