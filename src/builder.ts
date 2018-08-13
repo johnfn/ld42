@@ -26,7 +26,8 @@ class Builder extends PIXI.Graphics implements IEntity {
     this.floorLevel = floorLevel || 1;
 
     stage.addChild(this);
-    const { width, height } = PIXI.loader.resources['room-1'].texture;
+    //const { width, height } = PIXI.loader.resources['room-1'].texture;
+    const { width, height } = { width: Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, height: Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE };
 
     this.location = new Rect({
       x: topLeftX,
@@ -49,6 +50,7 @@ class Builder extends PIXI.Graphics implements IEntity {
     this.on('click', (event: PIXI.interaction.InteractionEvent) => {
       this.pendingInteraction = 'click';
     });
+    this.alpha = 0.3;
 
   }
 
@@ -85,7 +87,13 @@ class Builder extends PIXI.Graphics implements IEntity {
   }
 
   _successfullyBuildRoom(gameState: State): void {
-      gameState.world.addRoom(this.worldRect().x / Constants.MAP_TILE_SIZE, this.worldRect().y / Constants.MAP_TILE_SIZE, gameState);
+      gameState.world.addRoom(
+        this.worldRect().x / Constants.MAP_TILE_SIZE, 
+        this.worldRect().y / Constants.MAP_TILE_SIZE, 
+        gameState,
+        gameState.selectedBuilding,
+      );
+
       // remove ourselves from updateables list and derender
       gameState.removeEntity(this);
       gameState.stage.removeChild(this);
@@ -95,13 +103,13 @@ class Builder extends PIXI.Graphics implements IEntity {
         nextLocation = [this.worldRect().x + this.worldRect().w, this.worldRect().y];
 
         let alreadyCreatedBuilder: boolean = (gameState.getBuilders().map(anotherBuilder => ( 
-          anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
-        )).reduce((pv, cv) => pv || cv, false) || gameState.getRooms().map(anotherBuilder => ( 
-          anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
-        )).reduce((pv, cv) => pv || cv, false) );
+            anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
+          )).reduce((pv, cv) => pv || cv, false) || gameState.getRooms().map(anotherBuilder => ( 
+            anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
+          )).reduce((pv, cv) => pv || cv, false) );
         let existRoomUnderneath = gameState.getRooms().map(anotherBuilder => ( 
-          anotherBuilder.worldRect().x === nextLocation[0] && (anotherBuilder.worldRect().y - anotherBuilder.worldRect().h) === nextLocation[1]
-        )).reduce((pv, cv) => pv || cv, false)
+            anotherBuilder.worldRect().x === nextLocation[0] && (anotherBuilder.worldRect().y - anotherBuilder.worldRect().h) === nextLocation[1]
+          )).reduce((pv, cv) => pv || cv, false)
         if (!alreadyCreatedBuilder && (existRoomUnderneath || this.floorLevel === 1)) {
           console.log('new builder at ', nextLocation);
           gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1], this.floorLevel));
@@ -112,10 +120,11 @@ class Builder extends PIXI.Graphics implements IEntity {
         nextLocation = [this.worldRect().x, this.worldRect().y - this.worldRect().h];
  // wip refactor
         let alreadyCreatedBuilder: boolean = (gameState.getBuilders().map(anotherBuilder => ( 
-          anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
-        )).reduce((pv, cv) => pv || cv, false) || gameState.getRooms().map(anotherBuilder => ( 
-          anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
-        )).reduce((pv, cv) => pv || cv, false) );
+            anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
+          )).reduce((pv, cv) => pv || cv, false) || gameState.getRooms().map(anotherBuilder => ( 
+            anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
+          )).reduce((pv, cv) => pv || cv, false) );
+
         if (!alreadyCreatedBuilder) {
           console.log('new builder at ', nextLocation);
           gameState.entities.push(new Builder(gameState.stage, nextLocation[0], nextLocation[1], this.floorLevel + 1));

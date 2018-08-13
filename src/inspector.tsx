@@ -46,6 +46,7 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
           <div>Name: { cat.info.name } </div>
           <div>Favorite activity: { cat.info.favoriteActivity } </div>
           <div>Housing Status: { cat.info.room ? "Housed!" : "Homeless" } </div>
+          <div>Destination: { (cat.state.activity === 'finding-room' && cat.state.destination) ? cat.state.destination.worldRect.x : "None" } </div>
 
           <div
             style={{
@@ -60,13 +61,12 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
     }
 
     if (this.state.selection.type === "room") {
+      const occupants = this.state.selection.room.occupants;
       return (
         <div>
           <h2>Room Inspecturr</h2>
-          <div>Catpacity: { this.state.selection.room.occupants } / { this.state.selection.room.capacity } </div>
-          <div>
-
-          </div>
+          <div>Catpacity: { occupants } / { this.state.selection.room.capacity } </div>
+          <div>Revenue: { this.state.selection.room.rent * occupants } buttons per day </div>
         </div>
       );
     }

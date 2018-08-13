@@ -11,6 +11,11 @@ class MapScrollListener extends PIXI.Container {
 
     const speed = Constants.MOUSE_SCROLL_SPEED;
 
+    if (mouse.x < 0) { return; }
+    if (mouse.x >= Constants.SCREEN_WIDTH) { return; }
+    if (mouse.y < 0) { return; }
+    if (mouse.y >= Constants.SCREEN_HEIGHT) { return; }
+
     if (mouse.x <= Constants.MOUSE_SCROLL_DEADZONE) {
       dx -= speed;
     }

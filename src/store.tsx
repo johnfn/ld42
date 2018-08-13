@@ -1,35 +1,5 @@
-const BuildingTypes = {
-  condo: {
-    name     : "Condo 1",
-    capacity : 5,
-    occupancy: 0,
-
-    cost: {
-      buttons: 10,
-    },
-  },
-
-  catLabratory: {
-    name: "Cat Laboratailory",
-
-    cost: {
-      buttons: 200,
-    },
-  },
-
-  yarnEmporium: {
-    name: "Yarn Empurrrrrrium",
-
-    cost: {
-      buttons: 20,
-    },
-  },
-};
-
-type BuildingName = keyof typeof BuildingTypes;
-
 type StoreItemProps = {
-  buildingName: BuildingName;
+  buildingName: RoomName;
   selected: boolean;
 };
 
@@ -47,9 +17,9 @@ class StoreItem extends React.Component<StoreItemProps, StoreItemState> {
 
   }
   render() {
-    const price = BuildingTypes[this.props.buildingName].cost.buttons;
+    const price = RoomTypes[this.props.buildingName].cost.buttons;
     const canAfford = price <= State.Instance.buttons;
-    const building = BuildingTypes[this.props.buildingName];
+    const building = RoomTypes[this.props.buildingName];
 
     let item = (
       <span>
@@ -122,7 +92,7 @@ class Store extends React.Component<StoreProps, State> implements IEntity {
   }
 
   renderBuildings(): JSX.Element[] {
-    const buildingNames = Object.keys(BuildingTypes) as (keyof typeof BuildingTypes)[];
+    const buildingNames = Object.keys(RoomTypes) as (keyof typeof RoomTypes)[];
     const results: JSX.Element[] = [];
 
     for (const key of buildingNames) {

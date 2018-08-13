@@ -34,7 +34,7 @@ class World extends PIXI.Graphics implements IEntity {
       // only add once (i only put it in here bc we need state)
       Constants.DEBUG_FLAGS.DEBUG_ADD_BUILDING = false;
 
-      this.addRoom(30, Constants.SKY_HEIGHT_IN_TILES - 6, state);
+      this.addRoom(30, Constants.SKY_HEIGHT_IN_TILES - 6, state, "condo");
     }
 
     // state.buttons += 1;
@@ -76,12 +76,11 @@ class World extends PIXI.Graphics implements IEntity {
   /**
    * expects x, y coordinates in grid coordinates
    */
-  public addRoom(x: number, y: number, state: State): void {
+  public addRoom(x: number, y: number, state: State, roomName: RoomName): void {
     const room = new Room({
       tileX: x,
       tileY: y,
-      occupants: 0,
-      capacity: 5,
+      roomName,
       state,
     });
 
