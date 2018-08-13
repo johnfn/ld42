@@ -46,20 +46,12 @@ class StoreItem extends React.Component<StoreItemProps, StoreItemState> {
         {
           this.state.mouseOver &&
             <>
-              <span
-                style={{
-                  color: 'gray',
-                }}
-              >
+              <span className="buy-cost">
                 Cost: { price } buttons
               </span>{' '}
               {
                 !canAfford &&
-                  <span
-                    style={{
-                      color: 'red',
-                    }}
-                  >
+                  <span className="buy-cant-afford">
                     Can't afford!
                   </span>
               }
