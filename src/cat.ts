@@ -202,8 +202,9 @@ class Cat extends PIXI.Container implements IEntity {
 
   updateCatState(gameState: State): CatGoal {
     const tileBelow = gameState.world.getCellAt(this.x, this.y + Cat.height);
+    const closestElevator = gameState.getEntitiesByPredicate(isElevator)[0];
 
-    if (tileBelow.terrain === 'sky') {
+    if (tileBelow.terrain === 'sky' && closestElevator.x !== this.x) {
       return { activity: 'falling' };
 
       // we update our state based on our current state.
@@ -268,13 +269,14 @@ class Cat extends PIXI.Container implements IEntity {
 
     this.state = this.updateCatState(gameState);
 
-    // update cat based on state
+    // update cat position based on state
+    //CatFindPath.updateCatPosition(gameState, this).step();
 
+    // emote if necessary
     if (this.state.activity === 'falling') {
       this.y += 1;
     } else if (this.state.activity === 'going-to-room') {
-      const dest = this.state.destination;
-      CatFindPath.catFindPath(gameState, this, dest).step();
+      CatFindPath.catFindPath(gameState, this, this.state.destination).step();
 /*
 i
       if (dest.room.worldRect().x > this.x) {
