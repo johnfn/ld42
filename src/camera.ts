@@ -2,8 +2,8 @@ class Camera {
   width: number;
   height: number;
 
-  desiredStageX = 0;
-  desiredStageY = 0;
+  desiredStageX: number = 0;
+  desiredStageY: number = 0;
 
   bounds: Rect;
 
@@ -31,8 +31,8 @@ class Camera {
   }
 
   setY(value: number) {
-    if (value < this.bounds.y) { value = this.bounds.y; }
-    if (value >= this.bounds.bottom - this.height) { value = this.bounds.bottom - this.height; }
+    //if (value < this.bounds.y) { value = this.bounds.y; }
+    //if (value >= this.bounds.bottom - this.height) { value = this.bounds.bottom - this.height; }
 
     this.desiredStageY = -value;
   }
@@ -56,6 +56,8 @@ class Camera {
   constructor() {
     this.width  = Constants.SCREEN_WIDTH;
     this.height = Constants.SCREEN_HEIGHT;
+    this.desiredStageX = 0;
+    this.desiredStageY = -40;
 
     this.bounds = new Rect({ 
       x: 0, 

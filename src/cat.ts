@@ -5,7 +5,7 @@ function isCat(x: any): x is Cat {
 type CatGoal = 
   | { activity: 'waiting' }
   | { activity: 'falling' }
-  | { activity: 'living' }
+  | { activity: 'living'  }
   | { 
       activity: 'finding-room';
 
@@ -18,6 +18,7 @@ type CatGoal =
 
 type CatInfo = {
   name             : string;
+  happiness        : number;
   room            ?: Room;
   favoriteActivity : FavoriteCatActivities;
 }
@@ -25,10 +26,14 @@ type CatInfo = {
 class Cat extends PIXI.Container implements IEntity {
   public static width = 32;
   public static height = 32;
+  public static maxHappiness = 100;
+
   state: CatGoal;
   info : CatInfo;
 
   type = "CAT_TAG";
+
+  tick = 0;
 
   // we do this so that we only update during the tick
   wasClicked: boolean;
@@ -55,6 +60,7 @@ class Cat extends PIXI.Container implements IEntity {
     return {
       name            : Util.RandElem(Constants.Strings.CAT_NAMES),
       favoriteActivity: Util.RandElem(Object.keys(Constants.CAT_ACTIVITIES) as FavoriteCatActivities[]),
+      happiness       : 50,
     }
   }
 
@@ -78,7 +84,12 @@ class Cat extends PIXI.Container implements IEntity {
     })[0];
 
     if (!bestRoom) {
-      this.say(gameState, "I can't find any rooms right meow :(");
+      if (this.tick % 60 === 0) {
+        this.info.happiness--;
+      }
+
+      // this.say(gameState, "I can't find any rooms right meow :(");
+      this.emote(gameState, 'house');
 
       return { activity: 'waiting' };
     } else {
@@ -122,6 +133,7 @@ class Cat extends PIXI.Container implements IEntity {
           this.x = Util.RandRange(destRect.x, destRect.x + destRect.w - Cat.width);
           this.info.room = destRoom;
           destRoom.occupants++;
+
           return { activity: 'living' };
         }
 
@@ -147,6 +159,8 @@ class Cat extends PIXI.Container implements IEntity {
   }
 
   update(gameState: State): void {
+    this.tick++;
+
     // update state
 
     this.state = this.updateCatState(gameState);
@@ -209,6 +223,14 @@ class Cat extends PIXI.Container implements IEntity {
   say(gameState: State, text: string, alwaysSay = false) {
     if (Math.random() > .99 || alwaysSay) {
       const t = new FloatUpText(gameState, text);
+
+      this.addChild(t);
+    }
+  }
+
+  emote(gameState: State, text: string, alwaysSay = false) {
+    if (Math.random() > .99 || alwaysSay) {
+      const t = new FloatUpEmoji(gameState, text);
 
       this.addChild(t);
     }

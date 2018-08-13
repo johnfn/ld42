@@ -131,6 +131,7 @@ class Game {
       time            : { hour: 6, minute: 0 },
       selectedBuilding: "condo",
     });
+    //this.app.stage.y = -80;
 
     this.app.stage.interactive = true;
 
