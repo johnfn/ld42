@@ -49,6 +49,7 @@ class Room extends PIXI.Container {
 
   occupants: number;
   capacity : number;
+  roomName : RoomName;
 
   // so we can find it in the list of entities
   type = "ROOM_TAG";
@@ -65,24 +66,46 @@ class Room extends PIXI.Container {
 
     props.state.entities.push(this);
 
+    this.roomName = props.roomName;
     this.occupants = roomStats.occupancy;
     this.capacity  = roomStats.capacity;
 
     this.x = props.tileX * Constants.MAP_TILE_SIZE;
     this.y = props.tileY * Constants.MAP_TILE_SIZE;
-    
-    // why are we wrapping roomSprite? idk but thats how it is
-    const spriteTexture: PIXI.Texture = PIXI.loader.resources['room-1'].texture;
-    const roomSprite: PIXI.Sprite = new PIXI.Sprite(spriteTexture);
-
-    this.addChild(roomSprite); // at relative x, y = 0
 
     this.wasClicked = false;
+
+    const roomSprite = this.renderRoom();
 
     roomSprite.interactive = true;
     roomSprite.on("click", (e: PIXI.interaction.InteractionEvent) => {
       this.wasClicked = true;
     });
+  }
+
+  renderRoom(): PIXI.Sprite {
+    if (this.roomName === "condo") {
+      // why are we wrapping roomSprite? idk but thats how it is
+      const spriteTexture: PIXI.Texture = PIXI.loader.resources['room-1'].texture;
+      const roomSprite: PIXI.Sprite = new PIXI.Sprite(spriteTexture);
+
+      this.addChild(roomSprite); // at relative x, y = 0
+
+      return roomSprite;
+    } else if (this.roomName === "yarnEmporium") {
+      const spri = new PIXI.Sprite();
+      const gfx = new PIXI.Graphics();
+
+      gfx.beginFill(0x0000ff);
+      gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE);
+
+      spri.addChild(gfx);
+      this.addChild(spri);
+
+      return spri;
+    }
+
+    throw new Error("unimplemented!!!!!!!!!!");
   }
 
   worldRect(): Rect {
