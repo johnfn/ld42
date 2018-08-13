@@ -131,7 +131,6 @@ class Constants {
       "Seinfield",
       "Cloud",
       "Strife",
-      "Jobs",
       "Bjork",
       "Drake",
       "Chance",
@@ -177,6 +176,7 @@ class Constants {
       "Daisu",
 
       // Figures
+      "Jobs",
       "Aivi",
       
       // Cats from media
@@ -184,7 +184,6 @@ class Constants {
       "Jiji", // Kiki's Delivery Service, black
       "Maomolin", // Ranma 1/2
       "Meowth",
-      "Persian",
       "Espeon",
       "Raikou",
       "Skitty",
@@ -196,6 +195,7 @@ class Constants {
       "Purrloin",
       "Litleo",
       "Espurr",
+      "Mr. Mew", // The World Ends With You
 
       // Cat-like creatures/ catpeople from media
       "Rengar", // League of Legends
@@ -206,7 +206,6 @@ class Constants {
       "Azusa", // K-On
       "Chitori", // Gurren Lagann
       "Yoruichi", // Bleach
-      "Catseye", // X-Men
       "Pantha", // Teen Titans
       "Black", // "Black Cat", Spiderman
       "Ava Ayala", // Avengers Academy
