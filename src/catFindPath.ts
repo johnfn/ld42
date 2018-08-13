@@ -1,6 +1,4 @@
 
-console.log("IMPORTED CAT FIND PATH!!!! BOWEI" )
-
 class CatFindPath {
   public static catFindPath(gameState: State, cat: Cat, dest: { room: Room }): ({ step: (() => void) }) {
     const catBottom = cat.y + Cat.height;
@@ -13,7 +11,7 @@ class CatFindPath {
       }
     } else {
       const closestElevator = gameState.getEntitiesByPredicate(isElevator)[0];
-      console.log("CANT FIND DESTNATION, GOING TO ELEVATOR", catBottom, dest.room.worldRect().bottom, closestElevator.x);
+      //console.log("CANT FIND DESTNATION, GOING TO ELEVATOR", catBottom, dest.room.worldRect().bottom, closestElevator.x);
       if (closestElevator.x > cat.x) {
           return { step: () => { cat.x++ } };
       } else if (closestElevator.x < cat.x) {
