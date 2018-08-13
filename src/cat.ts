@@ -94,7 +94,7 @@ class Cat extends PIXI.Container implements IEntity {
   findRoom(gameState: State): CatGoal {
     // find a room
 
-    const rooms = gameState.getRooms().filter(r => r.roomName === "condo" && r.hasCapacity());
+    const rooms = gameState.getEntitiesBy(isRoom).filter(r => r.roomName === "condo" && r.hasCapacity());
     const bestRoom = Util.SortByKey(rooms, b => {
       return Util.ManhattanDistance({ x: b.worldRect().x, y: b.worldRect().y }, this);
     })[0];
@@ -164,7 +164,7 @@ class Cat extends PIXI.Container implements IEntity {
 
     if (randomActivity === "favorite" && !isDoingFavoriteActivity) {
       if (this.info.favoriteActivity === "Yarn") {
-        const allYarnRooms = gameState.getRooms().filter(r => r.roomName === "yarnEmporium");
+        const allYarnRooms = gameState.getEntitiesBy(isRoom).filter(r => r.roomName === "yarnEmporium");
         const roomsWithCapacity = allYarnRooms.filter(r => r.hasCapacity());
 
         if (roomsWithCapacity.length === 0) {
@@ -202,7 +202,7 @@ class Cat extends PIXI.Container implements IEntity {
 
   updateCatState(gameState: State): CatGoal {
     const tileBelow = gameState.world.getCellAt(this.x, this.y + Cat.height);
-    const closestElevator = gameState.getEntitiesByPredicate(isElevator)[0];
+    const closestElevator = gameState.getEntitiesBy(isElevator)[0];
 
     //if (tileBelow.terrain === 'sky' && closestElevator.x !== this.x) {
     if (CatFindPath.isCatFalling(gameState, this)) {

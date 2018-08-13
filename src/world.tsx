@@ -18,7 +18,7 @@ class World extends PIXI.Graphics implements IEntity {
    */
   grid: MapCell[][];
 
-  constructor(stage: PIXI.Container) {
+  constructor(stage: PIXI.Container, entities: IEntity[]) {
     super();
 
     stage.addChild(this);
@@ -26,6 +26,11 @@ class World extends PIXI.Graphics implements IEntity {
     this.renderMap();
 
     new Mountain(this);
+    entities.push(new Sun(stage));
+    entities.push(new Cloud(stage));
+    entities.push(new Builder(stage));
+    entities.push(new CatSpawner(stage));
+    entities.push(new Elevator(stage));
 
   }
 

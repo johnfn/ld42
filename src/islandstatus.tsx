@@ -19,8 +19,8 @@ class IslandStatus extends React.Component<IslandStatusProps, State> implements 
   }
 
   render() {
-    const allCats = State.Instance.getCats();
-    const allRooms = State.Instance.getRooms();
+    const allCats = State.Instance.getEntitiesBy(isCat);
+    const allRooms = State.Instance.getEntitiesBy(isRoom);
 
     const catCount = allCats.length;
     const housedCatCount = allCats.filter(c => c.info.livingRoom).length;

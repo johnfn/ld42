@@ -13,7 +13,7 @@ class CatFindPath {
         return () => {};
       }
     } else {
-      const closestElevator = gameState.getEntitiesByPredicate(isElevator)[0];
+      const closestElevator = gameState.getEntitiesBy(isElevator)[0];
       //console.log("CANT FIND DESTNATION, GOING TO ELEVATOR", catBottom, dest.room.worldRect().bottom, closestElevator.x);
       if (closestElevator.x > cat.x) {
         return () => {cat.x++};
@@ -48,8 +48,9 @@ class CatFindPath {
 
   public static isCatFalling(gameState: State, cat: Cat) : boolean {
     const terrainBelow = gameState.world.getCellAt(cat.x, cat.y + Cat.height).terrain;
-    const buildingBelow = null; 
-    const closestElevator = gameState.getEntitiesByPredicate(isElevator)[0];
+    const buildingBelowLeft = null; 
+    const buildingBelowRight = null; 
+    const closestElevator = gameState.getEntitiesBy(isElevator)[0];
 
     if ((terrainBelow !== 'grass' && terrainBelow !== 'dirt') && closestElevator.x !== cat.x) {
       return true;
