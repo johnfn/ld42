@@ -23,7 +23,7 @@ const RoomTypes = {
 
   yarnEmporium: {
     name: "Yarn Empurrrrrrium",
-    capacity : 0,
+    capacity : 3,
     occupancy: 0,
     rent     : 0,
 
@@ -55,8 +55,8 @@ function isRoom(x: any): x is Room {
  * make sure to give us some padding - like tile_width / 2
  */
 class Room extends PIXI.Container {
-  public static WIDTH_IN_TILES  = 10;
-  public static HEIGHT_IN_TILES = 7;
+  public static WIDTH_IN_TILES  = Constants.ROOM_WIDTH_IN_TILES;
+  public static HEIGHT_IN_TILES = Constants.ROOM_HEIGHT_IN_TILES;
 
   // we do this so that we only update during the tick
   wasClicked: boolean;
@@ -118,7 +118,7 @@ class Room extends PIXI.Container {
       const spriteTexture: PIXI.Texture = PIXI.loader.resources['room-1'].texture;
       const roomSprite: PIXI.Sprite = new PIXI.Sprite(spriteTexture);
       const gfx = new PIXI.Graphics();
-      gfx.beginFill(0xd07fd0);
+      gfx.beginFill(Constants.COLORS.CONDO);
       gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE);
 
       this.addChild(gfx);

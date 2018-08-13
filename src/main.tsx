@@ -57,6 +57,16 @@ class State {
     this.removeList.push(entity);
   }
 
+  getEntityByPredicate<T>(cond: any => is T): T {
+    const selected: T[] = [];
+    for (const ent of this.entities) {
+      if (cond(ent)) {
+        selected.push(cond)
+      }
+    }
+    return selected;
+  }
+
   getRooms(): Room[] {
     const rooms: Room[] = [];
 
@@ -141,6 +151,7 @@ class Game {
     this.state.entities.push(new Sun(this.app.stage));
     this.state.entities.push(new CatSpawner(this.app.stage));
     this.state.entities.push(new Cloud(this.app.stage));
+    this.state.entities.push(new Elevator(this.app.stage));
 
     //this.state.entities.push(new HotelFloor(this.app.stage, new Point({ x: Constants.SCREEN_WIDTH / 2.0, y: 80 })));
 

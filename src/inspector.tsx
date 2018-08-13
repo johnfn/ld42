@@ -33,9 +33,10 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
         description = "Doing nothing in particular";
       } else if (activity === "falling") {
         description = "Ahhhh!!!";
-      } else if (activity === "living") {
-        description = "Hanging out in its cat room";
-      } else if (activity === "finding-room") {
+      } else if (activity === "doing-activity") {
+        // TODO
+        description = "Doing something fun!";
+      } else if (activity === "going-to-room") {
         description = "Going to find a place to live."
       }
 
@@ -46,8 +47,14 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
           <div>Name: { cat.info.name } </div>
           <div>Happiness: { cat.info.happiness } / { Cat.maxHappiness } </div>
           <div>Favorite activity: { cat.info.favoriteActivity } </div>
-          <div>Housing Status: { cat.info.room ? "Housed!" : "Homeless" } </div>
-          <div>Destination: { (cat.state.activity === 'finding-room' && cat.state.destination) ? cat.state.destination.worldRect.x : "None" } </div>
+          <div>Housing Status: { cat.info.livingRoom ? "Housed!" : "Homeless" } </div>
+          {
+            cat.info.currentRoom &&
+              <div>Current Location: { 
+                RoomTypes[cat.info.currentRoom.roomName].name
+              }</div>
+          }
+          <div>Destination: { (cat.state.activity === 'going-to-room' && cat.state.destination) ? cat.state.destination.room.worldRect().x : "None" } </div>
 
           <div
             style={{
@@ -70,8 +77,9 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
           > History </div>
 
           {
-            cat.info.statuses.map(status => 
+            cat.info.statuses.map((status, i) => 
               <div
+                key={ i }
                 style={{
                   fontSize: "12px",
                 }}
@@ -89,7 +97,7 @@ class Inspector extends React.Component<InspectorProps, State> implements IEntit
       const occupants = this.state.selection.room.occupants;
       return (
         <div>
-          <h2>Room Inspecturr</h2>
+          <h2>{ RoomTypes[this.state.selection.room.roomName] }</h2>
           <div>Catpacity: { occupants } / { this.state.selection.room.capacity } </div>
           <div>Revenue: { this.state.selection.room.rent * occupants } buttons per day </div>
         </div>

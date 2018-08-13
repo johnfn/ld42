@@ -12,30 +12,36 @@ type FavoriteCatActivities = keyof typeof catActivities;
 
 class Constants {
   // all dims measured in pix
-  public static SCREEN_WIDTH = 600;
-  public static SCREEN_HEIGHT = 600;
-
-  public static SKY_HEIGHT_IN_TILES = 30;
-
-  public static MAP_WIDTH_IN_TILES = 70;
-  public static MAP_HEIGHT_IN_TILES = 40;
-
-  public static MAP_TILE_SIZE = 16;
-
-  public static MAX_HOMELESS_CATS = 5;
-
-  public static WORLD_WIDTH = Constants.MAP_WIDTH_IN_TILES * Constants.MAP_TILE_SIZE;
-  public static WORLD_HEIGHT = Constants.MAP_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE;
-
   public static TOOLBAR_HEIGHT = 16;
 
   public static MOUSE_SCROLL_DEADZONE = 40;
   public static MOUSE_SCROLL_SPEED = 3;
 
+  public static SCREEN_WIDTH = 600;
+  public static SCREEN_HEIGHT = 600;
+
+  public static MAP_TILE_SIZE = 16;
+
+  public static MAP_WIDTH_IN_TILES = 72;
+  public static MAP_HEIGHT_IN_TILES = 60;
+  public static WORLD_WIDTH = Constants.MAP_WIDTH_IN_TILES * Constants.MAP_TILE_SIZE;
+  public static WORLD_HEIGHT = Constants.MAP_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE;
+
+  public static SKY_HEIGHT_IN_TILES = 40;
+  public static LEFT_WATER_WIDTH_IN_TILES = 4;
+  public static INITIAL_BUILDER_LOCATIONX_IN_TILES = 20;
+  public static GROUND_LOCATION_Y = Constants.SKY_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE;
+
   public static DEBUG_FLAGS = {
-    DEBUG_ADD_BUILDING: true,
+    DEBUG_ALL_CATS_LIKE_YARN: true,
     DEBUG_INITIAL_BUTTONS_COUNT: 500
   };
+
+  public static ROOM_WIDTH_IN_TILES  = 10;
+  public static ROOM_HEIGHT_IN_TILES = 7;
+
+
+  public static MAX_HOMELESS_CATS = 5;
 
   public static INITIAL_BUTTONS_COUNT = 12;
 
@@ -67,7 +73,9 @@ class Constants {
 
   public static COLORS = {
     SKY: 0x7ED2E4,
-    WATER: 0x85B7E3
+    WATER: 0x85B7E3,
+    ELEVATOR: 0xBDFACE,
+    CONDO: 0xd07fd0,
   }
 
   public static Strings = {
@@ -111,6 +119,19 @@ class Constants {
       "Snail",
       "Peter",
 
+      "Charlie",
+      "Tiger",
+      "Shadow",
+      "Sunny",
+      "Sushi",
+      "Blooregard",
+      "Noodle",
+      "Patchwork",
+      "Furrball",
+      "Andrea",
+      "Puss",
+      "Oscar",
+
       // Japanese names
       "Miya",
       "Tama",
@@ -119,6 +140,12 @@ class Constants {
       "Nekomata",
       "Nabeneko",
       "Manzoku",
+      "Shiro",
+      "Kuro",
+      "Tora",
+      "Momo",
+      "Koko",
+      "Nabi",
 
       // Pop culture references
       "Shinji",
@@ -203,6 +230,7 @@ class Constants {
       "Leo",      // Fairy Tail
       "Shampoo", // Ranma 1/2
       "Azusa", // K-On
+      "Azunyan", // K-On
       "Chitori", // Gurren Lagann
       "Yoruichi", // Bleach
       "Pantha", // Teen Titans
@@ -216,33 +244,24 @@ class Constants {
       "Roll", // Megaman (in some depictions)
       "Gotmott", // Xenoblade Chronicles 2
       "Stella", // VA-11 HALL-A
+      "Kyuubey", // Madoka
+      "Gyuuki", // YuYuYu
+      "Tigger", // Pooh
+      "Hobbes", // Calvin
 
       // Other people's cats
       "Zinc", // Aivi/surasshu's
       "Hobac", // Hanna Cha's
 
-      // Misc
-      "Charlie",
-      "Shadow",
-      "Sunny",
-      "Sushi",
-      "Sir Donnigan",
-      "Blooregard",
-      "Noodle",
-      "Patchwork",
-      "Furrball",
-      "Andrea",
-      "Luna",
+      // Stupid names
       "Nyanyanyanners",
       "Lardyclaws",
       "Baconator",
+      "Sir Donnigan",
       "Inspector Whiskers",
       "Mr. Snuggles",
       "Archbishop Mannykins III",
       "Professor Fluffles"
     ],
-    ERRORS: {
-      "1": "You don't have enough resources to do that!"
-    }
   };
 }

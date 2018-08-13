@@ -30,26 +30,17 @@ class World extends PIXI.Graphics implements IEntity {
   }
 
   update(state: State): void {
-    if (Constants.DEBUG_FLAGS.DEBUG_ADD_BUILDING) {
-      // only add once (i only put it in here bc we need state)
-      Constants.DEBUG_FLAGS.DEBUG_ADD_BUILDING = false;
-
-      this.addRoom(30, Constants.SKY_HEIGHT_IN_TILES - 6, state, "condo");
-    }
-
-    // state.buttons += 1;
   }
 
   buildMap(): MapCell[][] {
     const grid: MapCell[][] = [];
     const numSkyTiles = Constants.SKY_HEIGHT_IN_TILES; 
-    //const numSkyTiles = 20; // TODO: unhardcode this
-    const leftWaterTiles = 4;
+    const leftWaterTiles = Constants.LEFT_WATER_WIDTH_IN_TILES;
 
     for (let x = 0; x < Constants.MAP_WIDTH_IN_TILES; x++) {
       grid[x] = [];
 
-      for (let y = 0; y < Constants.MAP_WIDTH_IN_TILES; y++) {
+      for (let y = 0; y < Constants.MAP_HEIGHT_IN_TILES; y++) {
         let terrain: TerrainTypes;
 
         if (y < numSkyTiles) {
@@ -96,7 +87,7 @@ class World extends PIXI.Graphics implements IEntity {
   renderMap(): void {
     // do intelligent things: (thanks johnfn)
     for (let x = 0; x < Constants.MAP_WIDTH_IN_TILES; x++) {
-      for (let y = 0; y < Constants.MAP_WIDTH_IN_TILES; y++) {
+      for (let y = 0; y < Constants.MAP_HEIGHT_IN_TILES; y++) {
         const terrainType = this.grid[x][y].terrain;
         let graphic: PIXI.Container;//  = new PIXI.Graphics();
 
@@ -109,7 +100,7 @@ class World extends PIXI.Graphics implements IEntity {
             return graphic;
           })()
         } else if (terrainType === "grass") {
-          graphic = (() => {
+          graphic = new PIXI.Graphics() || (() => {
             const graphic = new PIXI.Graphics();
             graphic.beginFill(Constants.COLORS.WATER);
             graphic.drawRect(0, 0, Constants.MAP_TILE_SIZE, Constants.MAP_TILE_SIZE);
@@ -117,12 +108,7 @@ class World extends PIXI.Graphics implements IEntity {
             //return new PIXI.Container();
           })()
         } else if (terrainType === "dirt") {
-          graphic = (() => {
-            const graphic = new PIXI.Graphics();
-            graphic.beginFill(0xc3870f);
-        graphic.drawRect(0, 0, Constants.MAP_TILE_SIZE, Constants.MAP_TILE_SIZE);
-            return graphic;
-          })()
+          graphic = new PIXI.Graphics();
         } else if (terrainType === "water") {
           graphic = (() => {
             const graphic = new PIXI.Graphics();
@@ -151,8 +137,10 @@ class World extends PIXI.Graphics implements IEntity {
     // render grass
     this.renderBlockyThing({
       thingType: 'terrainSprite',
+      //whenToRender: (mapCell: MapCell): boolean => ((console.log('called', mapCell.terrain) || true) && (mapCell.terrain) === 'grass' && (console.log('grass') || true)),
       whenToRender: (mapCell: MapCell): boolean => ((mapCell.terrain) === 'grass'),
       spriteCreator: (): { graphic: PIXI.Container, widthTiles: number, heightTiles: number } => {
+        console.log("MAKE SOME grass")
         return {  
           // 324 x 48
           graphic : new PIXI.Sprite(PIXI.loader.resources['ground-1'].texture),

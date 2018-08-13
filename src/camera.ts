@@ -57,7 +57,7 @@ class Camera {
     this.width  = Constants.SCREEN_WIDTH;
     this.height = Constants.SCREEN_HEIGHT;
     this.desiredStageX = 0;
-    this.desiredStageY = -40;
+    this.desiredStageY = 0;
 
     this.bounds = new Rect({ 
       x: 0, 
