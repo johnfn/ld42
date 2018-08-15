@@ -39,16 +39,11 @@ class Elevator extends PIXI.Container implements IEntity {
   }
 
   // WIP do not use
-  _incrementFloors(): void {
-    this.numFloors++;
-    const gfx = new PIXI.Graphics();
-    gfx.beginFill(Constants.COLORS.ELEVATOR);
-    gfx.drawRect(0, 0, 
-      Elevator.ELEVATOR_WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, 
-      Constants.ROOM_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE * this.numFloors
-    );
-    gfx.y = Constants.GROUND_LOCATION_Y - this.numFloors * Constants.ROOM_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE;
-    this.addChild(gfx);
+  increaseFloorsTo(n: number): void {
+    if (n > this.numFloors) {
+      this.numFloors = n;
+      this.reRenderSelf();
+    }
   }
 
   // when adding levels, increment my numFloors and then call my renderSelf()

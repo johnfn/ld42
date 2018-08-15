@@ -101,6 +101,7 @@ class Builder extends PIXI.Graphics implements IEntity {
         gameState,
         gameState.selectedBuilding,
       );
+      gameState.getEntitiesBy(isElevator)[0].increaseFloorsTo(this.floorLevel);
 
       // remove ourselves from updateables list and derender
       gameState.removeEntity(this);
