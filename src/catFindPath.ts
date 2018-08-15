@@ -49,15 +49,17 @@ class CatFindPath {
 
   public static isCatFalling(gameState: State, cat: Cat) : boolean {
     const terrainBelow = gameState.world.getCellAt(cat.x, cat.y + Cat.height).terrain;
-    let walkableBuildings: PIXI.Container[] = gameState.getEntitiesBy(isElevator);
+    let walkableBuildings: IHasWorldRect[] = gameState.getEntitiesBy(isElevator);
     walkableBuildings = walkableBuildings.concat(gameState.getEntitiesBy(isRoom));
 
     const catLeftPaw = new Point({x: cat.x, y: cat.y + Cat.height});
     const catRightPaw = new Point({x: cat.x + Cat.width, y: cat.y + Cat.height});
-    const buildingBelowLeft: boolean = false;
-    const buildingBelowRight: boolean = false;
+    const buildingBelowLeft: boolean = (walkableBuildings.filter(b => b.worldRect().contains(catLeftPaw)).length > 0);
+    const buildingBelowRight: boolean = (walkableBuildings.filter(b => b.worldRect().contains(catRightPaw)).length > 0);
 
     if (terrainBelow === 'grass' || terrainBelow === 'dirt') {
+      return false;
+    } else if (buildingBelowLeft || buildingBelowRight) {
       return false;
     } else {
       return true;

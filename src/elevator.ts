@@ -21,6 +21,15 @@ class Elevator extends PIXI.Container implements IEntity {
     this.reRenderSelf();
   }
 
+  worldRect(): Rect {
+    return new Rect({
+      x: Elevator.ELEVATOR_START_X,
+      w: Elevator.ELEVATOR_WIDTH_IN_TILES * Constants.MAP_TILE_SIZE,
+      y: Constants.GROUND_LOCATION_Y - this.numFloors * Constants.ROOM_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE,
+      h: Constants.ROOM_HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE * this.numFloors
+    })
+  }
+
   update(gameState: State): void {
   }
 
