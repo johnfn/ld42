@@ -1,4 +1,4 @@
-import { CANCELLED } from "dns";
+//import { CANCELLED } from "dns";
 
 // utility functions for cat moving and pathfinding
 class CatFindPath {
@@ -54,7 +54,7 @@ class CatFindPath {
 
     const catLeftPaw = new Point({x: cat.x, y: cat.y + Cat.height});
     const catRightPaw = new Point({x: cat.x + Cat.width, y: cat.y + Cat.height});
-    const buildingBelowLeft: boolean = walkableBuildings.map(c => c.worldRect.c)
+    const buildingBelowLeft: boolean = false;
     const buildingBelowRight: boolean = false;
 
     if (terrainBelow === 'grass' || terrainBelow === 'dirt') {
