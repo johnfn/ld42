@@ -26,27 +26,39 @@ class Toolbar extends React.Component<ToolbarProps, State> implements IEntity {
 
   render() {
     return (
-      <div
-        style={{
-          color: 'white',
-          font: 'Arial',
-        }}
-      >
-        <span
+      <div>
+        <div
           style={{
-            paddingLeft: "10px",
+            color: 'white',
+            font: 'Arial',
           }}
         >
-          Buttons: { this.state.buttons }
-        </span>
-
-        <span
-          style={{
-            paddingLeft: "10px",
-          }}
-        >
-          Time: { this.getTime() }
-        </span>
+          <span
+            style={{
+              paddingLeft: "10px",
+            }}
+          >
+            Buttons: { this.state.buttons }
+          </span>
+  
+          <span
+            style={{
+              paddingLeft: "10px",
+            }}
+          >
+            Time: { this.getTime() }
+          </span>
+        </div>
+        <div> 
+   
+          <span
+            style={{
+              paddingLeft: "10px",
+            }}
+          >
+            Alert: hi this is an alert! 
+          </span>
+        </div>
       </div>
     );
   }
