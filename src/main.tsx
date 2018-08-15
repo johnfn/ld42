@@ -208,6 +208,7 @@ const ASSET_LIST: string = `
 birds-1.png
 boat-1.png
 button-1.png
+cat-laboratory-1.png
 clouds-1.png
 dock-1.png
 ground-1.png

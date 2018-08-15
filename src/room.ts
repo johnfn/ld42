@@ -91,13 +91,17 @@ class Room extends PIXI.Container {
 
       return spri;
     } else if (this.roomName === "catLabratory") {
-      const spri = new PIXI.Sprite();
+      const spri = new PIXI.Sprite(PIXI.loader.resources['cat-laboratory-1'].texture);
+      spri.x += 8;
+      spri.y += 8;
+      /*
       const gfx = new PIXI.Graphics();
 
       gfx.beginFill(0xff0000);
       gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE);
 
       spri.addChild(gfx);
+      */
       this.addChild(spri);
 
       return spri;
@@ -105,10 +109,12 @@ class Room extends PIXI.Container {
       const spri = new PIXI.Sprite();
       const gfx = new PIXI.Graphics();
 
-      gfx.beginFill(0x303030);
-      gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE);
-
+      //gfx.beginFill(0x303030);
+      gfx.beginFill(0xd89fd8);
+      gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE - 16, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE - 16);
       spri.addChild(gfx);
+      spri.x += 8;
+      spri.y += 8;
       this.addChild(spri);
 
       return spri;
