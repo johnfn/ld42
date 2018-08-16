@@ -2,6 +2,10 @@ interface IEntity {
   update: (state: State) => void;
 }
 
+interface IHasWorldRect {
+  worldRect: () => Rect;
+}
+
 // Provides data about the current selected game object
 type GameSelection = 
   | { type: "cat", cat: Cat }
@@ -57,7 +61,7 @@ class State {
     this.removeList.push(entity);
   }
 
-  getEntitiesByPredicate<T>(cond: (x: any) => x is T): T[] {
+  getEntitiesBy<T>(cond: (x: any) => x is T): T[] {
     const selected: T[] = [];
     for (const ent of this.entities) {
       if (cond(ent)) {
@@ -65,40 +69,6 @@ class State {
       }
     }
     return selected;
-  }
-
-  getRooms(): Room[] {
-    const rooms: Room[] = [];
-
-    for (const ent of this.entities) {
-      if (isRoom(ent)) {
-        rooms.push(ent);
-      }
-    }
-
-    return rooms;
-  }
-
-  getBuilders(): Builder[] {
-    const builders: Builder[] = [];
-    for (const ent of this.entities) {
-      if (isBuilder(ent)) {
-        builders.push(ent);
-      }
-    }
-    return builders;
-  }
-
-  getCats(): Cat[] {
-    const cats: Cat[] = [];
-
-    for (const ent of this.entities) {
-      if (isCat(ent)) {
-        cats.push(ent);
-      }
-    }
-
-    return cats;
   }
 }
 
@@ -130,11 +100,13 @@ class Game {
   start() {
     this.stupidPixiSetupSetuff();
 
+    const entities: IEntity[] = [];
+
     this.state = new State({
-      entities        : [],
+      entities        : entities,
       stage           : this.app.stage,
       buttons         : Constants.DEBUG_FLAGS.DEBUG_INITIAL_BUTTONS_COUNT || Constants.INITIAL_BUTTONS_COUNT,
-      world           : new World(this.app.stage),
+      world           : new World(this.app.stage, entities),
       camera          : new Camera(),
       mousePosition   : new Point({ x: 0, y: 0 }),
       selection       : { type: "none" },
@@ -145,13 +117,14 @@ class Game {
 
     this.app.stage.interactive = true;
 
+    // meta-objects. all game objects should go into world.
     this.state.entities.push(this.state.camera);
     this.state.entities.push(new MapScrollListener(this.app.stage));
-    this.state.entities.push(new Builder(this.app.stage));
+    /* this.state.entities.push(new Builder(this.app.stage));
     this.state.entities.push(new Sun(this.app.stage));
     this.state.entities.push(new CatSpawner(this.app.stage));
     this.state.entities.push(new Cloud(this.app.stage));
-    this.state.entities.push(new Elevator(this.app.stage));
+    this.state.entities.push(new Elevator(this.app.stage)); */
 
     //this.state.entities.push(new HotelFloor(this.app.stage, new Point({ x: Constants.SCREEN_WIDTH / 2.0, y: 80 })));
 
@@ -235,6 +208,7 @@ const ASSET_LIST: string = `
 birds-1.png
 boat-1.png
 button-1.png
+cat-laboratory-1.png
 clouds-1.png
 dock-1.png
 ground-1.png

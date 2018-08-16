@@ -79,6 +79,53 @@ class Constants {
     CONDO: 0xd07fd0,
   }
 
+  public static ROOM_TYPES = {
+    condo: {
+      name     : "Condo 1",
+      capacity : 5,
+      occupancy: 0,
+      rent     : 5,
+  
+      cost: {
+        buttons: 10,
+      },
+    },
+  
+    catLabratory: {
+      name: "Cat Laboratailory",
+      capacity : 0,
+      occupancy: 0,
+      rent     : 0,
+  
+      cost: {
+        buttons: 200,
+      },
+    },
+  
+    yarnEmporium: {
+      name: "Yarn Empurrrrrrium",
+      capacity : 3,
+      occupancy: 0,
+      rent     : 0,
+  
+      cost: {
+        buttons: 20,
+      },
+    },
+  
+    emptyRoom: {
+      name: "Empty space",
+      capacity : 0,
+      occupancy: 0,
+      rent     : 0,
+  
+      cost: {
+        buttons: 1,
+      },
+    },
+  };
+
+
   public static Strings = {
     CAT_NAMES: [
       // Fairly common cat names
@@ -212,6 +259,7 @@ class Constants {
       "Diana", // Sailor Moon, black
       "Jiji", // Kiki's Delivery Service, black
       "Maomolin", // Ranma 1/2
+      "Sakamoto", // nichijou
       "Meowth",
       "Espeon",
       "Raikou",
@@ -224,6 +272,7 @@ class Constants {
       "Purrloin",
       "Litleo",
       "Espurr",
+      "Shamisen", // Haruhi
       "Mr. Mew", // The World Ends With You
 
       // Cat-like creatures/ catpeople from media
@@ -248,6 +297,10 @@ class Constants {
       "Stella", // VA-11 HALL-A
       "Kyuubey", // Madoka
       "Gyuuki", // YuYuYu
+      "Nekobasu", // totoro
+      "Hanekawa", // Monogatari
+      "Puck",
+      "Nyanta",
       "Tigger", // Pooh
       "Hobbes", // Calvin
 

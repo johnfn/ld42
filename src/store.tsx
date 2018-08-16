@@ -17,9 +17,9 @@ class StoreItem extends React.Component<StoreItemProps, StoreItemState> {
 
   }
   render() {
-    const price = RoomTypes[this.props.buildingName].cost.buttons;
+    const price = Constants.ROOM_TYPES[this.props.buildingName].cost.buttons;
     const canAfford = price <= State.Instance.buttons;
-    const building = RoomTypes[this.props.buildingName];
+    const building = Constants.ROOM_TYPES[this.props.buildingName];
 
     let item = (
       <span>
@@ -84,7 +84,7 @@ class Store extends React.Component<StoreProps, State> implements IEntity {
   }
 
   renderBuildings(): JSX.Element[] {
-    const buildingNames = Object.keys(RoomTypes) as (keyof typeof RoomTypes)[];
+    const buildingNames = Object.keys(Constants.ROOM_TYPES) as (keyof typeof Constants.ROOM_TYPES)[];
     const results: JSX.Element[] = [];
 
     for (const key of buildingNames) {

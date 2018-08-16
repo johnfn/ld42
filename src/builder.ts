@@ -101,6 +101,7 @@ class Builder extends PIXI.Graphics implements IEntity {
         gameState,
         gameState.selectedBuilding,
       );
+      gameState.getEntitiesBy(isElevator)[0].increaseFloorsTo(this.floorLevel);
 
       // remove ourselves from updateables list and derender
       gameState.removeEntity(this);
@@ -110,12 +111,12 @@ class Builder extends PIXI.Graphics implements IEntity {
         let nextLocation: [number, number];
         nextLocation = [this.worldRect().x + this.worldRect().w, this.worldRect().y];
 
-        let alreadyCreatedBuilder: boolean = (gameState.getBuilders().map(anotherBuilder => ( 
+        let alreadyCreatedBuilder: boolean = (gameState.getEntitiesBy(isBuilder).map(anotherBuilder => ( 
             anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
-          )).reduce((pv, cv) => pv || cv, false) || gameState.getRooms().map(anotherBuilder => ( 
+          )).reduce((pv, cv) => pv || cv, false) || gameState.getEntitiesBy(isRoom).map(anotherBuilder => ( 
             anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
           )).reduce((pv, cv) => pv || cv, false) );
-        let existRoomUnderneath = gameState.getRooms().map(anotherBuilder => ( 
+        let existRoomUnderneath = gameState.getEntitiesBy(isRoom).map(anotherBuilder => ( 
             anotherBuilder.worldRect().x === nextLocation[0] && (anotherBuilder.worldRect().y - anotherBuilder.worldRect().h) === nextLocation[1]
           )).reduce((pv, cv) => pv || cv, false)
         if (!alreadyCreatedBuilder && (existRoomUnderneath || this.floorLevel === 1)) {
@@ -127,9 +128,9 @@ class Builder extends PIXI.Graphics implements IEntity {
         let nextLocation: [number, number];
         nextLocation = [this.worldRect().x, this.worldRect().y - this.worldRect().h];
  // wip refactor
-        let alreadyCreatedBuilder: boolean = (gameState.getBuilders().map(anotherBuilder => ( 
+        let alreadyCreatedBuilder: boolean = (gameState.getEntitiesBy(isBuilder).map(anotherBuilder => ( 
             anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
-          )).reduce((pv, cv) => pv || cv, false) || gameState.getRooms().map(anotherBuilder => ( 
+          )).reduce((pv, cv) => pv || cv, false) || gameState.getEntitiesBy(isRoom).map(anotherBuilder => ( 
             anotherBuilder.worldRect().x === nextLocation[0] && anotherBuilder.worldRect().y === nextLocation[1]
           )).reduce((pv, cv) => pv || cv, false) );
 

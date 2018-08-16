@@ -1,50 +1,4 @@
-const RoomTypes = {
-  condo: {
-    name     : "Condo 1",
-    capacity : 5,
-    occupancy: 0,
-    rent     : 5,
-
-    cost: {
-      buttons: 10,
-    },
-  },
-
-  catLabratory: {
-    name: "Cat Laboratailory",
-    capacity : 0,
-    occupancy: 0,
-    rent     : 0,
-
-    cost: {
-      buttons: 200,
-    },
-  },
-
-  yarnEmporium: {
-    name: "Yarn Empurrrrrrium",
-    capacity : 3,
-    occupancy: 0,
-    rent     : 0,
-
-    cost: {
-      buttons: 20,
-    },
-  },
-
-  emptyRoom: {
-    name: "Empty space",
-    capacity : 0,
-    occupancy: 0,
-    rent     : 0,
-
-    cost: {
-      buttons: 1,
-    },
-  },
-};
-
-type RoomName = keyof typeof RoomTypes;
+type RoomName = keyof typeof Constants.ROOM_TYPES;
 
 function isRoom(x: any): x is Room {
   return x.type === "ROOM_TAG";
@@ -79,7 +33,7 @@ class Room extends PIXI.Container {
   }) {
     super();
 
-    const roomStats = RoomTypes[props.roomName];
+    const roomStats = Constants.ROOM_TYPES[props.roomName];
 
     props.state.entities.push(this);
 
@@ -137,13 +91,17 @@ class Room extends PIXI.Container {
 
       return spri;
     } else if (this.roomName === "catLabratory") {
-      const spri = new PIXI.Sprite();
+      const spri = new PIXI.Sprite(PIXI.loader.resources['cat-laboratory-1'].texture);
+      spri.x += 8;
+      spri.y += 8;
+      /*
       const gfx = new PIXI.Graphics();
 
       gfx.beginFill(0xff0000);
       gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE);
 
       spri.addChild(gfx);
+      */
       this.addChild(spri);
 
       return spri;
@@ -151,10 +109,12 @@ class Room extends PIXI.Container {
       const spri = new PIXI.Sprite();
       const gfx = new PIXI.Graphics();
 
-      gfx.beginFill(0x303030);
-      gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE);
-
+      //gfx.beginFill(0x303030);
+      gfx.beginFill(0xd89fd8);
+      gfx.drawRect(0, 0, Room.WIDTH_IN_TILES * Constants.MAP_TILE_SIZE - 16, Room.HEIGHT_IN_TILES * Constants.MAP_TILE_SIZE - 16);
       spri.addChild(gfx);
+      spri.x += 8;
+      spri.y += 8;
       this.addChild(spri);
 
       return spri;
