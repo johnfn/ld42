@@ -5,4 +5,5 @@ read MESSAGE
 echo "$MESSAGE"
 while true ; do
     git add . && git commit  -m "$MESSAGE"  && git pull -q && git push
+    sleep 10
 done
