@@ -34,7 +34,7 @@ class Constants {
 
   public static DEBUG_FLAGS = {
     DEBUG_ALL_CATS_LIKE_YARN: true,
-    DEBUG_INITIAL_BUTTONS_COUNT: 500,
+    DEBUG_INITIAL_BUTTONS_COUNT: 50,
     SHORT_ACTIVITIES: true,
   };
 
@@ -181,6 +181,7 @@ class Constants {
       "Oscar",
 
       // Japanese names
+      "Maru",
       "Miya",
       "Tama",
       "Niitama",
@@ -306,6 +307,9 @@ class Constants {
       // Other people's cats
       "Zinc", // Aivi/surasshu's
       "Hobac", // Hanna Cha's
+      "Biffy", // Holly's cat 
+
+
 
       // Stupid names
       "Nyanyanyanners",
@@ -315,7 +319,39 @@ class Constants {
       "Inspector Whiskers",
       "Mr. Snuggles",
       "Archbishop Mannykins III",
-      "Professor Fluffles"
+      "Professor Fluffles",
+
+      // Foods
+      "Meatball",
+      "Meatloaf",
+      "Muffin",
+      "Scone",
+      "Cupcake",
+      "Pepper",
+      "Paprika",
+      "Sugar",
+      "Honey",
+      "Pizza",
+      "Tofu",
+      "Cheddar",
+
+      // CLothing
+      "Mittens",
+      "Snuggie",
+      "Muff",
+      
+      // Historical Figures
+      "Bismarck",
+      "Winston",
+      "Sibelius",
+      "Dumbledore",
+      "Albus",
+      "Napoleon",
+      "Alexander",
+      "Caesar"
+
+
+
     ],
   };
 }
